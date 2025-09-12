@@ -83,29 +83,75 @@ const kpiData = [
     ]
   }
 ];
-// Flatten KPI structure into a simple list of items
+// Build KPI sections including headings while collecting items
 const kpiItems = [];
-kpiData.forEach(section => {
-  if (section.items) kpiItems.push(...section.items);
-  if (section.subsections) {
-    section.subsections.forEach(sub => {
-      if (sub.items) kpiItems.push(...sub.items);
-    });
-  }
-});
-
 const container = document.getElementById('kpi-container');
 const averageEl = document.getElementById('average');
 
-// Build a table row for each KPI item
-kpiItems.forEach(item => {
-  const row = document.createElement('tr');
-  row.innerHTML = `
-    <td>${item.text}</td>
-    <td><input type="number" id="${item.id}" min="0" max="100"></td>
-    <td><input type="text" id="${item.id}-note"></td>
-  `;
-  container.appendChild(row);
+function addItem(item) {
+  kpiItems.push(item);
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('kpi-item');
+
+  const textContainer = document.createElement('div');
+  textContainer.classList.add('kpi-text');
+
+  const label = document.createElement('label');
+  label.setAttribute('for', item.id);
+  label.textContent = item.text;
+  textContainer.appendChild(label);
+
+  if (item.note) {
+    const noteEl = document.createElement('div');
+    noteEl.classList.add('item-note');
+    noteEl.innerHTML = item.note.join('<br>');
+    textContainer.appendChild(noteEl);
+  }
+
+  wrapper.appendChild(textContainer);
+
+  const scoreInput = document.createElement('input');
+  scoreInput.type = 'number';
+  scoreInput.id = item.id;
+  scoreInput.min = 0;
+  scoreInput.max = 100;
+  wrapper.appendChild(scoreInput);
+
+  const noteInput = document.createElement('input');
+  noteInput.type = 'text';
+  noteInput.id = `${item.id}-note`;
+  wrapper.appendChild(noteInput);
+
+  container.appendChild(wrapper);
+}
+
+kpiData.forEach(section => {
+  const sectionHeading = document.createElement('h2');
+  sectionHeading.classList.add('section-heading');
+  sectionHeading.textContent = section.heading;
+  container.appendChild(sectionHeading);
+
+  if (section.items) {
+    section.items.forEach(addItem);
+  }
+  if (section.subsections) {
+    section.subsections.forEach(sub => {
+      const subHeading = document.createElement('h3');
+      subHeading.classList.add('subsection-heading');
+      subHeading.textContent = sub.heading;
+      container.appendChild(subHeading);
+      if (sub.items) {
+        sub.items.forEach(addItem);
+      }
+      const subDivider = document.createElement('hr');
+      subDivider.classList.add('divider');
+      container.appendChild(subDivider);
+    });
+  } else {
+    const sectionDivider = document.createElement('hr');
+    sectionDivider.classList.add('divider');
+    container.appendChild(sectionDivider);
+  }
 });
 
 function updateAverage() {

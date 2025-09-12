@@ -29,11 +29,42 @@ input[type="file"] {
   margin: 0 auto;
 }
 
-div {
+
+#average-container {
   text-align: center;
 }
 
-label {
-  display: block;
-  margin-bottom: 10px;
+.section-heading {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.subsection-heading {
+  margin-top: 15px;
+  text-align: left;
+}
+
+.divider {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+.kpi-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 8px 0;
+}
+
+.kpi-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-note {
+  color: #666;
+  font-size: 0.85em;
+  margin-top: 2px;
 }
