@@ -56,7 +56,8 @@ const kpiData = [
           { id: 'silent-steps', text: '必要に応じて適切に足音を消せましたか', note: ['・ラウンド開始直後の情報取り段階', '・ローテート画策中'] },
           { id: 'push-care', text: 'プッシュケアできましたか' },
           { id: 'scoreboard-check', text: '可能な時、オーブとプラントの音でスコアボードを確認できましたか' },
-          { id: 'backstab-care', text: '裏取りされうるエリアで適切に警戒できましたか' }
+          { id: 'backstab-care', text: '裏取りされうるエリアで適切に警戒できましたか' },
+          { id: 'clearing', text: 'クリアリングミスはありませんでしたか' }
         ]
       },
       {
