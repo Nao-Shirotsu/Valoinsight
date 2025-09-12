@@ -1,0 +1,179 @@
+const kpiData = [
+  {
+    heading: '編成中',
+    items: [
+      { id: 'remember-vc', text: '誰のVCが無いか覚えてましたか' },
+      { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー、リーコン、スモーク、トラップ、フラッシュ'] },
+      { id: 'strategy-axis', text: '編成から立ち回りの軸を見いだせましたか' }
+    ]
+  },
+  {
+    heading: '1st準備フェーズ',
+    items: [
+      { id: 'self-role', text: '自分がロールを全うすべきか/イレギュラー対応すべきか判断できましたか' },
+      { id: 'ally-role', text: '味方がロールを全う出来そうか判断できましたか', note: ['例: 攻めでサイファーが逆サイト管理してくれそうか、イニシがデュエにくっついてアビリティ投げそうか'] },
+      { id: 'ally-counter', text: '味方が敵の編成から対策を考えられそうか判断できましたか', note: ['例: ネオンがワイヤーのある所に行かなそうか、行くとしてもアンチワイヤーを考えていそうか'] },
+      { id: 'weird-teammate', text: '味方に変な奴がいないか確認しましたか', note: ['例: 「SDGs」「◯◯トロールします」'] }
+    ]
+  },
+  {
+    heading: '各ラウンドの準備フェーズ',
+    items: [
+      { id: 'weapon-econ', text: '敵味方の武器管理を適切に行えましたか', note: ['味方がハーフで4人買える時に適切に呼びかけできましたか', '敵がエコかどうか確認しましたか', '敵にオペレーターが出る可能性を認識しましたか'] },
+      { id: 'ult-management', text: '敵味方のアルティメット管理を適切に行えましたか', note: ['広範囲デバフ系ウルト(KJ, ブリーチ など)によってどう仕掛けるか・仕掛けられるか考えましたか'] },
+      { id: 'emotion-reset', text: '前ラウンドの感情処理を5秒以内に終わらせましたか (残20秒までに次の話を始められないと味方に浸透しない)' },
+      { id: 'counter-plan', text: '前のラウンドの内容をもとに適切に対策を考えられましたか' },
+      { id: 'propose-strat', text: '必要に応じて作戦を提案できましたか' }
+    ]
+  },
+  {
+    heading: 'ラウンド中',
+    subsections: [
+      {
+        heading: '撃ち合い',
+        items: [
+          { id: 'headline', text: 'ヘッドラインを維持できましたか' },
+          { id: 'angle-advantage', text: '必要に応じて適切にアングル(遠近壁)有利を取れていましたか' },
+          { id: 'off-angle', text: '必要に応じて適切にオフアングルを使えましたか' },
+          { id: 'peeker-adv', text: '必要に応じて適切にピーカーズアドバンテージを取れていましたか' },
+          { id: 'timing-peek', text: '必要に応じて適切にタイミングピークできましたか' },
+          { id: 'slicing-pie', text: '必要に応じて適切にカッティングパイできましたか' },
+          { id: 'cover-angle', text: '味方がカバー射線を通せるアングル&位置の維持はできましたか' },
+          { id: 'magazine', text: 'マガジン残弾数管理は適切でしたか' },
+          { id: 'anti-wallbang', text: 'モク抜きされにくい位置にいましたか' },
+          { id: 'anti-flash', text: 'フラッシュを食らっても生存できる位置にいましたか' }
+        ]
+      },
+      {
+        heading: '盤面管理',
+        items: [
+          { id: 'engage-decision', text: '接敵していいか判断してからピークしましたか' },
+          { id: 'reposition', text: '必要に応じて適切にポジションを変えましたか' },
+          { id: 'consider-enemy-count', text: 'エントリー時に敵の数と質の両方を考慮しましたか' },
+          { id: 'not-miss-rotate', text: 'ローテートが出来る状況を見落としませんでしたか' },
+          { id: 'rotate-reason', text: 'ローテートする判断の際、適切な根拠はありましたか' },
+          { id: 'ult-change', text: '敵味方のアルティメット状況変化を認識していましたか' },
+          { id: 'silent-steps', text: '必要に応じて適切に足音を消せましたか', note: ['ラウンド開始直後の情報取り段階', 'ローテート中'] },
+          { id: 'push-care', text: 'プッシュケアできましたか' },
+          { id: 'scoreboard-check', text: '可能な時、オーブとプラントの音でスコアボードを確認できましたか' },
+          { id: 'backstab-care', text: '裏取りされうるエリアで適切に警戒できましたか' }
+        ]
+      },
+      {
+        heading: '連携',
+        items: [
+          { id: 'death-call', text: '死亡時に即座に必要なことを報告できましたか' },
+          { id: 'ask-help', text: '自分が困った時に適切に助けを要求しましたか' },
+          { id: 'follow-entry', text: '適切にエントリーに着いていきましたか' },
+          { id: 'support-duelist', text: 'デュエリスト(先頭の人)が困っている時に適切に提案したり、適切に支援アビリティを出せましたか' },
+          { id: 'cover-line', text: '必要に応じて適切に味方へのカバーの射線を通せましたか' },
+          { id: 'safe-melee', text: '近接武器・アビリティは安全な状況でのみ構えていましたか' },
+          { id: 'protect-defuser', text: '解除者の射線に敵が立たないようにできましたか' }
+        ]
+      },
+      {
+        heading: 'プラント・ポストプラント',
+        items: [
+          { id: 'plant-delay', text: 'どこで遅延行為がしやすいか考えてプラント位置を決めましたか' },
+          { id: 'postplant-position', text: '見方が設置した位置に対して強い位置取りができましたか' },
+          { id: 'ability-awareness', text: '味方と敵の残アビリティを認識できましたか' },
+          { id: 'ally-reaction', text: '味方の動きを見てそれに対応した適切なポジショニングはできましたか' }
+        ]
+      }
+    ]
+  }
+];
+
+const container = document.getElementById('kpi-container');
+const averageEl = document.getElementById('average');
+const allItems = [];
+
+function renderItems(items) {
+  items.forEach(item => {
+    allItems.push(item);
+    const div = document.createElement('div');
+    const scoreLabel = document.createElement('label');
+    scoreLabel.innerHTML = `${item.text} score: <input type="number" id="${item.id}" min="0" max="100">`;
+    const noteLabel = document.createElement('label');
+    noteLabel.innerHTML = ` Notes: <input type="text" id="${item.id}-note">`;
+    div.appendChild(scoreLabel);
+    div.appendChild(noteLabel);
+    if (item.note) {
+      const noteDiv = document.createElement('div');
+      noteDiv.style.fontSize = 'smaller';
+      if (Array.isArray(item.note)) {
+        const ul = document.createElement('ul');
+        item.note.forEach(n => {
+          const li = document.createElement('li');
+          li.textContent = n;
+          ul.appendChild(li);
+        });
+        noteDiv.appendChild(ul);
+      } else {
+        noteDiv.textContent = item.note;
+      }
+      div.appendChild(noteDiv);
+    }
+    container.appendChild(div);
+  });
+}
+
+kpiData.forEach(section => {
+  const h2 = document.createElement('h2');
+  h2.textContent = section.heading;
+  container.appendChild(h2);
+  if (section.items) {
+    renderItems(section.items);
+  }
+  if (section.subsections) {
+    section.subsections.forEach(sub => {
+      const h3 = document.createElement('h3');
+      h3.textContent = sub.heading;
+      container.appendChild(h3);
+      renderItems(sub.items);
+    });
+  }
+});
+
+function updateAverage() {
+  let total = 0;
+  let count = 0;
+  allItems.forEach(item => {
+    const value = parseFloat(document.getElementById(item.id).value);
+    if (!isNaN(value)) {
+      total += value;
+      count++;
+    }
+  });
+  const average = count ? (total / count).toFixed(2) : 0;
+  averageEl.textContent = average;
+}
+
+allItems.forEach(item => {
+  document.getElementById(item.id).addEventListener('input', updateAverage);
+});
+
+document.getElementById('csvFile').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    const text = evt.target.result.trim();
+    const lines = text.split(/\r?\n/).slice(1); // skip header
+    lines.forEach(line => {
+      const [id, score, note] = line.split(',');
+      const scoreInput = document.getElementById(id);
+      if (scoreInput) {
+        scoreInput.value = score;
+        const noteInput = document.getElementById(`${id}-note`);
+        if (noteInput) {
+          noteInput.value = note || '';
+        }
+      }
+    });
+    updateAverage();
+  };
+  reader.readAsText(file);
+});
+
