@@ -3,7 +3,7 @@ const kpiData = [
     heading: '編成中',
     items: [
       { id: 'remember-vc', text: '誰のVCが無いか覚えてましたか' },
-      { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー、リーコン、スモーク、トラップ、フラッシュ'] },
+      { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ'] },
       { id: 'strategy-axis', text: '編成から立ち回りの軸を見いだせましたか' }
     ]
   },
@@ -19,8 +19,8 @@ const kpiData = [
   {
     heading: '各ラウンドの準備フェーズ',
     items: [
-      { id: 'weapon-econ', text: '敵味方の武器管理を適切に行えましたか', note: ['味方がハーフで4人買える時に適切に呼びかけできましたか', '敵がエコかどうか確認しましたか', '敵にオペレーターが出る可能性を認識しましたか'] },
-      { id: 'ult-management', text: '敵味方のアルティメット管理を適切に行えましたか', note: ['広範囲デバフ系ウルト(KJ, ブリーチ など)によってどう仕掛けるか・仕掛けられるか考えましたか'] },
+      { id: 'weapon-econ', text: '敵味方の武器管理を適切に行えましたか', note: ['・味方がハーフで4人買える時に呼びかけ', '・敵がエコかどうか', '・敵にオペレーターが出る可能性があるか'] },
+      { id: 'ult-management', text: '敵味方のアルティメット管理を適切に行えましたか', note: ['広範囲デバフ系ウルト(KJ, ブリーチ など)によってどう仕掛けるか・仕掛けられるか'] },
       { id: 'emotion-reset', text: '前ラウンドの感情処理を5秒以内に終わらせましたか', note: ['残20秒までに次の話を始められないと味方に浸透しない'] },
       { id: 'counter-plan', text: '前のラウンドの内容をもとに適切に対策を考えられましたか' },
       { id: 'propose-strat', text: '必要に応じて作戦を提案できましたか' }
@@ -53,7 +53,7 @@ const kpiData = [
           { id: 'not-miss-rotate', text: 'ローテートが出来る状況を見落としませんでしたか' },
           { id: 'rotate-reason', text: 'ローテートする判断の際、適切な根拠はありましたか' },
           { id: 'ult-change', text: '敵味方のアルティメット状況変化を認識していましたか' },
-          { id: 'silent-steps', text: '必要に応じて適切に足音を消せましたか', note: ['ラウンド開始直後の情報取り段階', 'ローテート中'] },
+          { id: 'silent-steps', text: '必要に応じて適切に足音を消せましたか', note: ['・ラウンド開始直後の情報取り段階', '・ローテート画策中'] },
           { id: 'push-care', text: 'プッシュケアできましたか' },
           { id: 'scoreboard-check', text: '可能な時、オーブとプラントの音でスコアボードを確認できましたか' },
           { id: 'backstab-care', text: '裏取りされうるエリアで適切に警戒できましたか' }
@@ -118,7 +118,7 @@ function addItem(item) {
   skipCheckbox.id = `${item.id}-skip`;
   const skipLabel = document.createElement('label');
   skipLabel.setAttribute('for', `${item.id}-skip`);
-  skipLabel.textContent = 'スキップ';
+  skipLabel.textContent = '除外';
   skipContainer.appendChild(skipCheckbox);
   skipContainer.appendChild(skipLabel);
   wrapper.appendChild(skipContainer);
