@@ -83,17 +83,29 @@ const kpiData = [
     ]
   }
 ];
+// Flatten KPI structure into a simple list of items
+const kpiItems = [];
+kpiData.forEach(section => {
+  if (section.items) kpiItems.push(...section.items);
+  if (section.subsections) {
+    section.subsections.forEach(sub => {
+      if (sub.items) kpiItems.push(...sub.items);
+    });
+  }
+});
 
 const container = document.getElementById('kpi-container');
 const averageEl = document.getElementById('average');
 
+// Build a table row for each KPI item
 kpiItems.forEach(item => {
-  const div = document.createElement('div');
-  div.innerHTML = `
-    <label>${item.name} score: <input type="number" id="${item.id}" min="0" max="100"></label>
-    <label>Notes: <input type="text" id="${item.id}-note"></label>
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${item.text}</td>
+    <td><input type="number" id="${item.id}" min="0" max="100"></td>
+    <td><input type="text" id="${item.id}-note"></td>
   `;
-  container.appendChild(div);
+  container.appendChild(row);
 });
 
 function updateAverage() {

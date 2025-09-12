@@ -7,7 +7,14 @@
 <body>
     <h1>VALORANT KPI採点ツール</h1>
     <input type="file" id="csvFile" accept=".csv" />
-    <div id="kpi-container"></div>
+    <form id="kpi-form">
+        <table id="kpi-table">
+            <thead>
+                <tr><th>KPI</th><th>Score</th><th>Notes</th></tr>
+            </thead>
+            <tbody id="kpi-container"></tbody>
+        </table>
+    </form>
     <div>
         <strong>Average score:</strong> <span id="average">0</span>
     </div>
