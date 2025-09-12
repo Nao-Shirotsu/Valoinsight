@@ -93,10 +93,22 @@ function addItem(item) {
   const wrapper = document.createElement('div');
   wrapper.classList.add('kpi-item');
 
+  const textContainer = document.createElement('div');
+  textContainer.classList.add('kpi-text');
+
   const label = document.createElement('label');
   label.setAttribute('for', item.id);
   label.textContent = item.text;
-  wrapper.appendChild(label);
+  textContainer.appendChild(label);
+
+  if (item.note) {
+    const noteEl = document.createElement('div');
+    noteEl.classList.add('item-note');
+    noteEl.innerHTML = item.note.join('<br>');
+    textContainer.appendChild(noteEl);
+  }
+
+  wrapper.appendChild(textContainer);
 
   const scoreInput = document.createElement('input');
   scoreInput.type = 'number';
