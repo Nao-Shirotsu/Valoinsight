@@ -92,6 +92,7 @@ function addItem(item) {
   kpiItems.push(item);
   const wrapper = document.createElement('div');
   wrapper.classList.add('kpi-item');
+  wrapper.id = item.id;
 
   const textContainer = document.createElement('div');
   textContainer.classList.add('kpi-text');
@@ -121,29 +122,23 @@ function addItem(item) {
   skipContainer.appendChild(skipLabel);
   wrapper.appendChild(skipContainer);
 
-  const scoreContainer = document.createElement('div');
-  scoreContainer.classList.add('score-buttons');
-  const scores = [
-    { value: 0, label: 'ダメダメ' },
-    { value: 20, label: '意識はできた' },
-    { value: 40, label: 'ちょっとできた' },
-    { value: 60, label: 'まあまあできた' },
-    { value: 80, label: 'ほとんど常にできた' },
-    { value: 100, label: '完ペキ！' }
-  ];
-  scores.forEach(score => {
-    const radio = document.createElement('input');
-    radio.type = 'radio';
-    radio.name = `${item.id}-score`;
-    radio.value = score.value;
-    radio.id = `${item.id}-score-${score.value}`;
-    const radioLabel = document.createElement('label');
-    radioLabel.setAttribute('for', radio.id);
-    radioLabel.textContent = score.label;
-    scoreContainer.appendChild(radio);
-    scoreContainer.appendChild(radioLabel);
-  });
-  wrapper.appendChild(scoreContainer);
+  const starContainer = document.createElement('div');
+  starContainer.classList.add('star-rating');
+  for (let i = 1; i <= 5; i++) {
+    const star = document.createElement('span');
+    star.classList.add('star');
+    star.innerHTML = '★';
+    star.dataset.value = i;
+    star.addEventListener('click', () => {
+      const current = parseInt(wrapper.dataset.rating || '0');
+      const newRating = current === i ? 0 : i;
+      setRating(wrapper, newRating);
+      updateAverage();
+    });
+    starContainer.appendChild(star);
+  }
+  wrapper.appendChild(starContainer);
+  skipCheckbox.addEventListener('change', updateAverage);
 
   const noteInput = document.createElement('input');
   noteInput.type = 'text';
@@ -188,9 +183,10 @@ function updateAverage() {
   kpiItems.forEach(item => {
     const skip = document.getElementById(`${item.id}-skip`).checked;
     if (skip) return;
-    const selected = document.querySelector(`input[name="${item.id}-score"]:checked`);
-    if (selected) {
-      total += parseFloat(selected.value);
+    const wrapper = document.getElementById(item.id);
+    const rating = parseInt(wrapper.dataset.rating);
+    if (!isNaN(rating)) {
+      total += rating * 20;
       count++;
     }
   });
@@ -198,12 +194,13 @@ function updateAverage() {
   averageEl.textContent = average;
 }
 
-
-kpiItems.forEach(item => {
-  const radios = document.querySelectorAll(`input[name="${item.id}-score"]`);
-  radios.forEach(radio => radio.addEventListener('change', updateAverage));
-  document.getElementById(`${item.id}-skip`).addEventListener('change', updateAverage);
-});
+function setRating(wrapper, rating) {
+  wrapper.dataset.rating = rating;
+  const stars = wrapper.querySelectorAll('.star');
+  stars.forEach((star, idx) => {
+    star.classList.toggle('selected', idx < rating);
+  });
+}
 
 document.getElementById('csvFile').addEventListener('change', e => {
   const file = e.target.files[0];
@@ -215,12 +212,11 @@ document.getElementById('csvFile').addEventListener('change', e => {
     const lines = text.split(/\r?\n/).slice(1); // skip header
     lines.forEach(line => {
       const [id, score, note] = line.split(',');
-      const radios = document.querySelectorAll(`input[name="${id}-score"]`);
-      radios.forEach(radio => {
-        if (radio.value === score) {
-          radio.checked = true;
-        }
-      });
+      const wrapper = document.getElementById(id);
+      if (wrapper) {
+        const rating = parseInt(score, 10) / 20;
+        setRating(wrapper, rating);
+      }
       const noteInput = document.getElementById(`${id}-note`);
       if (noteInput) {
         noteInput.value = note || '';
