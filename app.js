@@ -83,22 +83,13 @@ const kpiData = [
     ]
   }
 ];
-// Flatten KPI structure into a simple list of items
+// Build KPI table including headings while collecting items
 const kpiItems = [];
-kpiData.forEach(section => {
-  if (section.items) kpiItems.push(...section.items);
-  if (section.subsections) {
-    section.subsections.forEach(sub => {
-      if (sub.items) kpiItems.push(...sub.items);
-    });
-  }
-});
-
 const container = document.getElementById('kpi-container');
 const averageEl = document.getElementById('average');
 
-// Build a table row for each KPI item
-kpiItems.forEach(item => {
+function addItemRow(item) {
+  kpiItems.push(item);
   const row = document.createElement('tr');
   row.innerHTML = `
     <td>${item.text}</td>
@@ -106,6 +97,28 @@ kpiItems.forEach(item => {
     <td><input type="text" id="${item.id}-note"></td>
   `;
   container.appendChild(row);
+}
+
+kpiData.forEach(section => {
+  const sectionRow = document.createElement('tr');
+  sectionRow.classList.add('section-heading');
+  sectionRow.innerHTML = `<th colspan="3">${section.heading}</th>`;
+  container.appendChild(sectionRow);
+
+  if (section.items) {
+    section.items.forEach(addItemRow);
+  }
+  if (section.subsections) {
+    section.subsections.forEach(sub => {
+      const subRow = document.createElement('tr');
+      subRow.classList.add('subsection-heading');
+      subRow.innerHTML = `<th colspan="3">${sub.heading}</th>`;
+      container.appendChild(subRow);
+      if (sub.items) {
+        sub.items.forEach(addItemRow);
+      }
+    });
+  }
 });
 
 function updateAverage() {

@@ -29,6 +29,26 @@ input[type="file"] {
   margin: 0 auto;
 }
 
+#kpi-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#kpi-table th, #kpi-table td {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+}
+
+.section-heading th {
+  background-color: #e9ecef;
+  text-align: left;
+}
+
+.subsection-heading th {
+  background-color: #f8f9fa;
+  text-align: left;
+}
+
 div {
   text-align: center;
 }
