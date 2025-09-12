@@ -29,31 +29,34 @@ input[type="file"] {
   margin: 0 auto;
 }
 
-#kpi-table {
-  border-collapse: collapse;
-  width: 100%;
-}
 
-#kpi-table th, #kpi-table td {
-  border: 1px solid #ccc;
-  padding: 6px 8px;
-}
-
-.section-heading th {
-  background-color: #e9ecef;
-  text-align: left;
-}
-
-.subsection-heading th {
-  background-color: #f8f9fa;
-  text-align: left;
-}
-
-div {
+#average-container {
   text-align: center;
 }
 
-label {
-  display: block;
-  margin-bottom: 10px;
+.section-heading {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.subsection-heading {
+  margin-top: 15px;
+  text-align: left;
+}
+
+.divider {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+.kpi-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+}
+
+.kpi-item label {
+  flex: 1;
 }

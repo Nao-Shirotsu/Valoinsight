@@ -83,41 +83,62 @@ const kpiData = [
     ]
   }
 ];
-// Build KPI table including headings while collecting items
+// Build KPI sections including headings while collecting items
 const kpiItems = [];
 const container = document.getElementById('kpi-container');
 const averageEl = document.getElementById('average');
 
-function addItemRow(item) {
+function addItem(item) {
   kpiItems.push(item);
-  const row = document.createElement('tr');
-  row.innerHTML = `
-    <td>${item.text}</td>
-    <td><input type="number" id="${item.id}" min="0" max="100"></td>
-    <td><input type="text" id="${item.id}-note"></td>
-  `;
-  container.appendChild(row);
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('kpi-item');
+
+  const label = document.createElement('label');
+  label.setAttribute('for', item.id);
+  label.textContent = item.text;
+  wrapper.appendChild(label);
+
+  const scoreInput = document.createElement('input');
+  scoreInput.type = 'number';
+  scoreInput.id = item.id;
+  scoreInput.min = 0;
+  scoreInput.max = 100;
+  wrapper.appendChild(scoreInput);
+
+  const noteInput = document.createElement('input');
+  noteInput.type = 'text';
+  noteInput.id = `${item.id}-note`;
+  wrapper.appendChild(noteInput);
+
+  container.appendChild(wrapper);
 }
 
 kpiData.forEach(section => {
-  const sectionRow = document.createElement('tr');
-  sectionRow.classList.add('section-heading');
-  sectionRow.innerHTML = `<th colspan="3">${section.heading}</th>`;
-  container.appendChild(sectionRow);
+  const sectionHeading = document.createElement('h2');
+  sectionHeading.classList.add('section-heading');
+  sectionHeading.textContent = section.heading;
+  container.appendChild(sectionHeading);
 
   if (section.items) {
-    section.items.forEach(addItemRow);
+    section.items.forEach(addItem);
   }
   if (section.subsections) {
     section.subsections.forEach(sub => {
-      const subRow = document.createElement('tr');
-      subRow.classList.add('subsection-heading');
-      subRow.innerHTML = `<th colspan="3">${sub.heading}</th>`;
-      container.appendChild(subRow);
+      const subHeading = document.createElement('h3');
+      subHeading.classList.add('subsection-heading');
+      subHeading.textContent = sub.heading;
+      container.appendChild(subHeading);
       if (sub.items) {
-        sub.items.forEach(addItemRow);
+        sub.items.forEach(addItem);
       }
+      const subDivider = document.createElement('hr');
+      subDivider.classList.add('divider');
+      container.appendChild(subDivider);
     });
+  } else {
+    const sectionDivider = document.createElement('hr');
+    sectionDivider.classList.add('divider');
+    container.appendChild(sectionDivider);
   }
 });
 
