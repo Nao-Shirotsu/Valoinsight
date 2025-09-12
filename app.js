@@ -172,27 +172,3 @@ function updateAverage() {
 kpiItems.forEach(item => {
   document.getElementById(item.id).addEventListener('input', updateAverage);
 });
-
-document.getElementById('csvFile').addEventListener('change', e => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function(evt) {
-    const text = evt.target.result.trim();
-    const lines = text.split(/\r?\n/).slice(1); // skip header
-    lines.forEach(line => {
-      const [id, score, note] = line.split(',');
-      const scoreInput = document.getElementById(id);
-      if (scoreInput) {
-        scoreInput.value = score;
-        const noteInput = document.getElementById(`${id}-note`);
-        if (noteInput) {
-          noteInput.value = note || '';
-        }
-      }
-    });
-    updateAverage();
-  };
-  reader.readAsText(file);
-});
