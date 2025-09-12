@@ -88,16 +88,17 @@ const kpiItems = [];
 const container = document.getElementById('kpi-container');
 const averageEl = document.getElementById('average');
 
+
 function addItem(item) {
   kpiItems.push(item);
   const wrapper = document.createElement('div');
   wrapper.classList.add('kpi-item');
+  wrapper.id = item.id;
 
   const textContainer = document.createElement('div');
   textContainer.classList.add('kpi-text');
 
   const label = document.createElement('label');
-  label.setAttribute('for', item.id);
   label.textContent = item.text;
   textContainer.appendChild(label);
 
@@ -110,12 +111,35 @@ function addItem(item) {
 
   wrapper.appendChild(textContainer);
 
-  const scoreInput = document.createElement('input');
-  scoreInput.type = 'number';
-  scoreInput.id = item.id;
-  scoreInput.min = 0;
-  scoreInput.max = 100;
-  wrapper.appendChild(scoreInput);
+  const skipContainer = document.createElement('div');
+  skipContainer.classList.add('skip-container');
+  const skipCheckbox = document.createElement('input');
+  skipCheckbox.type = 'checkbox';
+  skipCheckbox.id = `${item.id}-skip`;
+  const skipLabel = document.createElement('label');
+  skipLabel.setAttribute('for', `${item.id}-skip`);
+  skipLabel.textContent = 'スキップ';
+  skipContainer.appendChild(skipCheckbox);
+  skipContainer.appendChild(skipLabel);
+  wrapper.appendChild(skipContainer);
+
+  const starContainer = document.createElement('div');
+  starContainer.classList.add('star-rating');
+  for (let i = 1; i <= 5; i++) {
+    const star = document.createElement('span');
+    star.classList.add('star');
+    star.innerHTML = '★';
+    star.dataset.value = i;
+    star.addEventListener('click', () => {
+      const current = parseInt(wrapper.dataset.rating || '0');
+      const newRating = current === i ? 0 : i;
+      setRating(wrapper, newRating);
+      updateAverage();
+    });
+    starContainer.appendChild(star);
+  }
+  wrapper.appendChild(starContainer);
+  skipCheckbox.addEventListener('change', updateAverage);
 
   const noteInput = document.createElement('input');
   noteInput.type = 'text';
@@ -158,9 +182,12 @@ function updateAverage() {
   let total = 0;
   let count = 0;
   kpiItems.forEach(item => {
-    const value = parseFloat(document.getElementById(item.id).value);
-    if (!isNaN(value)) {
-      total += value;
+    const skip = document.getElementById(`${item.id}-skip`).checked;
+    if (skip) return;
+    const wrapper = document.getElementById(item.id);
+    const rating = parseInt(wrapper.dataset.rating);
+    if (!isNaN(rating)) {
+      total += rating * 20;
       count++;
     }
   });
@@ -168,7 +195,35 @@ function updateAverage() {
   averageEl.textContent = average;
 }
 
+function setRating(wrapper, rating) {
+  wrapper.dataset.rating = rating;
+  const stars = wrapper.querySelectorAll('.star');
+  stars.forEach((star, idx) => {
+    star.classList.toggle('selected', idx < rating);
+  });
+}
 
-kpiItems.forEach(item => {
-  document.getElementById(item.id).addEventListener('input', updateAverage);
+document.getElementById('csvFile').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    const text = evt.target.result.trim();
+    const lines = text.split(/\r?\n/).slice(1); // skip header
+    lines.forEach(line => {
+      const [id, score, note] = line.split(',');
+      const wrapper = document.getElementById(id);
+      if (wrapper) {
+        const rating = parseInt(score, 10) / 20;
+        setRating(wrapper, rating);
+      }
+      const noteInput = document.getElementById(`${id}-note`);
+      if (noteInput) {
+        noteInput.value = note || '';
+      }
+    });
+    updateAverage();
+  };
+  reader.readAsText(file);
 });

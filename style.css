@@ -68,3 +68,25 @@ input[type="file"] {
   font-size: 0.85em;
   margin-top: 2px;
 }
+
+.skip-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.star-rating {
+  display: flex;
+  gap: 4px;
+}
+
+.star {
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star.selected {
+  color: gold;
+}
