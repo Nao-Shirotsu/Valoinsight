@@ -88,6 +88,7 @@ const kpiItems = [];
 const container = document.getElementById('kpi-container');
 const averageEl = document.getElementById('average');
 
+
 function addItem(item) {
   kpiItems.push(item);
   const wrapper = document.createElement('div');
