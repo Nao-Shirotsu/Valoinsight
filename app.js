@@ -97,7 +97,6 @@ function addItem(item) {
   textContainer.classList.add('kpi-text');
 
   const label = document.createElement('label');
-  label.setAttribute('for', item.id);
   label.textContent = item.text;
   textContainer.appendChild(label);
 
@@ -110,12 +109,41 @@ function addItem(item) {
 
   wrapper.appendChild(textContainer);
 
-  const scoreInput = document.createElement('input');
-  scoreInput.type = 'number';
-  scoreInput.id = item.id;
-  scoreInput.min = 0;
-  scoreInput.max = 100;
-  wrapper.appendChild(scoreInput);
+  const skipContainer = document.createElement('div');
+  skipContainer.classList.add('skip-container');
+  const skipCheckbox = document.createElement('input');
+  skipCheckbox.type = 'checkbox';
+  skipCheckbox.id = `${item.id}-skip`;
+  const skipLabel = document.createElement('label');
+  skipLabel.setAttribute('for', `${item.id}-skip`);
+  skipLabel.textContent = 'スキップ';
+  skipContainer.appendChild(skipCheckbox);
+  skipContainer.appendChild(skipLabel);
+  wrapper.appendChild(skipContainer);
+
+  const scoreContainer = document.createElement('div');
+  scoreContainer.classList.add('score-buttons');
+  const scores = [
+    { value: 0, label: 'ダメダメ' },
+    { value: 20, label: '意識はできた' },
+    { value: 40, label: 'ちょっとできた' },
+    { value: 60, label: 'まあまあできた' },
+    { value: 80, label: 'ほとんど常にできた' },
+    { value: 100, label: '完ペキ！' }
+  ];
+  scores.forEach(score => {
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `${item.id}-score`;
+    radio.value = score.value;
+    radio.id = `${item.id}-score-${score.value}`;
+    const radioLabel = document.createElement('label');
+    radioLabel.setAttribute('for', radio.id);
+    radioLabel.textContent = score.label;
+    scoreContainer.appendChild(radio);
+    scoreContainer.appendChild(radioLabel);
+  });
+  wrapper.appendChild(scoreContainer);
 
   const noteInput = document.createElement('input');
   noteInput.type = 'text';
@@ -158,9 +186,11 @@ function updateAverage() {
   let total = 0;
   let count = 0;
   kpiItems.forEach(item => {
-    const value = parseFloat(document.getElementById(item.id).value);
-    if (!isNaN(value)) {
-      total += value;
+    const skip = document.getElementById(`${item.id}-skip`).checked;
+    if (skip) return;
+    const selected = document.querySelector(`input[name="${item.id}-score"]:checked`);
+    if (selected) {
+      total += parseFloat(selected.value);
       count++;
     }
   });
@@ -170,7 +200,9 @@ function updateAverage() {
 
 
 kpiItems.forEach(item => {
-  document.getElementById(item.id).addEventListener('input', updateAverage);
+  const radios = document.querySelectorAll(`input[name="${item.id}-score"]`);
+  radios.forEach(radio => radio.addEventListener('change', updateAverage));
+  document.getElementById(`${item.id}-skip`).addEventListener('change', updateAverage);
 });
 
 document.getElementById('csvFile').addEventListener('change', e => {
@@ -183,13 +215,15 @@ document.getElementById('csvFile').addEventListener('change', e => {
     const lines = text.split(/\r?\n/).slice(1); // skip header
     lines.forEach(line => {
       const [id, score, note] = line.split(',');
-      const scoreInput = document.getElementById(id);
-      if (scoreInput) {
-        scoreInput.value = score;
-        const noteInput = document.getElementById(`${id}-note`);
-        if (noteInput) {
-          noteInput.value = note || '';
+      const radios = document.querySelectorAll(`input[name="${id}-score"]`);
+      radios.forEach(radio => {
+        if (radio.value === score) {
+          radio.checked = true;
         }
+      });
+      const noteInput = document.getElementById(`${id}-note`);
+      if (noteInput) {
+        noteInput.value = note || '';
       }
     });
     updateAverage();
