@@ -86,59 +86,20 @@ const kpiData = [
 
 const container = document.getElementById('kpi-container');
 const averageEl = document.getElementById('average');
-const allItems = [];
 
-function renderItems(items) {
-  items.forEach(item => {
-    allItems.push(item);
-    const div = document.createElement('div');
-    const scoreLabel = document.createElement('label');
-    scoreLabel.innerHTML = `${item.text} score: <input type="number" id="${item.id}" min="0" max="100">`;
-    const noteLabel = document.createElement('label');
-    noteLabel.innerHTML = ` Notes: <input type="text" id="${item.id}-note">`;
-    div.appendChild(scoreLabel);
-    div.appendChild(noteLabel);
-    if (item.note) {
-      const noteDiv = document.createElement('div');
-      noteDiv.style.fontSize = 'smaller';
-      if (Array.isArray(item.note)) {
-        const ul = document.createElement('ul');
-        item.note.forEach(n => {
-          const li = document.createElement('li');
-          li.textContent = n;
-          ul.appendChild(li);
-        });
-        noteDiv.appendChild(ul);
-      } else {
-        noteDiv.textContent = item.note;
-      }
-      div.appendChild(noteDiv);
-    }
-    container.appendChild(div);
-  });
-}
-
-kpiData.forEach(section => {
-  const h2 = document.createElement('h2');
-  h2.textContent = section.heading;
-  container.appendChild(h2);
-  if (section.items) {
-    renderItems(section.items);
-  }
-  if (section.subsections) {
-    section.subsections.forEach(sub => {
-      const h3 = document.createElement('h3');
-      h3.textContent = sub.heading;
-      container.appendChild(h3);
-      renderItems(sub.items);
-    });
-  }
+kpiItems.forEach(item => {
+  const div = document.createElement('div');
+  div.innerHTML = `
+    <label>${item.name} score: <input type="number" id="${item.id}" min="0" max="100"></label>
+    <label>Notes: <input type="text" id="${item.id}-note"></label>
+  `;
+  container.appendChild(div);
 });
 
 function updateAverage() {
   let total = 0;
   let count = 0;
-  allItems.forEach(item => {
+  kpiItems.forEach(item => {
     const value = parseFloat(document.getElementById(item.id).value);
     if (!isNaN(value)) {
       total += value;
@@ -149,7 +110,8 @@ function updateAverage() {
   averageEl.textContent = average;
 }
 
-allItems.forEach(item => {
+
+kpiItems.forEach(item => {
   document.getElementById(item.id).addEventListener('input', updateAverage);
 });
 
@@ -176,4 +138,3 @@ document.getElementById('csvFile').addEventListener('change', e => {
   };
   reader.readAsText(file);
 });
-
