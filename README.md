@@ -1,6 +1,6 @@
 # Valoinsight
 
-Simple static site to visualise VALORANT match KPI scores. KPI items are hard-coded and scores can be entered manually. The page displays the average score of the entered KPIs.
+Simple static site to visualise VALORANT match KPI scores. KPI items are hard-coded and scores can be entered manually. The page displays the average score of the entered KPIs. The evaluation and summary notes can also be exported as a JSON file via the **エクスポート** button in the fixed footer.
 
 ## Usage
 

@@ -218,23 +218,50 @@ function setRating(wrapper, rating) {
   });
 }
 
-document.getElementById('csvFile').addEventListener('change', e => {
-  const file = e.target.files[0];
-  if (!file) return;
+const csvInput = document.getElementById('csvFile');
+if (csvInput) {
+  csvInput.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const reader = new FileReader();
-  reader.onload = function(evt) {
-    const text = evt.target.result.trim();
-    const lines = text.split(/\r?\n/).slice(1); // skip header
-    lines.forEach(line => {
-      const [id, score] = line.split(',');
-      const wrapper = document.getElementById(id);
-      if (wrapper) {
-        const rating = parseInt(score, 10) / 20;
-        setRating(wrapper, rating);
-      }
-    });
-    updateAverage();
-  };
-  reader.readAsText(file);
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const text = evt.target.result.trim();
+      const lines = text.split(/\r?\n/).slice(1); // skip header
+      lines.forEach(line => {
+        const [id, score] = line.split(',');
+        const wrapper = document.getElementById(id);
+        if (wrapper) {
+          const rating = parseInt(score, 10) / 20;
+          setRating(wrapper, rating);
+        }
+      });
+      updateAverage();
+    };
+    reader.readAsText(file);
+  });
+}
+
+document.getElementById('export-btn').addEventListener('click', () => {
+  const data = kpiItems.map(item => {
+    const skip = document.getElementById(`${item.id}-skip`).checked;
+    const wrapper = document.getElementById(item.id);
+    const rating = parseInt(wrapper.dataset.rating || '0');
+    return {
+      id: item.id,
+      '項目文': item.text,
+      '除外チェック': skip,
+      '点数': rating * 20
+    };
+  });
+  data.push(summaryNotes.good, summaryNotes.bad, summaryNotes.focus);
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'kpi_data.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 });
