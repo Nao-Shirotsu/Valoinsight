@@ -99,6 +99,7 @@ const attributeLabels = {
 
 const radarCanvas = document.getElementById('radar-chart');
 const radarCtx = radarCanvas ? radarCanvas.getContext('2d') : null;
+let currentChartValues = new Array(attributeKeys.length).fill(0);
 
 // storage for summary notes
 const summaryNotes = {
@@ -136,6 +137,7 @@ function drawRadarChart(values) {
 
   ctx.strokeStyle = '#ccc';
   ctx.font = '12px sans-serif';
+  ctx.fillStyle = '#000';
   for (let i = 0; i < count; i++) {
     const angle = -Math.PI / 2 + i * angleStep;
     const x = centerX + radius * Math.cos(angle);
@@ -180,7 +182,20 @@ function drawRadarChart(values) {
   ctx.fill();
 }
 
-drawRadarChart(new Array(attributeKeys.length).fill(0));
+function resizeLayout() {
+  if (!radarCanvas) return;
+  const size = Math.min(window.innerWidth * 0.3, 300);
+  radarCanvas.width = size;
+  radarCanvas.height = size;
+  const footer = document.getElementById('average-container');
+  if (footer) {
+    document.body.style.setProperty('--footer-height', `${footer.offsetHeight}px`);
+  }
+  drawRadarChart(currentChartValues);
+}
+
+window.addEventListener('resize', resizeLayout);
+resizeLayout();
 
 function addItem(item) {
   kpiItems.push(item);
@@ -298,7 +313,12 @@ kpiData.forEach(section => {
       if (span) span.textContent = avg;
     });
     const chartValues = attributeKeys.map(key => attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0);
+    currentChartValues = chartValues;
     drawRadarChart(chartValues);
+    const footer = document.getElementById('average-container');
+    if (footer) {
+      document.body.style.setProperty('--footer-height', `${footer.offsetHeight}px`);
+    }
   }
 
 function setRating(wrapper, rating) {
