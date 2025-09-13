@@ -120,6 +120,7 @@ function addItem(item) {
   const skipLabel = document.createElement('label');
   skipLabel.setAttribute('for', `${item.id}-skip`);
   skipLabel.textContent = '除外';
+  skipLabel.classList.add('skip-label');
   skipContainer.appendChild(skipCheckbox);
   skipContainer.appendChild(skipLabel);
   wrapper.appendChild(skipContainer);
