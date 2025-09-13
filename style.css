@@ -69,6 +69,15 @@ input[type="file"] {
   align-items: flex-start;
   gap: 10px;
   margin: 8px 0;
+  padding: 4px 8px;
+}
+
+.kpi-item:nth-of-type(odd) {
+  background-color: #ffffff;
+}
+
+.kpi-item:nth-of-type(even) {
+  background-color: #f2f2f2;
 }
 
 .kpi-text {
