@@ -41,7 +41,8 @@ const kpiData = [
           { id: 'magazine', text: 'マガジン残弾数管理は適切でしたか', attribute: 'physical' },
           { id: 'anti-wallbang', text: 'モク抜きされにくい位置にいましたか', attribute: 'physical' },
           { id: 'anti-flash', text: 'フラッシュを食らっても生存できる位置にいましたか', attribute: 'physical' },
-          { id: 'variable-peak', text: '体の出し方に緩急をつけられましたか', attribute: 'physical' }
+          { id: 'variable-peak', text: '体の出し方に緩急をつけられましたか', attribute: 'physical' },
+          { id: 'safe-melee', text: '近接武器・アビリティは安全な状況でのみ構えていましたか', attribute: 'physical' }
         ]
       },
       {
@@ -61,14 +62,13 @@ const kpiData = [
         ]
       },
       {
-        heading: '連携',
+        heading: 'チームプレイ',
         items: [
           { id: 'death-call', text: '死亡時に即座に必要なことを報告できましたか', attribute: 'teamwork' },
           { id: 'ask-help', text: '自分が困った時に適切に助けを要求しましたか', attribute: 'teamwork' },
           { id: 'follow-entry', text: '適切にエントリーに着いていきましたか', attribute: 'teamwork' },
           { id: 'support-duelist', text: 'デュエリスト(先頭の人)が困っている時に適切に提案したり、適切に支援アビリティを出せましたか', attribute: 'teamwork' },
           { id: 'cover-line', text: '必要に応じて適切に味方へのカバーの射線を通せましたか', attribute: 'teamwork' },
-          { id: 'safe-melee', text: '近接武器・アビリティは安全な状況でのみ構えていましたか', attribute: 'teamwork' },
           { id: 'protect-defuser', text: '解除者の射線に敵が立たないようにできましたか', attribute: 'teamwork' }
         ]
       },
