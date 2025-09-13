@@ -129,7 +129,9 @@ function drawRadarChart(values) {
   const maxVal = 100;
   const centerX = canvas.width / 2;
   const centerY = canvas.height / 2;
-  const radius = Math.min(centerX, centerY) - 10;
+  // shrink drawing area to 80% so labels have more room
+  const maxRadius = Math.min(centerX, centerY) - 10;
+  const radius = maxRadius * 0.8;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -148,8 +150,9 @@ function drawRadarChart(values) {
     ctx.stroke();
 
     const label = attributeLabels[attributeKeys[i]] || '';
-    const lx = centerX + (radius + 10) * Math.cos(angle);
-    const ly = centerY + (radius + 10) * Math.sin(angle);
+    const labelRadius = radius + 10;
+    const lx = centerX + labelRadius * Math.cos(angle);
+    const ly = centerY + labelRadius * Math.sin(angle);
     if (Math.abs(Math.cos(angle)) < 0.1) {
       ctx.textAlign = 'center';
     } else {
