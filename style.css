@@ -54,7 +54,8 @@ input[type="file"] {
 }
 
 #radar-chart {
-  width: clamp(200px, 30vw, 300px);
+  /* Wider aspect ratio (3:2) so horizontal labels aren't cut off */
+  width: clamp(300px, 45vw, 450px);
   height: clamp(200px, 30vw, 300px);
   margin: 0 20px 0 0;
 }

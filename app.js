@@ -187,9 +187,11 @@ function drawRadarChart(values) {
 
 function resizeLayout() {
   if (!radarCanvas) return;
-  const size = Math.min(window.innerWidth * 0.3, 300);
-  radarCanvas.width = size;
-  radarCanvas.height = size;
+  // Base canvas height on viewport width, then widen to a 3:2 ratio
+  const height = Math.min(Math.max(window.innerWidth * 0.3, 200), 300);
+  const width = height * 1.5;
+  radarCanvas.width = width;
+  radarCanvas.height = height;
   const footer = document.getElementById('average-container');
   if (footer) {
     document.body.style.setProperty('--footer-height', `${footer.offsetHeight}px`);
