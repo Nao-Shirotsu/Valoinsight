@@ -249,6 +249,7 @@ if (importInput) {
     if (!file) return;
 
     const reader = new FileReader();
+    const inputEl = e.target;
     reader.onload = function(evt) {
       try {
         const data = JSON.parse(evt.target.result);
@@ -279,10 +280,12 @@ if (importInput) {
         updateAverage();
       } catch (err) {
         console.error('Failed to parse JSON:', err);
+      } finally {
+        // reset input value after processing so the same file can be re-imported
+        inputEl.value = '';
       }
     };
     reader.readAsText(file);
-    e.target.value = '';
   });
 }
 
