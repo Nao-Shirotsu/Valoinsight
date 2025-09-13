@@ -243,19 +243,30 @@ if (csvInput) {
 }
 
 document.getElementById('export-btn').addEventListener('click', () => {
-  const data = kpiItems.map(item => {
+  const kpiElements = kpiItems.map(item => {
     const skip = document.getElementById(`${item.id}-skip`).checked;
     const wrapper = document.getElementById(item.id);
     const rating = parseInt(wrapper.dataset.rating || '0');
     return {
       id: item.id,
-      '項目文': item.text,
-      '除外チェック': skip,
-      '点数': rating * 20
+      text: item.text,
+      skip: skip,
+      score: rating * 20
     };
   });
-  data.push(summaryNotes.good, summaryNotes.bad, summaryNotes.focus);
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+
+  const textnotes = {
+    wasgood: summaryNotes.good,
+    wasbad: summaryNotes.bad,
+    important: summaryNotes.focus
+  };
+
+  const exportData = {
+    kpiElements,
+    textnotes
+  };
+
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
