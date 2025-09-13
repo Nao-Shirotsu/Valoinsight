@@ -141,12 +141,6 @@ function addItem(item) {
   }
   wrapper.appendChild(starContainer);
   skipCheckbox.addEventListener('change', updateAverage);
-
-  const noteInput = document.createElement('input');
-  noteInput.type = 'text';
-  noteInput.id = `${item.id}-note`;
-  wrapper.appendChild(noteInput);
-
   container.appendChild(wrapper);
 }
 
@@ -213,15 +207,11 @@ document.getElementById('csvFile').addEventListener('change', e => {
     const text = evt.target.result.trim();
     const lines = text.split(/\r?\n/).slice(1); // skip header
     lines.forEach(line => {
-      const [id, score, note] = line.split(',');
+      const [id, score] = line.split(',');
       const wrapper = document.getElementById(id);
       if (wrapper) {
         const rating = parseInt(score, 10) / 20;
         setRating(wrapper, rating);
-      }
-      const noteInput = document.getElementById(`${id}-note`);
-      if (noteInput) {
-        noteInput.value = note || '';
       }
     });
     updateAverage();
