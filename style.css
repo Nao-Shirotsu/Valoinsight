@@ -7,7 +7,7 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   margin: 0;
-  padding: 0 20px var(--footer-height, 200px);
+  padding: 0 20px var(--footer-height, 133px);
   background-color: #f5f7fa;
   color: #333;
 }
@@ -55,8 +55,8 @@ input[type="file"] {
 
 #radar-chart {
   /* Wider aspect ratio (3:2) so horizontal labels aren't cut off */
-  width: clamp(300px, 45vw, 450px);
-  height: clamp(200px, 30vw, 300px);
+  width: clamp(200px, 30vw, 300px);
+  height: clamp(133px, 20vw, 200px);
   margin: 0 20px 0 0;
 }
 
