@@ -89,6 +89,13 @@ const kpiItems = [];
 const container = document.getElementById('kpi-container');
 const averageEl = document.getElementById('average');
 const attributeKeys = ['pregame', 'physical', 'macro', 'teamwork', 'plant'];
+const attributeLabels = {
+  pregame: 'プレゲーム',
+  physical: 'フィジカル',
+  macro: 'マクロ',
+  teamwork: 'チームプレイ',
+  plant: 'プラント'
+};
 
 const radarCanvas = document.getElementById('radar-chart');
 const radarCtx = radarCanvas ? radarCanvas.getContext('2d') : null;
@@ -155,6 +162,20 @@ function drawRadarChart(values) {
   ctx.strokeStyle = '#ff6384';
   ctx.stroke();
   ctx.fill();
+
+  ctx.fillStyle = '#000';
+  ctx.font = '12px sans-serif';
+  for (let i = 0; i < count; i++) {
+    const angle = -Math.PI / 2 + i * angleStep;
+    const labelRadius = radius + 20;
+    const x = centerX + labelRadius * Math.cos(angle);
+    const y = centerY + labelRadius * Math.sin(angle);
+    const key = attributeKeys[i];
+    const text = `${attributeLabels[key]} ${Math.round(values[i])}`;
+    ctx.textAlign = x < centerX ? 'right' : 'left';
+    ctx.textBaseline = y < centerY ? 'bottom' : 'top';
+    ctx.fillText(text, x, y);
+  }
 }
 
 drawRadarChart(new Array(attributeKeys.length).fill(0));
@@ -269,11 +290,6 @@ kpiData.forEach(section => {
 
     const average = count ? (total / count).toFixed(2) : 0;
     averageEl.textContent = average;
-    attributeKeys.forEach(key => {
-      const avg = attrCounts[key] ? (attrTotals[key] / attrCounts[key]).toFixed(2) : 0;
-      const span = document.getElementById(`avg-${key}`);
-      if (span) span.textContent = avg;
-    });
     const chartValues = attributeKeys.map(key => attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0);
     drawRadarChart(chartValues);
   }
