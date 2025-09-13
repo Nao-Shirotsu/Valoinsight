@@ -90,6 +90,9 @@ const container = document.getElementById('kpi-container');
 const averageEl = document.getElementById('average');
 const attributeKeys = ['pregame', 'physical', 'macro', 'teamwork', 'plant'];
 
+const radarCanvas = document.getElementById('radar-chart');
+const radarCtx = radarCanvas ? radarCanvas.getContext('2d') : null;
+
 // storage for summary notes
 const summaryNotes = {
   good: '',
@@ -109,6 +112,52 @@ const summaryNotes = {
 // expose for later export
 window.summaryNotes = summaryNotes;
 
+
+function drawRadarChart(values) {
+  if (!radarCtx) return;
+  const ctx = radarCtx;
+  const canvas = radarCanvas;
+  const count = values.length;
+  const maxVal = 100;
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  const radius = Math.min(centerX, centerY) - 10;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const angleStep = (Math.PI * 2) / count;
+
+  ctx.strokeStyle = '#ccc';
+  for (let i = 0; i < count; i++) {
+    const angle = -Math.PI / 2 + i * angleStep;
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  }
+
+  ctx.beginPath();
+  for (let i = 0; i < count; i++) {
+    const angle = -Math.PI / 2 + i * angleStep;
+    const r = (values[i] / maxVal) * radius;
+    const x = centerX + r * Math.cos(angle);
+    const y = centerY + r * Math.sin(angle);
+    if (i === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(255, 99, 132, 0.3)';
+  ctx.strokeStyle = '#ff6384';
+  ctx.stroke();
+  ctx.fill();
+}
+
+drawRadarChart(new Array(attributeKeys.length).fill(0));
 
 function addItem(item) {
   kpiItems.push(item);
@@ -225,6 +274,8 @@ kpiData.forEach(section => {
       const span = document.getElementById(`avg-${key}`);
       if (span) span.textContent = avg;
     });
+    const chartValues = attributeKeys.map(key => attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0);
+    drawRadarChart(chartValues);
   }
 
 function setRating(wrapper, rating) {
