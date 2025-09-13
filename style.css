@@ -80,8 +80,8 @@ input[type="file"] {
 
 #export-btn {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: calc(10px + (100vw - 100%));
+    bottom: 10px;
     transform: none;
     padding: 6px 12px;
     font-size: 1rem;
