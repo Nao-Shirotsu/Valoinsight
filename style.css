@@ -110,3 +110,34 @@ input[type="file"] {
 .star.selected {
   color: gold;
 }
+
+#summary-container {
+  width: 95%;
+  margin: 40px auto 120px;
+}
+
+.summary-heading {
+  text-align: center;
+  background-color: #e2e8f0;
+  padding: 8px 0;
+  border-radius: 4px;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.summary-label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+.summary-input {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1em;
+}
