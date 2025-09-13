@@ -89,6 +89,13 @@ const kpiItems = [];
 const container = document.getElementById('kpi-container');
 const averageEl = document.getElementById('average');
 const attributeKeys = ['pregame', 'physical', 'macro', 'teamwork', 'plant'];
+const attributeLabels = {
+  pregame: 'プレゲーム',
+  physical: 'フィジカル',
+  macro: 'マクロ',
+  teamwork: 'チームプレイ',
+  plant: 'プラント'
+};
 
 const radarCanvas = document.getElementById('radar-chart');
 const radarCtx = radarCanvas ? radarCanvas.getContext('2d') : null;
@@ -128,6 +135,7 @@ function drawRadarChart(values) {
   const angleStep = (Math.PI * 2) / count;
 
   ctx.strokeStyle = '#ccc';
+  ctx.font = '12px sans-serif';
   for (let i = 0; i < count; i++) {
     const angle = -Math.PI / 2 + i * angleStep;
     const x = centerX + radius * Math.cos(angle);
@@ -136,6 +144,21 @@ function drawRadarChart(values) {
     ctx.moveTo(centerX, centerY);
     ctx.lineTo(x, y);
     ctx.stroke();
+
+    const label = attributeLabels[attributeKeys[i]] || '';
+    const lx = centerX + (radius + 10) * Math.cos(angle);
+    const ly = centerY + (radius + 10) * Math.sin(angle);
+    if (Math.abs(Math.cos(angle)) < 0.1) {
+      ctx.textAlign = 'center';
+    } else {
+      ctx.textAlign = Math.cos(angle) > 0 ? 'left' : 'right';
+    }
+    if (Math.abs(Math.sin(angle)) < 0.1) {
+      ctx.textBaseline = 'middle';
+    } else {
+      ctx.textBaseline = Math.sin(angle) > 0 ? 'top' : 'bottom';
+    }
+    ctx.fillText(label, lx, ly);
   }
 
   ctx.beginPath();
