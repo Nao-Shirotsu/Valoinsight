@@ -163,10 +163,10 @@ kpiData.forEach(section => {
       if (sub.items) {
         sub.items.forEach(addItem);
       }
-      const subDivider = document.createElement('hr');
-      subDivider.classList.add('divider');
-      container.appendChild(subDivider);
     });
+    const sectionDivider = document.createElement('hr');
+    sectionDivider.classList.add('divider');
+    container.appendChild(sectionDivider);
   } else {
     const sectionDivider = document.createElement('hr');
     sectionDivider.classList.add('divider');
