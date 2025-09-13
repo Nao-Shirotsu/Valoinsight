@@ -242,6 +242,50 @@ if (csvInput) {
   });
 }
 
+const importInput = document.getElementById('import-json');
+if (importInput) {
+  importInput.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        const data = JSON.parse(evt.target.result);
+        if (data.kpiElements) {
+          data.kpiElements.forEach(item => {
+            const wrapper = document.getElementById(item.id);
+            if (wrapper) {
+              const rating = (item.score || 0) / 20;
+              setRating(wrapper, rating);
+              const skipCheckbox = document.getElementById(`${item.id}-skip`);
+              if (skipCheckbox) {
+                skipCheckbox.checked = !!item.skip;
+              }
+            }
+          });
+        }
+        if (data.textnotes) {
+          summaryNotes.good = data.textnotes.wasgood || '';
+          summaryNotes.bad = data.textnotes.wasbad || '';
+          summaryNotes.focus = data.textnotes.important || '';
+          const goodEl = document.getElementById('summary-good');
+          const badEl = document.getElementById('summary-bad');
+          const focusEl = document.getElementById('summary-focus');
+          if (goodEl) goodEl.value = summaryNotes.good;
+          if (badEl) badEl.value = summaryNotes.bad;
+          if (focusEl) focusEl.value = summaryNotes.focus;
+        }
+        updateAverage();
+      } catch (err) {
+        console.error('Failed to parse JSON:', err);
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
+}
+
 document.getElementById('export-btn').addEventListener('click', () => {
   const kpiElements = kpiItems.map(item => {
     const skip = document.getElementById(`${item.id}-skip`).checked;
