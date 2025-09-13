@@ -89,6 +89,25 @@ const kpiItems = [];
 const container = document.getElementById('kpi-container');
 const averageEl = document.getElementById('average');
 
+// storage for summary notes
+const summaryNotes = {
+  good: '',
+  bad: '',
+  focus: ''
+};
+
+['good', 'bad', 'focus'].forEach(type => {
+  const el = document.getElementById(`summary-${type}`);
+  if (el) {
+    el.addEventListener('input', e => {
+      summaryNotes[type] = e.target.value;
+    });
+  }
+});
+
+// expose for later export
+window.summaryNotes = summaryNotes;
+
 
 function addItem(item) {
   kpiItems.push(item);
