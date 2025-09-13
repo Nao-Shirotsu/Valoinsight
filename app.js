@@ -188,7 +188,7 @@ function drawRadarChart(values) {
 function resizeLayout() {
   if (!radarCanvas) return;
   // Base canvas height on viewport width, then widen to a 3:2 ratio
-  const height = Math.min(Math.max(window.innerWidth * 0.3, 200), 300);
+  const height = Math.min(Math.max(window.innerWidth * 0.2, 133), 200);
   const width = height * 1.5;
   radarCanvas.width = width;
   radarCanvas.height = height;
