@@ -2,27 +2,27 @@ const kpiData = [
   {
     heading: '編成中',
     items: [
-      { id: 'remember-vc', text: '誰のVCが無いか覚えてましたか', attribute: 'study' },
-      { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ'], attribute: 'study' },
-      { id: 'strategy-axis', text: '編成から立ち回りの軸を見いだせましたか', attribute: 'study' }
+      { id: 'remember-vc', text: '誰のVCが無いか覚えてましたか', attributes: ['study', 'teamplay'] },
+      { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ'], attributes: ['study', 'teamplay'] },
+      { id: 'strategy-axis', text: '編成から立ち回りの軸を見いだせましたか', attributes: ['study', 'teamplay'] }
     ]
   },
   {
     heading: '1st準備フェーズ',
     items: [
-      { id: 'self-role', text: '自分がロールを全うすべきか/イレギュラー対応すべきか判断できましたか', note: ['・0デュエ2イニシ編成で自分イニシ → 自分がデュエ的な戦う動きをする', '・攻めでサイファーが逆サイト管理してくれそう → デフォルト戦術', '・イニシがデュエにくっついてアビリティ投げそう → ラッシュ可能かも'], attribute: 'thinking' },
-      { id: 'ally-counter', text: '必要に応じて適切に: 敵編成に対するアンチ戦術考案と味方への声掛けはできましたか', note: ['・味方が敵の編成から対策を考えられそうか判断する', '・ネオンがワイヤーのある所に行かなそうか、行くとしてもアンチワイヤーを考えていそうか、など'], attribute: 'thinking' },
-      { id: 'weird-teammate', text: '味方に変な奴がいる場合: その人との連携プレイの優先度を下げる決意をしましたか', note: ['・名前が「SDGs」「◯◯トロールします」', '・VCで明らかに様子がおかしい'], attribute: 'thinking' }
+      { id: 'self-role', text: '自分がロールを全うすべきか/イレギュラー対応すべきか判断できましたか', note: ['・0デュエ2イニシ編成で自分イニシ → 自分がデュエ的な戦う動きをする', '・攻めでサイファーが逆サイト管理してくれそう → デフォルト戦術', '・イニシがデュエにくっついてアビリティ投げそう → ラッシュ可能かも'], attributes: ['thinking', 'study'] },
+      { id: 'ally-counter', text: '必要に応じて適切に: 敵編成に対するアンチ戦術考案と味方への声掛けはできましたか', note: ['・味方が敵の編成から対策を考えられそうか判断する', '・ネオンがワイヤーのある所に行かなそうか、行くとしてもアンチワイヤーを考えていそうか、など'], attributes: ['thinking', 'study'] },
+      { id: 'weird-teammate', text: '味方に変な奴がいる場合: その人との連携プレイの優先度を下げる決意をしましたか', note: ['・名前が「SDGs」「◯◯トロールします」', '・VCで明らかに様子がおかしい'], attributes: ['thinking', 'study'] }
     ]
   },
   {
     heading: '各ラウンドの準備フェーズ',
     items: [
-      { id: 'weapon-econ', text: '敵味方の武器管理を適切に行えましたか', note: ['・味方がハーフで4人買える時に呼びかけ', '・敵がエコかどうか', '・敵にオペレーターが出る可能性があるか'], attribute: 'thinking' },
-      { id: 'ult-management', text: '敵味方のアルティメット管理を適切に行えましたか', note: ['・広範囲デバフ系ウルト(KJ, ブリーチ など)によってどう仕掛けるか・仕掛けられるか'], attribute: 'thinking' },
-      { id: 'emotion-reset', text: '前ラウンドの感情処理を5秒以内に終わらせましたか', note: ['・残20秒までに次の話を始められないと味方に浸透しない'], attribute: 'thinking' },
-      { id: 'counter-plan', text: '前のラウンドの内容をもとに適切に対策を考えられましたか', attribute: 'thinking' },
-      { id: 'propose-strat', text: '必要に応じて作戦を提案できましたか', attribute: 'thinking' }
+      { id: 'weapon-econ', text: '敵味方の武器管理を適切に行えましたか', note: ['・味方がハーフで4人買える時に呼びかけ', '・敵がエコかどうか', '・敵にオペレーターが出る可能性があるか'], attributes: ['thinking', 'study'] },
+      { id: 'ult-management', text: '敵味方のアルティメット管理を適切に行えましたか', note: ['・広範囲デバフ系ウルト(KJ, ブリーチ など)によってどう仕掛けるか・仕掛けられるか'], attributes: ['thinking', 'study'] },
+      { id: 'emotion-reset', text: '前ラウンドの感情処理を5秒以内に終わらせましたか', note: ['・残20秒までに次の話を始められないと味方に浸透しない'], attributes: ['thinking', 'study'] },
+      { id: 'counter-plan', text: '前のラウンドの内容をもとに適切に対策を考えられましたか', attributes: ['thinking', 'study'] },
+      { id: 'propose-strat', text: '必要に応じて作戦を提案できましたか', attributes: ['thinking', 'study'] }
     ]
   },
   {
@@ -31,54 +31,54 @@ const kpiData = [
       {
         heading: '撃ち合い',
         items: [
-          { id: 'headline', text: 'ヘッドラインを維持できましたか', attribute: 'physical' },
-          { id: 'angle-advantage', text: '必要に応じて適切にアングル(遠近壁)有利を取れていましたか', attribute: 'physical' },
-          { id: 'off-angle', text: '必要に応じて適切にオフアングルを使えましたか', attribute: 'physical' },
-          { id: 'peeker-adv', text: '必要に応じて適切にピーカーズアドバンテージを取れていましたか', attribute: 'physical' },
-          { id: 'timing-peek', text: '必要に応じて適切にタイミングピークできましたか', attribute: 'physical' },
-          { id: 'slicing-pie', text: '必要に応じて適切にカッティングパイできましたか', attribute: 'physical' },
-          { id: 'cover-angle', text: '味方がカバー射線を通せるアングル&位置の維持はできましたか', attribute: 'physical' },
-          { id: 'magazine', text: 'マガジン残弾数管理は適切でしたか', attribute: 'physical' },
-          { id: 'anti-wallbang', text: 'モク抜きされにくい位置にいましたか', attribute: 'physical' },
-          { id: 'anti-flash', text: 'フラッシュを食らっても生存できる位置にいましたか', attribute: 'physical' },
-          { id: 'variable-peak', text: '体の出し方に緩急をつけられましたか', attribute: 'physical' },
-          { id: 'safe-melee', text: '近接武器・アビリティは安全な状況でのみ構えていましたか', attribute: 'physical' }
+          { id: 'headline', text: 'ヘッドラインを維持できましたか', attributes: ['physical', 'judgement'] },
+          { id: 'angle-advantage', text: '必要に応じて適切にアングル(遠近壁)有利を取れていましたか', attributes: ['physical', 'judgement'] },
+          { id: 'off-angle', text: '必要に応じて適切にオフアングルを使えましたか', attributes: ['physical', 'judgement'] },
+          { id: 'peeker-adv', text: '必要に応じて適切にピーカーズアドバンテージを取れていましたか', attributes: ['physical', 'judgement'] },
+          { id: 'timing-peek', text: '必要に応じて適切にタイミングピークできましたか', attributes: ['physical', 'judgement'] },
+          { id: 'slicing-pie', text: '必要に応じて適切にカッティングパイできましたか', attributes: ['physical', 'judgement'] },
+          { id: 'cover-angle', text: '味方がカバー射線を通せるアングル&位置の維持はできましたか', attributes: ['physical', 'judgement'] },
+          { id: 'magazine', text: 'マガジン残弾数管理は適切でしたか', attributes: ['physical', 'judgement'] },
+          { id: 'anti-wallbang', text: 'モク抜きされにくい位置にいましたか', attributes: ['physical', 'judgement'] },
+          { id: 'anti-flash', text: 'フラッシュを食らっても生存できる位置にいましたか', attributes: ['physical', 'judgement'] },
+          { id: 'variable-peak', text: '体の出し方に緩急をつけられましたか', attributes: ['physical', 'judgement'] },
+          { id: 'safe-melee', text: '近接武器・アビリティは安全な状況でのみ構えていましたか', attributes: ['physical', 'judgement'] }
         ]
       },
       {
         heading: '盤面管理',
         items: [
-          { id: 'engage-decision', text: '接敵していいか判断してからピークしましたか', attribute: 'judgement' },
-          { id: 'reposition', text: '必要に応じて適切にポジションを変えましたか', attribute: 'judgement' },
-          { id: 'consider-enemy-count', text: 'エントリー時に敵の数と質の両方を考慮しましたか', attribute: 'judgement' },
-          { id: 'not-miss-rotate', text: 'ローテートが出来る状況を見落としませんでしたか', attribute: 'judgement' },
-          { id: 'rotate-reason', text: 'ローテートする判断の際、適切な根拠はありましたか', attribute: 'judgement' },
-          { id: 'ult-change', text: '敵味方のアルティメット状況変化を認識していましたか', attribute: 'judgement' },
-          { id: 'silent-steps', text: '必要に応じて適切に足音を消せましたか', note: ['・ラウンド開始直後の情報取り段階', '・ローテート画策中'], attribute: 'judgement' },
-          { id: 'push-care', text: 'プッシュケアできましたか', attribute: 'judgement' },
-          { id: 'scoreboard-check', text: '可能な時、オーブとプラントの音でスコアボードを確認できましたか', attribute: 'judgement' },
-          { id: 'backstab-care', text: '裏取りされうるエリアで適切に警戒できましたか', attribute: 'judgement' },
-          { id: 'clearing', text: 'クリアリングミスはありませんでしたか', attribute: 'judgement' }
+          { id: 'engage-decision', text: '接敵していいか判断してからピークしましたか', attributes: ['judgement', 'alert'] },
+          { id: 'reposition', text: '必要に応じて適切にポジションを変えましたか', attributes: ['judgement', 'alert'] },
+          { id: 'consider-enemy-count', text: 'エントリー時に敵の数と質の両方を考慮しましたか', attributes: ['judgement', 'alert'] },
+          { id: 'not-miss-rotate', text: 'ローテートが出来る状況を見落としませんでしたか', attributes: ['judgement', 'alert'] },
+          { id: 'rotate-reason', text: 'ローテートする判断の際、適切な根拠はありましたか', attributes: ['judgement', 'alert'] },
+          { id: 'ult-change', text: '敵味方のアルティメット状況変化を認識していましたか', attributes: ['judgement', 'alert'] },
+          { id: 'silent-steps', text: '必要に応じて適切に足音を消せましたか', note: ['・ラウンド開始直後の情報取り段階', '・ローテート画策中'], attributes: ['physical', 'teamplay'] },
+          { id: 'push-care', text: 'プッシュケアできましたか', attributes: ['judgement', 'alert'] },
+          { id: 'scoreboard-check', text: '可能な時、オーブとプラントの音でスコアボードを確認できましたか', attributes: ['judgement', 'alert'] },
+          { id: 'backstab-care', text: '裏取りされうるエリアで適切に警戒できましたか', attributes: ['judgement', 'alert'] },
+          { id: 'clearing', text: 'クリアリングミスはありませんでしたか', attributes: ['judgement', 'alert'] }
         ]
       },
       {
         heading: 'チームプレイ',
         items: [
-          { id: 'death-call', text: '死亡時に即座に必要なことを報告できましたか', attribute: 'teamplay' },
-          { id: 'ask-help', text: '自分が困った時に適切に助けを要求しましたか', attribute: 'teamplay' },
-          { id: 'follow-entry', text: '適切にエントリーに着いていきましたか', attribute: 'teamplay' },
-          { id: 'support-duelist', text: 'デュエリスト(先頭の人)が困っている時に適切に提案したり、適切に支援アビリティを出せましたか', attribute: 'teamplay' },
-          { id: 'cover-line', text: '必要に応じて適切に味方へのカバーの射線を通せましたか', attribute: 'teamplay' },
-          { id: 'protect-defuser', text: '解除者の射線に敵が立たないようにできましたか', attribute: 'teamplay' }
+          { id: 'death-call', text: '死亡時に即座に必要なことを報告できましたか', attributes: ['teamplay', 'physical'] },
+          { id: 'ask-help', text: '自分が困った時に適切に助けを要求しましたか', attributes: ['teamplay', 'physical'] },
+          { id: 'follow-entry', text: '適切にエントリーに着いていきましたか', attributes: ['teamplay', 'physical'] },
+          { id: 'support-duelist', text: 'デュエリスト(先頭の人)が困っている時に適切に提案したり、適切に支援アビリティを出せましたか', attributes: ['teamplay', 'physical'] },
+          { id: 'cover-line', text: '必要に応じて適切に味方へのカバーの射線を通せましたか', attributes: ['teamplay', 'physical'] },
+          { id: 'protect-defuser', text: '解除者の射線に敵が立たないようにできましたか', attributes: ['teamplay', 'physical'] }
         ]
       },
       {
         heading: 'プラント・ポストプラント',
         items: [
-          { id: 'plant-delay', text: 'どこで遅延行為がしやすいか考えてプラント位置を決めましたか', attribute: 'alert' },
-          { id: 'postplant-position', text: '見方が設置した位置に対して強い位置取りができましたか', attribute: 'alert' },
-          { id: 'ability-awareness', text: '味方と敵の残アビリティを認識できましたか', attribute: 'alert' },
-          { id: 'ally-reaction', text: '味方の動きを見てそれに対応した適切なポジショニングはできましたか', attribute: 'alert' }
+          { id: 'plant-delay', text: 'どこで遅延行為がしやすいか考えてプラント位置を決めましたか', attributes: ['alert', 'thinking'] },
+          { id: 'postplant-position', text: '見方が設置した位置に対して強い位置取りができましたか', attributes: ['alert', 'thinking'] },
+          { id: 'ability-awareness', text: '味方と敵の残アビリティを認識できましたか', attributes: ['alert', 'thinking'] },
+          { id: 'ally-reaction', text: '味方の動きを見てそれに対応した適切なポジショニングはできましたか', attributes: ['alert', 'thinking'] }
         ]
       }
     ]
@@ -224,6 +224,13 @@ window.addEventListener('resize', resizeLayout);
 resizeLayout();
 
 function addItem(item) {
+  // normalize attribute field to an array
+  if (!item.attributes) {
+    item.attributes = Array.isArray(item.attribute)
+      ? item.attribute
+      : [item.attribute];
+  }
+
   kpiItems.push(item);
   const wrapper = document.createElement('div');
   wrapper.classList.add('kpi-item');
@@ -242,6 +249,20 @@ function addItem(item) {
     noteEl.innerHTML = item.note.join('<br>');
     textContainer.appendChild(noteEl);
   }
+
+  // attribute tags
+  const tagContainer = document.createElement('div');
+  tagContainer.classList.add('item-tags');
+  item.attributes.forEach(attr => {
+    const tag = document.createElement('span');
+    tag.classList.add('attribute-tag');
+    tag.textContent = attributeLabels[attr] || attr;
+    if (attributeColors[attr]) {
+      tag.style.backgroundColor = attributeColors[attr];
+    }
+    tagContainer.appendChild(tag);
+  });
+  textContainer.appendChild(tagContainer);
 
   wrapper.appendChild(textContainer);
 
@@ -326,8 +347,14 @@ kpiData.forEach(section => {
         const score = rating * 20;
         total += score;
         count++;
-        attrTotals[item.attribute] += score;
-        attrCounts[item.attribute] += 1;
+        item.attributes.forEach(attr => {
+          if (attrTotals[attr] === undefined) {
+            attrTotals[attr] = 0;
+            attrCounts[attr] = 0;
+          }
+          attrTotals[attr] += score;
+          attrCounts[attr] += 1;
+        });
       }
     });
 
@@ -388,7 +415,7 @@ document.getElementById('export-btn').addEventListener('click', () => {
     return {
       id: item.id,
       text: item.text,
-      attribute: item.attribute,
+      attributes: item.attributes,
       skip: skip,
       score: rating * 20
     };
