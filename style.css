@@ -43,6 +43,23 @@ h1 {
   margin: 0 auto;
 }
 
+#json-drop-area {
+  width: 12vw;
+  height: 6vw;
+  min-width: 150px;
+  padding: 20px 10px;
+  border: 2px dashed #bbb;
+  text-align: center;
+  color: #666;
+  background-color: #fafafa;
+  font-size: 1.25vw;
+}
+
+#json-drop-area.dragover {
+  border-color: #333;
+  background-color: #f0f0f0;
+}
+
 #selection-container {
   width: 95%;
   margin: 0 auto 20px;
@@ -122,18 +139,94 @@ h1 {
   z-index: 1000;
   font-size: var(--heading-font-size);
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+#controls-container {
+  position: absolute;
+  right: 0;
+  top: 10%;
+  margin-right: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+/* mode switch positioned via controls-container */
+#mode-switch {}
+
+#file-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  background-color: #ccc;
+  border-radius: 16px;
+  cursor: pointer;
+  position: relative;
+  width: 150px;
+  height: 32px;
+  font-size: 0.9rem;
+}
+
+.toggle-label span {
+  flex: 1;
+  text-align: center;
+  z-index: 1;
+}
+
+.toggle-label::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(50% - 4px);
+  height: calc(100% - 4px);
+  background: #fff;
+  border-radius: 14px;
+  transition: transform 0.2s;
+}
+
+#mode-toggle:checked + .toggle-label::after {
+  transform: translateX(100%);
+}
+
+#mode-toggle:checked + .toggle-label .toggle-grading {
+  color: #666;
+}
+
+#mode-toggle:checked + .toggle-label .toggle-stats {
+  color: #000;
+}
+
+#mode-toggle:not(:checked) + .toggle-label .toggle-grading {
+  color: #000;
+}
+
+#mode-toggle:not(:checked) + .toggle-label .toggle-stats {
+  color: #666;
+}
+
+#chart-score-container {
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
-  flex-wrap: wrap;
 }
 
 #radar-chart {
   /* Wider aspect ratio (3:2) so horizontal labels aren't cut off */
   width: clamp(225px, 33vw, 330px);
   height: clamp(150px, 22vw, 220px);
-  margin: 0 20px 0 0;
+  margin: 0;
 }
 
 #score-container {
@@ -190,12 +283,13 @@ h1 {
 }
 
 #export-btn {
-    position: absolute;
-    right: calc(10px + (100vw - 99%));
-    bottom: 10px;
-    transform: none;
-    padding: 6px 12px;
-    font-size: 1rem;
+  padding: 6px 12px;
+  font-size: 1rem;
+}
+
+#export-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .section-heading {
@@ -216,7 +310,7 @@ h1 {
 
 .kpi-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   margin: 8px 0;
   padding: 4px 8px;
@@ -268,6 +362,11 @@ h1 {
   align-self: center;
 }
 
+.star-rating.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 .star {
   font-size: clamp(1rem, calc(1rem + 0.625vw), 1.6rem);;
   cursor: pointer;
@@ -276,6 +375,31 @@ h1 {
 
 .star.selected {
   color: gold;
+}
+
+.score-container {
+  display: none;
+  align-items: center;
+  margin-left: 8px;
+  gap: 6px;
+}
+
+.data-count {
+  background-color: #e2e8f0;
+  border-radius: 4px;
+  padding: 0 4px;
+  font-size: 0.8em;
+}
+
+.score-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+}
+
+.score-number {
+  font-size: 1.75em;
+  line-height: 1;
 }
 
 #summary-container {

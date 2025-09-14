@@ -88,8 +88,10 @@ const kpiData = [
 const kpiItems = [];
 const container = document.getElementById('kpi-container');
 const selectionContainer = document.getElementById('selection-container');
+const dropArea = document.getElementById('json-drop-area');
 let selectedMap = null;
 let selectedAgent = null;
+let loadedDatasets = [];
 
 function buildSelectionRow(options, className, onSelect) {
   const row = document.createElement('div');
@@ -109,9 +111,14 @@ function buildSelectionRow(options, className, onSelect) {
       btn.appendChild(label);
     }
     btn.addEventListener('click', () => {
+      const isSelected = btn.classList.contains('selected');
       Array.from(row.children).forEach(child => child.classList.remove('selected'));
-      btn.classList.add('selected');
-      onSelect(value);
+      if (isSelected) {
+        onSelect(null);
+      } else {
+        btn.classList.add('selected');
+        onSelect(value);
+      }
     });
     row.appendChild(btn);
   });
@@ -135,6 +142,9 @@ if (selectionContainer) {
   ];
   buildSelectionRow(mapOptions, 'map-button', value => {
     selectedMap = value;
+    if (modeToggle.checked) {
+      refreshStats();
+    }
   });
 
   const agentOptions = [
@@ -168,6 +178,9 @@ if (selectionContainer) {
   ];
   buildSelectionRow(agentOptions, 'agent-button', value => {
     selectedAgent = value;
+    if (modeToggle.checked) {
+      refreshStats();
+    }
   });
 
   const selectionDivider = document.createElement('hr');
@@ -418,6 +431,19 @@ function addItem(item) {
     starContainer.appendChild(star);
   }
   wrapper.appendChild(starContainer);
+
+  const scoreWrapper = document.createElement('div');
+  scoreWrapper.classList.add('score-container');
+
+  const countDisplay = document.createElement('span');
+  countDisplay.classList.add('data-count');
+  scoreWrapper.appendChild(countDisplay);
+
+  const scoreDisplay = document.createElement('span');
+  scoreDisplay.classList.add('score-display');
+  scoreWrapper.appendChild(scoreDisplay);
+
+  wrapper.appendChild(scoreWrapper);
   skipCheckbox.addEventListener('change', updateAverage);
   container.appendChild(wrapper);
 }
@@ -497,6 +523,107 @@ kpiData.forEach(section => {
     }
   }
 
+  function resetScores() {
+    averageEl.textContent = '0.0';
+    attributeKeys.forEach(key => {
+      const span = document.getElementById(`avg-${key}`);
+      if (span) span.textContent = '0.0';
+    });
+    const zeros = new Array(attributeKeys.length).fill(0);
+    currentChartValues = zeros;
+    drawRadarChart(zeros);
+  }
+
+  function updateStats(dataArray) {
+    const attrTotals = {};
+    const attrCounts = {};
+    attributeKeys.forEach(key => {
+      attrTotals[key] = 0;
+      attrCounts[key] = 0;
+    });
+    const kpiTotals = {};
+    const kpiCounts = {};
+    kpiItems.forEach(item => {
+      kpiTotals[item.id] = 0;
+      kpiCounts[item.id] = 0;
+    });
+    let total = 0;
+    let count = 0;
+    dataArray.forEach(data => {
+      if (!Array.isArray(data.kpiElements)) return;
+      data.kpiElements.forEach(el => {
+        if (el.skip) return;
+        const score = typeof el.score === 'number' ? el.score : 0;
+        if (kpiTotals[el.id] === undefined) {
+          kpiTotals[el.id] = 0;
+          kpiCounts[el.id] = 0;
+        }
+        kpiTotals[el.id] += score;
+        kpiCounts[el.id] += 1;
+        total += score;
+        count++;
+        if (Array.isArray(el.attributes)) {
+          el.attributes.forEach(attr => {
+            if (attrTotals[attr] === undefined) {
+              attrTotals[attr] = 0;
+              attrCounts[attr] = 0;
+            }
+            attrTotals[attr] += score;
+            attrCounts[attr] += 1;
+          });
+        }
+      });
+    });
+    kpiItems.forEach(item => {
+      const wrapper = document.getElementById(item.id);
+      if (!wrapper) return;
+      const scoreContainer = wrapper.querySelector('.score-container');
+      const scoreEl = wrapper.querySelector('.score-display');
+      const countEl = wrapper.querySelector('.data-count');
+      if (!scoreContainer || !scoreEl || !countEl) return;
+      if (kpiCounts[item.id]) {
+        countEl.textContent = `該当 ${kpiCounts[item.id]} 件`;
+        const avg = (kpiTotals[item.id] / kpiCounts[item.id]).toFixed(1);
+        scoreEl.innerHTML = `平均スコア <span class="score-number">${avg}</span>`;
+      } else {
+        countEl.textContent = '該当 0 件';
+        scoreEl.innerHTML = '平均スコア <span class="score-number">N/A</span>';
+      }
+      scoreContainer.style.display = 'flex';
+    });
+    const average = count ? total / count : 0;
+    averageEl.textContent = average.toFixed(1);
+    attributeKeys.forEach(key => {
+      const avg = attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0;
+      const span = document.getElementById(`avg-${key}`);
+      if (span) span.textContent = avg.toFixed(1);
+    });
+    const chartValues = attributeKeys.map(key => attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0);
+    currentChartValues = chartValues;
+    drawRadarChart(chartValues);
+    const footer = document.getElementById('average-container');
+    if (footer) {
+      document.body.style.setProperty('--footer-height', `${footer.offsetHeight}px`);
+    }
+  }
+
+  function refreshStats() {
+    if (!modeToggle.checked) return;
+    const filtered = loadedDatasets.filter(data => {
+      if (selectedMap && data.map !== selectedMap) return false;
+      if (selectedAgent && data.agent !== selectedAgent) return false;
+      return true;
+    });
+    updateStats(filtered);
+  }
+
+  function loadJsonData(dataArray) {
+    loadedDatasets = [];
+    const incoming = Array.isArray(dataArray) ? dataArray : [dataArray];
+    loadedDatasets.push(...incoming);
+    refreshStats();
+  }
+
 function setRating(wrapper, rating) {
   wrapper.dataset.rating = rating;
   const stars = wrapper.querySelectorAll('.star');
@@ -529,6 +656,87 @@ if (csvInput) {
   });
 }
 
+
+function readJsonFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = evt => {
+      try {
+        resolve(JSON.parse(evt.target.result));
+      } catch (err) {
+        reject(err);
+      }
+    };
+    reader.onerror = reject;
+    reader.readAsText(file);
+  });
+}
+
+async function collectJsonFromEntry(entry) {
+  if (entry.isFile) {
+    const file = await new Promise((resolve, reject) => entry.file(resolve, reject));
+    if (file.name.endsWith('.json')) {
+      return [await readJsonFile(file)];
+    }
+    return [];
+  } else if (entry.isDirectory) {
+    const dirReader = entry.createReader();
+    const entries = await new Promise((resolve, reject) => dirReader.readEntries(resolve, reject));
+    const results = [];
+    for (const ent of entries) {
+      if (ent.isFile && ent.name.endsWith('.json')) {
+        results.push(...await collectJsonFromEntry(ent));
+      }
+    }
+    return results;
+  }
+  return [];
+}
+
+if (dropArea) {
+  ['dragenter', 'dragover'].forEach(eventName => {
+    dropArea.addEventListener(eventName, e => {
+      e.preventDefault();
+      dropArea.classList.add('dragover');
+    });
+  });
+  ['dragleave', 'drop'].forEach(eventName => {
+    dropArea.addEventListener(eventName, e => {
+      e.preventDefault();
+      dropArea.classList.remove('dragover');
+    });
+  });
+  dropArea.addEventListener('drop', async e => {
+    e.preventDefault();
+    dropArea.classList.remove('dragover');
+    const items = e.dataTransfer.items;
+    const promises = [];
+    if (items && items.length) {
+      for (const item of items) {
+        const entry = item.webkitGetAsEntry ? item.webkitGetAsEntry() : null;
+        if (entry) {
+          promises.push(collectJsonFromEntry(entry));
+        }
+      }
+    } else {
+      const files = e.dataTransfer.files;
+      for (const file of files) {
+        if (file.name.endsWith('.json')) {
+          promises.push(readJsonFile(file).then(data => [data]));
+        }
+      }
+    }
+    try {
+      const results = await Promise.all(promises);
+      const datasets = results.flat();
+      if (datasets.length) {
+        loadJsonData(datasets);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  });
+}
 
 document.getElementById('export-btn').addEventListener('click', () => {
   const kpiElements = kpiItems.map(item => {
@@ -567,3 +775,67 @@ document.getElementById('export-btn').addEventListener('click', () => {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 });
+
+const modeToggle = document.getElementById('mode-toggle');
+const statsPlaceholderValue = 0.0;
+
+function applyMode() {
+  const kpiContainer = document.getElementById('kpi-container');
+  const summaryContainer = document.getElementById('summary-container');
+  const exportBtn = document.getElementById('export-btn');
+
+  if (modeToggle.checked) {
+    if (kpiContainer) kpiContainer.style.display = '';
+    if (summaryContainer) summaryContainer.style.display = 'none';
+    if (dropArea) dropArea.style.display = '';
+    if (exportBtn) {
+      exportBtn.disabled = true;
+      exportBtn.style.display = 'none';
+    }
+    kpiItems.forEach(item => {
+      const skipCheckbox = document.getElementById(`${item.id}-skip`);
+      if (skipCheckbox) skipCheckbox.disabled = true;
+      const wrapper = document.getElementById(item.id);
+      if (wrapper) {
+        const skipContainer = wrapper.querySelector('.skip-container');
+        if (skipContainer) skipContainer.style.display = 'none';
+        const starContainer = wrapper.querySelector('.star-rating');
+        if (starContainer) starContainer.style.display = 'none';
+        const scoreContainer = wrapper.querySelector('.score-container');
+        const scoreEl = wrapper.querySelector('.score-display');
+        const countEl = wrapper.querySelector('.data-count');
+        if (scoreContainer && scoreEl && countEl) {
+          scoreEl.innerHTML = `平均スコア <span class="score-number">${statsPlaceholderValue}</span>`;
+          countEl.textContent = '該当 0 件';
+          scoreContainer.style.display = 'flex';
+        }
+      }
+    });
+    resetScores();
+  } else {
+    if (kpiContainer) kpiContainer.style.display = '';
+    if (summaryContainer) summaryContainer.style.display = '';
+    if (dropArea) dropArea.style.display = 'none';
+    if (exportBtn) {
+      exportBtn.disabled = false;
+      exportBtn.style.display = '';
+    }
+    kpiItems.forEach(item => {
+      const skipCheckbox = document.getElementById(`${item.id}-skip`);
+      if (skipCheckbox) skipCheckbox.disabled = false;
+      const wrapper = document.getElementById(item.id);
+      if (wrapper) {
+        const skipContainer = wrapper.querySelector('.skip-container');
+        if (skipContainer) skipContainer.style.display = '';
+        const starContainer = wrapper.querySelector('.star-rating');
+        if (starContainer) starContainer.style.display = '';
+        const scoreContainer = wrapper.querySelector('.score-container');
+        if (scoreContainer) scoreContainer.style.display = 'none';
+      }
+    });
+    updateAverage();
+  }
+}
+
+modeToggle.addEventListener('change', applyMode);
+applyMode();
