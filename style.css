@@ -40,6 +40,41 @@ h1 {
   margin: 0 auto;
 }
 
+#selection-container {
+  width: 95%;
+  margin: 0 auto 20px;
+}
+
+.selection-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.selection-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #000;
+  cursor: pointer;
+}
+
+.selection-button.selected {
+  border-color: red;
+}
+
+.map-button {
+  width: 80px;
+  height: 80px;
+  font-size: 2rem;
+}
+
+.agent-button {
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+}
+
 
 #average-container {
   position: fixed;
