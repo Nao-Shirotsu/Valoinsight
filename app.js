@@ -680,7 +680,7 @@ function applyMode() {
         const scoreEl = wrapper.querySelector('.score-display');
         if (scoreEl) {
           scoreEl.textContent = statsPlaceholderValue;
-          scoreEl.style.display = '';
+          scoreEl.style.display = 'inline-block';
         }
       }
     });
