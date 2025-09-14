@@ -58,8 +58,11 @@ h1 {
 }
 
 #attribute-averages {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, auto);
+  column-gap: 12px;
+  row-gap: 2px;
   font-size: 1rem;
   margin-top: 4px;
 }
@@ -68,14 +71,20 @@ h1 {
   display: flex;
   align-items: center;
   white-space: nowrap;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.attribute-average:nth-child(odd) {
+  background-color: #f1f2f9;
+}
+
+.attribute-average:nth-child(even) {
+  background-color: #f2f5fa;
 }
 
 .attribute-label {
   width: 6em;
-}
-
-.attribute-score::before {
-  content: ': ';
 }
 
 #export-btn {
