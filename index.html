@@ -24,13 +24,14 @@
         <textarea id="summary-focus" class="summary-input"></textarea>
     </div>
     <div id="average-container">
-        <canvas id="radar-chart"></canvas>
-        <div id="score-container">
-            <div id="overall-average">総合スコア <span id="average">0.0</span> / 100</div>
-            <div id="attribute-averages">
-                <div class="attribute-average physical">
-                    <span class="attribute-label">フィジカル</span>
-                    <span class="attribute-score"><span id="avg-physical">0.0</span></span>
+        <div id="chart-score-container">
+            <canvas id="radar-chart"></canvas>
+            <div id="score-container">
+                <div id="overall-average">総合スコア <span id="average">0.0</span> / 100</div>
+                <div id="attribute-averages">
+                    <div class="attribute-average physical">
+                        <span class="attribute-label">フィジカル</span>
+                        <span class="attribute-score"><span id="avg-physical">0.0</span></span>
                 </div>
                 <div class="attribute-average teamplay">
                     <span class="attribute-label">チームプレイ</span>
@@ -54,7 +55,18 @@
                 </div>
             </div>
         </div>
-        <button id="export-btn">ファイルに保存</button>
+        <div id="right-controls">
+            <div id="mode-switch" class="toggle-switch">
+                <input type="checkbox" id="mode-toggle">
+                <label for="mode-toggle" class="toggle-label">
+                    <span class="toggle-grading">採点</span>
+                    <span class="toggle-stats">統計</span>
+                </label>
+            </div>
+            <button id="export-btn">ファイルに保存</button>
+            <div id="json-drop-area" class="drop-area" style="display:none;">JSONファイルをここにドラッグ＆ドロップ</div>
+        </div>
+    </div>
     </div>
     <div id="footer">
         <br><br><br>
