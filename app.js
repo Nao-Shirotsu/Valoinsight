@@ -311,12 +311,12 @@ kpiData.forEach(section => {
       }
     });
 
-    const average = count ? (total / count).toFixed(2) : 0;
-    averageEl.textContent = average;
+    const average = count ? total / count : 0;
+    averageEl.textContent = average.toFixed(1);
     attributeKeys.forEach(key => {
-      const avg = attrCounts[key] ? (attrTotals[key] / attrCounts[key]).toFixed(2) : 0;
+      const avg = attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0;
       const span = document.getElementById(`avg-${key}`);
-      if (span) span.textContent = avg;
+      if (span) span.textContent = avg.toFixed(1);
     });
     const chartValues = attributeKeys.map(key => attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0);
     currentChartValues = chartValues;
