@@ -131,6 +131,20 @@ const summaryNotes = {
 // expose for later export
 window.summaryNotes = summaryNotes;
 
+function drawRoundedRect(ctx, x, y, width, height, radius) {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+  ctx.fill();
+}
 
 function drawRadarChart(values) {
   if (!radarCtx) return;
@@ -175,6 +189,28 @@ function drawRadarChart(values) {
       ctx.textBaseline = Math.sin(angle) > 0 ? 'top' : 'bottom';
     }
     ctx.font = '12px sans-serif';
+    const metrics = ctx.measureText(label);
+    const textWidth = metrics.width;
+    const textHeight = (metrics.actualBoundingBoxAscent || 0) + (metrics.actualBoundingBoxDescent || 0) || 12;
+    const paddingX = 4;
+    const paddingY = 2;
+    const rectWidth = textWidth + paddingX * 2;
+    const rectHeight = textHeight + paddingY * 2;
+    let rectX = lx;
+    let rectY = ly;
+    if (ctx.textAlign === 'center') {
+      rectX -= rectWidth / 2;
+    } else if (ctx.textAlign === 'right') {
+      rectX -= rectWidth;
+    }
+    if (ctx.textBaseline === 'middle') {
+      rectY -= rectHeight / 2;
+    } else if (ctx.textBaseline === 'bottom') {
+      rectY -= rectHeight;
+    }
+    ctx.fillStyle = attributeColors[attributeKeys[i]];
+    drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, 4);
+    ctx.fillStyle = '#000';
     ctx.fillText(label, lx, ly);
 
     // Draw the score just inside the chart under the label
