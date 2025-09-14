@@ -148,21 +148,6 @@ function drawRadarChart(values) {
 
   const angleStep = (Math.PI * 2) / count;
 
-  // Draw colored background sectors for each attribute
-  for (let i = 0; i < count; i++) {
-    const startAngle = -Math.PI / 2 + i * angleStep;
-    const endAngle = startAngle + angleStep;
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY);
-    ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-    ctx.closePath();
-    ctx.save();
-    ctx.fillStyle = attributeColors[attributeKeys[i]];
-    ctx.globalAlpha = 0.3;
-    ctx.fill();
-    ctx.restore();
-  }
-
   ctx.strokeStyle = '#ccc';
   ctx.fillStyle = '#000';
   for (let i = 0; i < count; i++) {

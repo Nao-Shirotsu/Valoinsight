@@ -54,8 +54,6 @@ h1 {
   width: clamp(225px, 33vw, 330px);
   height: clamp(150px, 22vw, 220px);
   margin: 0 20px 0 0;
-  border-radius: 4px;
-  overflow: hidden;
 }
 
 #score-container {
