@@ -102,6 +102,12 @@ function buildSelectionRow(options, className, onSelect) {
     const value = opt.src.split('/').pop().replace('.webp', '');
     img.alt = value;
     btn.appendChild(img);
+    if (opt.label) {
+      const label = document.createElement('div');
+      label.classList.add('map-label');
+      label.textContent = opt.label;
+      btn.appendChild(label);
+    }
     btn.addEventListener('click', () => {
       Array.from(row.children).forEach(child => child.classList.remove('selected'));
       btn.classList.add('selected');
@@ -114,18 +120,18 @@ function buildSelectionRow(options, className, onSelect) {
 
 if (selectionContainer) {
   const mapOptions = [
-    { src: 'assets/maps/abyss.webp' },
-    { src: 'assets/maps/ascent.webp' },
-    { src: 'assets/maps/bind.webp' },
-    { src: 'assets/maps/breeze.webp' },
-    { src: 'assets/maps/corrode.webp' },
-    { src: 'assets/maps/fracture.webp' },
-    { src: 'assets/maps/haven.webp' },
-    { src: 'assets/maps/icebox.webp' },
-    { src: 'assets/maps/lotus.webp' },
-    { src: 'assets/maps/pearl.webp' },
-    { src: 'assets/maps/split.webp' },
-    { src: 'assets/maps/sunset.webp' }
+    { src: 'assets/maps/abyss.webp', label: 'アビス' },
+    { src: 'assets/maps/ascent.webp', label: 'アセント' },
+    { src: 'assets/maps/bind.webp', label: 'バインド' },
+    { src: 'assets/maps/breeze.webp', label: 'ブリーズ' },
+    { src: 'assets/maps/corrode.webp', label: 'カロード' },
+    { src: 'assets/maps/fracture.webp', label: 'フラクチャー' },
+    { src: 'assets/maps/haven.webp', label: 'ヘイヴン' },
+    { src: 'assets/maps/icebox.webp', label: 'アイスボックス' },
+    { src: 'assets/maps/lotus.webp', label: 'ロータス' },
+    { src: 'assets/maps/pearl.webp', label: 'パール' },
+    { src: 'assets/maps/split.webp', label: 'スプリット' },
+    { src: 'assets/maps/sunset.webp', label: 'サンセット' }
   ];
   buildSelectionRow(mapOptions, 'map-button', value => {
     selectedMap = value;
