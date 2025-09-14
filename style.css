@@ -148,12 +148,18 @@ h1 {
   top: 8px;
   margin-right: 10%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 8px;
 }
 /* mode switch positioned via controls-container */
 #mode-switch {}
+
+#file-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
 .toggle-switch input {
   display: none;
