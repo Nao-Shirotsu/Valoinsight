@@ -1,6 +1,12 @@
 /* Simple and refined styling for VALORANT KPI tool */
 :root {
   --heading-font-size: clamp(1.5rem, 5vw, 2rem);
+  --color-physical: #ffd1d1;
+  --color-alert: #ffe8cc;
+  --color-thinking: #d6f5d6;
+  --color-teamplay: #e6d5ff;
+  --color-judgement: #fff9cc;
+  --color-study: #d6f0ff;
 }
 
 body {
@@ -75,12 +81,28 @@ h1 {
   border-radius: 4px;
 }
 
-.attribute-average:nth-child(odd) {
-  background-color: #f1f2f9;
+.attribute-average.physical {
+  background-color: var(--color-physical);
 }
 
-.attribute-average:nth-child(even) {
-  background-color: #f2f5fa;
+.attribute-average.alert {
+  background-color: var(--color-alert);
+}
+
+.attribute-average.thinking {
+  background-color: var(--color-thinking);
+}
+
+.attribute-average.teamplay {
+  background-color: var(--color-teamplay);
+}
+
+.attribute-average.judgement {
+  background-color: var(--color-judgement);
+}
+
+.attribute-average.study {
+  background-color: var(--color-study);
 }
 
 .attribute-label {

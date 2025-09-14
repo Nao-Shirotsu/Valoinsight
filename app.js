@@ -98,6 +98,16 @@ const attributeLabels = {
   study: '座学'
 };
 
+const rootStyles = getComputedStyle(document.documentElement);
+const attributeColors = {
+  physical: rootStyles.getPropertyValue('--color-physical').trim(),
+  teamplay: rootStyles.getPropertyValue('--color-teamplay').trim(),
+  judgement: rootStyles.getPropertyValue('--color-judgement').trim(),
+  alert: rootStyles.getPropertyValue('--color-alert').trim(),
+  thinking: rootStyles.getPropertyValue('--color-thinking').trim(),
+  study: rootStyles.getPropertyValue('--color-study').trim()
+};
+
 const radarCanvas = document.getElementById('radar-chart');
 const radarCtx = radarCanvas ? radarCanvas.getContext('2d') : null;
 let currentChartValues = new Array(attributeKeys.length).fill(0);
