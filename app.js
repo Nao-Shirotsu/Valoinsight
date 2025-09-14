@@ -137,6 +137,7 @@ if (selectionContainer) {
   ];
   buildSelectionRow(mapOptions, 'map-button', value => {
     selectedMap = value;
+    refreshStats();
   });
 
   const agentOptions = [
@@ -170,6 +171,7 @@ if (selectionContainer) {
   ];
   buildSelectionRow(agentOptions, 'agent-button', value => {
     selectedAgent = value;
+    refreshStats();
   });
 
   const selectionDivider = document.createElement('hr');
@@ -523,10 +525,7 @@ kpiData.forEach(section => {
     drawRadarChart(zeros);
   }
 
-  function loadJsonData(dataArray) {
-    loadedDatasets = [];
-    const incoming = Array.isArray(dataArray) ? dataArray : [dataArray];
-    loadedDatasets.push(...incoming);
+  function updateStats(dataArray) {
     const attrTotals = {};
     const attrCounts = {};
     attributeKeys.forEach(key => {
@@ -541,7 +540,7 @@ kpiData.forEach(section => {
     });
     let total = 0;
     let count = 0;
-    loadedDatasets.forEach(data => {
+    dataArray.forEach(data => {
       if (!Array.isArray(data.kpiElements)) return;
       data.kpiElements.forEach(el => {
         if (el.skip) return;
@@ -596,6 +595,22 @@ kpiData.forEach(section => {
     if (footer) {
       document.body.style.setProperty('--footer-height', `${footer.offsetHeight}px`);
     }
+  }
+
+  function refreshStats() {
+    const filtered = loadedDatasets.filter(data => {
+      if (selectedMap && data.map !== selectedMap) return false;
+      if (selectedAgent && data.agent !== selectedAgent) return false;
+      return true;
+    });
+    updateStats(filtered);
+  }
+
+  function loadJsonData(dataArray) {
+    loadedDatasets = [];
+    const incoming = Array.isArray(dataArray) ? dataArray : [dataArray];
+    loadedDatasets.push(...incoming);
+    refreshStats();
   }
 
 function setRating(wrapper, rating) {
