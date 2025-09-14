@@ -149,7 +149,7 @@ function drawRadarChart(values) {
   const angleStep = (Math.PI * 2) / count;
 
   ctx.strokeStyle = '#ccc';
-  ctx.font = '12px sans-serif';
+  ctx.fillStyle = '#000';
   for (let i = 0; i < count; i++) {
     const angle = -Math.PI / 2 + i * angleStep;
     const x = centerX + radius * Math.cos(angle);
@@ -159,9 +159,9 @@ function drawRadarChart(values) {
     ctx.lineTo(x, y);
     ctx.stroke();
 
-    const key = attributeKeys[i];
-    const label = attributeLabels[key] || '';
-    const labelRadius = radius + 10;
+    const label = attributeLabels[attributeKeys[i]] || '';
+    // leave extra space for the score beneath the label
+    const labelRadius = radius + 12;
     const lx = centerX + labelRadius * Math.cos(angle);
     const ly = centerY + labelRadius * Math.sin(angle);
     if (Math.abs(Math.cos(angle)) < 0.1) {
@@ -174,30 +174,17 @@ function drawRadarChart(values) {
     } else {
       ctx.textBaseline = Math.sin(angle) > 0 ? 'top' : 'bottom';
     }
-    const color = attributeColors[key] || '#fff';
-    const metrics = ctx.measureText(label);
-    const padding = 2;
-    const textHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
-    let rectX = lx;
-    if (ctx.textAlign === 'center') {
-      rectX -= metrics.width / 2 + padding;
-    } else if (ctx.textAlign === 'right') {
-      rectX -= metrics.width + padding;
-    } else {
-      rectX -= padding;
-    }
-    let rectY = ly;
-    if (ctx.textBaseline === 'middle') {
-      rectY -= textHeight / 2 + padding;
-    } else if (ctx.textBaseline === 'bottom') {
-      rectY -= textHeight + padding;
-    } else {
-      rectY -= padding;
-    }
-    ctx.fillStyle = color;
-    ctx.fillRect(rectX, rectY, metrics.width + padding * 2, textHeight + padding * 2);
-    ctx.fillStyle = '#000';
+    ctx.font = '12px sans-serif';
     ctx.fillText(label, lx, ly);
+
+    // Draw the score just inside the chart under the label
+    const scoreRadius = radius - 4;
+    const sx = centerX + scoreRadius * Math.cos(angle);
+    const sy = centerY + scoreRadius * Math.sin(angle);
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(values[i].toFixed(1), sx, sy);
   }
 
   ctx.beginPath();
@@ -222,7 +209,7 @@ function drawRadarChart(values) {
 function resizeLayout() {
   if (!radarCanvas) return;
   // Base canvas height on viewport width, then widen to a 3:2 ratio
-  const height = Math.min(Math.max(window.innerWidth * 0.2, 133), 200);
+  const height = Math.min(Math.max(window.innerWidth * 0.22, 150), 220);
   const width = height * 1.5;
   radarCanvas.width = width;
   radarCanvas.height = height;
