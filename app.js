@@ -87,6 +87,93 @@ const kpiData = [
 // Build KPI sections including headings while collecting items
 const kpiItems = [];
 const container = document.getElementById('kpi-container');
+const selectionContainer = document.getElementById('selection-container');
+let selectedMap = null;
+let selectedAgent = null;
+
+function buildSelectionRow(options, className, onSelect) {
+  const row = document.createElement('div');
+  row.classList.add('selection-row');
+  options.forEach(opt => {
+    const btn = document.createElement('div');
+    btn.classList.add('selection-button', className);
+    const img = document.createElement('img');
+    img.src = opt.src;
+    const value = opt.src.split('/').pop().replace('.webp', '');
+    img.alt = value;
+    btn.appendChild(img);
+    if (opt.label) {
+      const label = document.createElement('div');
+      label.classList.add('map-label');
+      label.textContent = opt.label;
+      btn.appendChild(label);
+    }
+    btn.addEventListener('click', () => {
+      Array.from(row.children).forEach(child => child.classList.remove('selected'));
+      btn.classList.add('selected');
+      onSelect(value);
+    });
+    row.appendChild(btn);
+  });
+  selectionContainer.appendChild(row);
+}
+
+if (selectionContainer) {
+  const mapOptions = [
+    { src: 'assets/maps/abyss.webp', label: 'アビス' },
+    { src: 'assets/maps/ascent.webp', label: 'アセント' },
+    { src: 'assets/maps/bind.webp', label: 'バインド' },
+    { src: 'assets/maps/breeze.webp', label: 'ブリーズ' },
+    { src: 'assets/maps/corrode.webp', label: 'カロード' },
+    { src: 'assets/maps/fracture.webp', label: 'フラクチャー' },
+    { src: 'assets/maps/haven.webp', label: 'ヘイヴン' },
+    { src: 'assets/maps/icebox.webp', label: 'アイスボックス' },
+    { src: 'assets/maps/lotus.webp', label: 'ロータス' },
+    { src: 'assets/maps/pearl.webp', label: 'パール' },
+    { src: 'assets/maps/split.webp', label: 'スプリット' },
+    { src: 'assets/maps/sunset.webp', label: 'サンセット' }
+  ];
+  buildSelectionRow(mapOptions, 'map-button', value => {
+    selectedMap = value;
+  });
+
+  const agentOptions = [
+    { src: 'assets/agents/astra.webp' },
+    { src: 'assets/agents/breach.webp' },
+    { src: 'assets/agents/brimstone.webp' },
+    { src: 'assets/agents/chamber.webp' },
+    { src: 'assets/agents/clove.webp' },
+    { src: 'assets/agents/cypher.webp' },
+    { src: 'assets/agents/deadlock.webp' },
+    { src: 'assets/agents/fade.webp' },
+    { src: 'assets/agents/gekko.webp' },
+    { src: 'assets/agents/harbor.webp' },
+    { src: 'assets/agents/iso.webp' },
+    { src: 'assets/agents/jett.webp' },
+    { src: 'assets/agents/kayo.webp' },
+    { src: 'assets/agents/killjoy.webp' },
+    { src: 'assets/agents/neon.webp' },
+    { src: 'assets/agents/omen.webp' },
+    { src: 'assets/agents/phoenix.webp' },
+    { src: 'assets/agents/raze.webp' },
+    { src: 'assets/agents/reyna.webp' },
+    { src: 'assets/agents/sage.webp' },
+    { src: 'assets/agents/skye.webp' },
+    { src: 'assets/agents/sova.webp' },
+    { src: 'assets/agents/tejo.webp' },
+    { src: 'assets/agents/viper.webp' },
+    { src: 'assets/agents/vyse.webp' },
+    { src: 'assets/agents/waylay.webp' },
+    { src: 'assets/agents/yoru.webp' }
+  ];
+  buildSelectionRow(agentOptions, 'agent-button', value => {
+    selectedAgent = value;
+  });
+
+  const selectionDivider = document.createElement('hr');
+  selectionDivider.classList.add('divider');
+  selectionContainer.appendChild(selectionDivider);
+}
 const averageEl = document.getElementById('average');
 const attributeKeys = ['physical', 'teamplay', 'judgement', 'alert', 'thinking', 'study'];
 const attributeLabels = {
@@ -464,6 +551,8 @@ document.getElementById('export-btn').addEventListener('click', () => {
   };
 
   const exportData = {
+    map: selectedMap,
+    agent: selectedAgent,
     kpiElements,
     textnotes
   };

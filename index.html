@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>VALORANT ふりかえりツール</h1>
+    <h1>ValoInsight</h1>
+    <p class="subtitle">VALORANT上達のための自己採点ツール</p>
+    <p class="github-link"><a href="https://github.com/Nao-Shirotsu/Valoinsight"><img src="assets/github-mark.svg" alt="GitHub" class="github-logo"></a></p>
     <form id="kpi-form">
+        <div id="selection-container"></div>
         <div id="kpi-container"></div>
     </form>
     <div id="summary-container">
@@ -52,6 +55,13 @@
             </div>
         </div>
         <button id="export-btn">ファイルに保存</button>
+    </div>
+    <div id="footer">
+        <br><br><br>
+        <hr class="divider">
+        <p>当ウェブサイトは、<a href="https://www.riotgames.com/ja/legal">Riot Games コンテンツ制作ガイドライン</a>に準拠して制作しています。</p>
+        <p class="riot-disclaimer">当ウェブサイト(ValoInsight)は、ライアットゲームズが公式承認するものではなく、ライアットゲームズ又はリーグ・オブ・レジェンドの製作・管理に正式に関与したいかなる者の見解・意見に基づくものではありません。リーグ・オブ・レジェンド及びライアットゲームズは、Riot Games, Inc.の商標又は登録商標です。リーグ・オブ・レジェンド © Riot Games, Inc.</p>
+        <p>programmed by Shirotsu, with OpenAI Codex</p>
     </div>
     <script src="app.js"></script>
 </body>
