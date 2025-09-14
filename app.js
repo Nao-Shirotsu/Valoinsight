@@ -571,12 +571,18 @@ document.getElementById('export-btn').addEventListener('click', () => {
 const modeToggle = document.getElementById('mode-toggle');
 
 function applyMode() {
+  const kpiContainer = document.getElementById('kpi-container');
+  const summaryContainer = document.getElementById('summary-container');
+  const exportBtn = document.getElementById('export-btn');
+
   if (modeToggle.checked) {
-    document.getElementById('kpi-container').style.display = 'none';
-    document.getElementById('summary-container').style.display = 'none';
+    if (kpiContainer) kpiContainer.style.display = 'none';
+    if (summaryContainer) summaryContainer.style.display = 'none';
+    if (exportBtn) exportBtn.disabled = true;
   } else {
-    document.getElementById('kpi-container').style.display = '';
-    document.getElementById('summary-container').style.display = '';
+    if (kpiContainer) kpiContainer.style.display = '';
+    if (summaryContainer) summaryContainer.style.display = '';
+    if (exportBtn) exportBtn.disabled = false;
   }
   updateAverage();
 }
