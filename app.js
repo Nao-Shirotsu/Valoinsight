@@ -91,6 +91,7 @@ const selectionContainer = document.getElementById('selection-container');
 const dropArea = document.getElementById('json-drop-area');
 let selectedMap = null;
 let selectedAgent = null;
+let loadedDatasets = [];
 
 function buildSelectionRow(options, className, onSelect) {
   const row = document.createElement('div');
@@ -514,7 +515,9 @@ kpiData.forEach(section => {
   }
 
   function loadJsonData(dataArray) {
-    const datasets = Array.isArray(dataArray) ? dataArray : [dataArray];
+    loadedDatasets = [];
+    const incoming = Array.isArray(dataArray) ? dataArray : [dataArray];
+    loadedDatasets.push(...incoming);
     const attrTotals = {};
     const attrCounts = {};
     attributeKeys.forEach(key => {
@@ -529,7 +532,7 @@ kpiData.forEach(section => {
     });
     let total = 0;
     let count = 0;
-    datasets.forEach(data => {
+    loadedDatasets.forEach(data => {
       if (!Array.isArray(data.kpiElements)) return;
       data.kpiElements.forEach(el => {
         if (el.skip) return;
