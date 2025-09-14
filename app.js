@@ -583,10 +583,11 @@ kpiData.forEach(section => {
       if (!scoreContainer || !scoreEl || !countEl) return;
       if (kpiCounts[item.id]) {
         countEl.textContent = `該当 ${kpiCounts[item.id]} 件`;
-        scoreEl.textContent = `平均スコア ${(kpiTotals[item.id] / kpiCounts[item.id]).toFixed(1)}`;
+        const avg = (kpiTotals[item.id] / kpiCounts[item.id]).toFixed(1);
+        scoreEl.innerHTML = `平均スコア <span class="score-number">${avg}</span>`;
       } else {
         countEl.textContent = '該当 0 件';
-        scoreEl.textContent = 'N/A';
+        scoreEl.innerHTML = '平均スコア <span class="score-number">N/A</span>';
       }
       scoreContainer.style.display = 'flex';
     });
@@ -804,7 +805,7 @@ function applyMode() {
         const scoreEl = wrapper.querySelector('.score-display');
         const countEl = wrapper.querySelector('.data-count');
         if (scoreContainer && scoreEl && countEl) {
-          scoreEl.textContent = `平均スコア ${statsPlaceholderValue}`;
+          scoreEl.innerHTML = `平均スコア <span class="score-number">${statsPlaceholderValue}</span>`;
           countEl.textContent = '該当 0 件';
           scoreContainer.style.display = 'flex';
         }

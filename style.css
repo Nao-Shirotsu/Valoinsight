@@ -310,7 +310,7 @@ h1 {
 
 .kpi-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   margin: 8px 0;
   padding: 4px 8px;
@@ -393,6 +393,14 @@ h1 {
 
 .score-display {
   font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.score-number {
+  font-size: 2em;
+  line-height: 1;
 }
 
 #summary-container {
