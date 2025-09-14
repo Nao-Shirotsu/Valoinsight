@@ -524,6 +524,19 @@ kpiData.forEach(section => {
     let count = 0;
     if (Array.isArray(data.kpiElements)) {
       data.kpiElements.forEach(el => {
+        const wrapper = document.getElementById(el.id);
+        if (wrapper) {
+          const scoreEl = wrapper.querySelector('.score-display');
+          if (scoreEl) {
+            if (el.skip) {
+              scoreEl.textContent = 'N/A';
+            } else if (typeof el.score === 'number') {
+              scoreEl.textContent = Number(el.score).toFixed(1);
+            } else {
+              scoreEl.textContent = statsPlaceholderValue;
+            }
+          }
+        }
         if (el.skip) return;
         const score = typeof el.score === 'number' ? el.score : 0;
         total += score;
