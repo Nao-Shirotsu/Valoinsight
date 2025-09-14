@@ -163,6 +163,10 @@ if (selectionContainer) {
   buildSelectionRow(agentOptions, 'agent-button', value => {
     selectedAgent = value;
   });
+
+  const selectionDivider = document.createElement('hr');
+  selectionDivider.classList.add('divider');
+  selectionContainer.appendChild(selectionDivider);
 }
 const averageEl = document.getElementById('average');
 const attributeKeys = ['physical', 'teamplay', 'judgement', 'alert', 'thinking', 'study'];
