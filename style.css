@@ -60,23 +60,25 @@ h1 {
     border: 2px solid #000;
     cursor: pointer;
     overflow: hidden;
-    border-radius: 1% / 15%;
 }
 
 .selection-button.selected {
-  border-color: red;
+  border-color: #ff7777;
 }
 
 .map-button {
     width: 120px;
     height: 120px;
     font-size: 2rem;
+    border-radius: 6% / 6%;
 }
 
 .agent-button {
     width: 60px;
     height: 60px;
     font-size: 1rem;
+    border-radius: 12% / 12%;
+    background-color: #999;
 }
 
 .selection-button img {
@@ -88,8 +90,8 @@ h1 {
 
 .selection-button.selected img {
     filter: none;
+    background-color: #fff1f1;
 }
-
 
 #average-container {
   position: fixed;
