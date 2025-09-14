@@ -27,12 +27,12 @@ h1 {
 
 .subtitle {
   text-align: center;
-  margin: 0 0 20px;
+  margin: 0 0 10px;
 }
 
 .github-link {
   text-align: center;
-  margin: -20px 0 20px;
+  margin: 0 0 20px;
 }
 
 .github-link .github-logo {
