@@ -31,8 +31,8 @@ h1 {
 }
 
 .github-link .github-logo {
-  width: calc(var(--heading-font-size) * 2 / 3);
-  height: calc(var(--heading-font-size) * 2 / 3);
+  width: var(--heading-font-size);
+  height: var(--heading-font-size);
 }
 
 #kpi-container {
