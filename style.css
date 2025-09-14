@@ -7,7 +7,7 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   margin: 0;
-  padding: 0 20px var(--footer-height, 133px);
+  padding: 0 20px var(--footer-height, 150px);
   background-color: #f5f7fa;
   color: #333;
 }
@@ -31,7 +31,7 @@ h1 {
   left: 0;
   width: 100%;
   background-color: #fff;
-  padding: 5px 10px;
+  padding: 8px 10px;
   border-top: 1px solid #ccc;
   z-index: 1000;
   font-size: var(--heading-font-size);
@@ -45,8 +45,8 @@ h1 {
 
 #radar-chart {
   /* Wider aspect ratio (3:2) so horizontal labels aren't cut off */
-  width: clamp(200px, 30vw, 300px);
-  height: clamp(133px, 20vw, 200px);
+  width: clamp(225px, 33vw, 330px);
+  height: clamp(150px, 22vw, 220px);
   margin: 0 20px 0 0;
 }
 
