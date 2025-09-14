@@ -163,6 +163,19 @@ h1 {
   margin-top: 2px;
 }
 
+.item-tags {
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.attribute-tag {
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 0.75em;
+}
+
 .skip-container {
   display: flex;
   flex-direction: column;
