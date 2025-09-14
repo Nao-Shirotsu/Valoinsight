@@ -272,3 +272,16 @@ h1 {
   font-family: inherit;
   font-size: 1em;
 }
+
+#footer {
+  text-align: center;
+}
+
+#footer p {
+  margin: 6px 0;
+}
+
+#footer .riot-disclaimer {
+  font-size: 0.75rem;
+  color: #999;
+}
