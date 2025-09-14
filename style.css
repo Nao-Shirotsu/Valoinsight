@@ -44,13 +44,14 @@ h1 {
 }
 
 #json-drop-area {
-  width: 70%;
-  margin: 20px auto;
-  padding: 40px 10px;
+  width: 25vw;
+  min-width: 150px;
+  padding: 20px 10px;
   border: 2px dashed #bbb;
   text-align: center;
   color: #666;
   background-color: #fafafa;
+  margin: 0;
 }
 
 #json-drop-area.dragover {
@@ -140,12 +141,17 @@ h1 {
   align-items: center;
   justify-content: center;
 }
-#mode-switch {
+#right-controls {
   position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 10px;
+  top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
 }
+/* mode switch positioned via right-controls */
+#mode-switch {}
 
 .toggle-switch input {
   display: none;
@@ -269,10 +275,6 @@ h1 {
 }
 
 #export-btn {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
   padding: 6px 12px;
   font-size: 1rem;
 }

@@ -659,13 +659,19 @@ function applyMode() {
     if (kpiContainer) kpiContainer.style.display = 'none';
     if (summaryContainer) summaryContainer.style.display = 'none';
     if (dropArea) dropArea.style.display = '';
-    if (exportBtn) exportBtn.disabled = true;
+    if (exportBtn) {
+      exportBtn.disabled = true;
+      exportBtn.style.display = 'none';
+    }
     resetScores();
   } else {
     if (kpiContainer) kpiContainer.style.display = '';
     if (summaryContainer) summaryContainer.style.display = '';
     if (dropArea) dropArea.style.display = 'none';
-    if (exportBtn) exportBtn.disabled = false;
+    if (exportBtn) {
+      exportBtn.disabled = false;
+      exportBtn.style.display = '';
+    }
     updateAverage();
   }
 }

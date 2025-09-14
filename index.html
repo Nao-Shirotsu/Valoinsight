@@ -13,7 +13,6 @@
     <form id="kpi-form">
         <div id="selection-container"></div>
         <div id="kpi-container"></div>
-        <div id="json-drop-area" class="drop-area" style="display:none;">JSONファイルをここにドラッグ＆ドロップ</div>
     </form>
     <div id="summary-container">
         <h2 class="summary-heading">総括ノート</h2>
@@ -25,13 +24,6 @@
         <textarea id="summary-focus" class="summary-input"></textarea>
     </div>
     <div id="average-container">
-        <div id="mode-switch" class="toggle-switch">
-            <input type="checkbox" id="mode-toggle">
-            <label for="mode-toggle" class="toggle-label">
-                <span class="toggle-grading">採点</span>
-                <span class="toggle-stats">統計</span>
-            </label>
-        </div>
         <div id="chart-score-container">
             <canvas id="radar-chart"></canvas>
             <div id="score-container">
@@ -63,8 +55,17 @@
                 </div>
             </div>
         </div>
+        <div id="right-controls">
+            <div id="mode-switch" class="toggle-switch">
+                <input type="checkbox" id="mode-toggle">
+                <label for="mode-toggle" class="toggle-label">
+                    <span class="toggle-grading">採点</span>
+                    <span class="toggle-stats">統計</span>
+                </label>
+            </div>
+            <button id="export-btn">ファイルに保存</button>
+            <div id="json-drop-area" class="drop-area" style="display:none;">JSONファイルをここにドラッグ＆ドロップ</div>
         </div>
-        <button id="export-btn">ファイルに保存</button>
     </div>
     <div id="footer">
         <br><br><br>
