@@ -25,6 +25,12 @@ h1 {
   font-size: var(--heading-font-size);
 }
 
+.github-link {
+  text-align: center;
+  font-size: 0.9rem;
+  margin: -20px 0 20px;
+}
+
 #kpi-container {
   width: 95%;
   margin: 0 auto;
