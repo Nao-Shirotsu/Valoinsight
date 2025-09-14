@@ -87,6 +87,35 @@ const kpiData = [
 // Build KPI sections including headings while collecting items
 const kpiItems = [];
 const container = document.getElementById('kpi-container');
+const selectionContainer = document.getElementById('selection-container');
+let selectedMap = null;
+let selectedAgent = null;
+
+function buildSelectionRow(letters, className, onSelect) {
+  const row = document.createElement('div');
+  row.classList.add('selection-row');
+  letters.forEach(letter => {
+    const btn = document.createElement('div');
+    btn.textContent = letter;
+    btn.classList.add('selection-button', className);
+    btn.addEventListener('click', () => {
+      Array.from(row.children).forEach(child => child.classList.remove('selected'));
+      btn.classList.add('selected');
+      onSelect(letter);
+    });
+    row.appendChild(btn);
+  });
+  selectionContainer.appendChild(row);
+}
+
+if (selectionContainer) {
+  buildSelectionRow(['A', 'B', 'C'], 'map-button', letter => {
+    selectedMap = letter;
+  });
+  buildSelectionRow(['s', 't', 'u', 'v', 'w'], 'agent-button', letter => {
+    selectedAgent = letter;
+  });
+}
 const averageEl = document.getElementById('average');
 const attributeKeys = ['physical', 'teamplay', 'judgement', 'alert', 'thinking', 'study'];
 const attributeLabels = {
@@ -464,6 +493,8 @@ document.getElementById('export-btn').addEventListener('click', () => {
   };
 
   const exportData = {
+    map: selectedMap,
+    agent: selectedAgent,
     kpiElements,
     textnotes
   };
