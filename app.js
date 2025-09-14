@@ -574,10 +574,10 @@ kpiData.forEach(section => {
       const countEl = wrapper.querySelector('.data-count');
       if (!scoreContainer || !scoreEl || !countEl) return;
       if (kpiCounts[item.id]) {
-        countEl.textContent = `${kpiCounts[item.id]} data`;
-        scoreEl.textContent = `${(kpiTotals[item.id] / kpiCounts[item.id]).toFixed(1)}`;
+        countEl.textContent = `該当 ${kpiCounts[item.id]} 件`;
+        scoreEl.textContent = `平均スコア ${(kpiTotals[item.id] / kpiCounts[item.id]).toFixed(1)}`;
       } else {
-        countEl.textContent = '0 data';
+        countEl.textContent = '該当 0 件';
         scoreEl.textContent = 'N/A';
       }
       scoreContainer.style.display = 'flex';
@@ -751,7 +751,7 @@ document.getElementById('export-btn').addEventListener('click', () => {
 });
 
 const modeToggle = document.getElementById('mode-toggle');
-const statsPlaceholderValue = 55.5;
+const statsPlaceholderValue = 0.0;
 
 function applyMode() {
   const kpiContainer = document.getElementById('kpi-container');
@@ -779,8 +779,8 @@ function applyMode() {
         const scoreEl = wrapper.querySelector('.score-display');
         const countEl = wrapper.querySelector('.data-count');
         if (scoreContainer && scoreEl && countEl) {
-          scoreEl.textContent = `(${statsPlaceholderValue})`;
-          countEl.textContent = '(0 data)';
+          scoreEl.textContent = `平均スコア ${statsPlaceholderValue}`;
+          countEl.textContent = '該当 0 件';
           scoreContainer.style.display = 'flex';
         }
       }
