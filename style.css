@@ -124,9 +124,27 @@ h1 {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 20px;
   flex-wrap: wrap;
+}
+
+#mode-switch {
+  display: flex;
+  gap: 6px;
+  margin-right: 20px;
+}
+
+.mode-button {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.mode-button.active {
+  background-color: #d0d0d0;
 }
 
 #radar-chart {
