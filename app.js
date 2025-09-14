@@ -421,9 +421,18 @@ function addItem(item) {
   }
   wrapper.appendChild(starContainer);
 
-  const scoreDisplay = document.createElement('div');
+  const scoreWrapper = document.createElement('div');
+  scoreWrapper.classList.add('score-container');
+
+  const countDisplay = document.createElement('span');
+  countDisplay.classList.add('data-count');
+  scoreWrapper.appendChild(countDisplay);
+
+  const scoreDisplay = document.createElement('span');
   scoreDisplay.classList.add('score-display');
-  wrapper.appendChild(scoreDisplay);
+  scoreWrapper.appendChild(scoreDisplay);
+
+  wrapper.appendChild(scoreWrapper);
   skipCheckbox.addEventListener('change', updateAverage);
   container.appendChild(wrapper);
 }
@@ -560,13 +569,18 @@ kpiData.forEach(section => {
     kpiItems.forEach(item => {
       const wrapper = document.getElementById(item.id);
       if (!wrapper) return;
+      const scoreContainer = wrapper.querySelector('.score-container');
       const scoreEl = wrapper.querySelector('.score-display');
-      if (!scoreEl) return;
+      const countEl = wrapper.querySelector('.data-count');
+      if (!scoreContainer || !scoreEl || !countEl) return;
       if (kpiCounts[item.id]) {
-        scoreEl.textContent = (kpiTotals[item.id] / kpiCounts[item.id]).toFixed(1);
+        countEl.textContent = `(${kpiCounts[item.id]} data)`;
+        scoreEl.textContent = `(${(kpiTotals[item.id] / kpiCounts[item.id]).toFixed(1)})`;
       } else {
-        scoreEl.textContent = 'N/A';
+        countEl.textContent = '(0 data)';
+        scoreEl.textContent = '(N/A)';
       }
+      scoreContainer.style.display = 'flex';
     });
     const average = count ? total / count : 0;
     averageEl.textContent = average.toFixed(1);
@@ -761,10 +775,13 @@ function applyMode() {
         if (skipContainer) skipContainer.style.display = 'none';
         const starContainer = wrapper.querySelector('.star-rating');
         if (starContainer) starContainer.style.display = 'none';
+        const scoreContainer = wrapper.querySelector('.score-container');
         const scoreEl = wrapper.querySelector('.score-display');
-        if (scoreEl) {
-          scoreEl.textContent = statsPlaceholderValue;
-          scoreEl.style.display = 'inline-block';
+        const countEl = wrapper.querySelector('.data-count');
+        if (scoreContainer && scoreEl && countEl) {
+          scoreEl.textContent = `(${statsPlaceholderValue})`;
+          countEl.textContent = '(0 data)';
+          scoreContainer.style.display = 'flex';
         }
       }
     });
@@ -786,8 +803,8 @@ function applyMode() {
         if (skipContainer) skipContainer.style.display = '';
         const starContainer = wrapper.querySelector('.star-rating');
         if (starContainer) starContainer.style.display = '';
-        const scoreEl = wrapper.querySelector('.score-display');
-        if (scoreEl) scoreEl.style.display = 'none';
+        const scoreContainer = wrapper.querySelector('.score-container');
+        if (scoreContainer) scoreContainer.style.display = 'none';
       }
     });
     updateAverage();
