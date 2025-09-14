@@ -196,17 +196,17 @@ function drawRadarChart(values) {
     const paddingY = 2;
     const rectWidth = textWidth + paddingX * 2;
     const rectHeight = textHeight + paddingY * 2;
-    let rectX = lx;
-    let rectY = ly;
+    let rectX = lx - paddingX;
     if (ctx.textAlign === 'center') {
-      rectX -= rectWidth / 2;
+      rectX -= textWidth / 2;
     } else if (ctx.textAlign === 'right') {
-      rectX -= rectWidth;
+      rectX -= textWidth;
     }
+    let rectY = ly - paddingY;
     if (ctx.textBaseline === 'middle') {
-      rectY -= rectHeight / 2;
+      rectY -= textHeight / 2;
     } else if (ctx.textBaseline === 'bottom') {
-      rectY -= rectHeight;
+      rectY -= textHeight;
     }
     ctx.fillStyle = attributeColors[attributeKeys[i]];
     drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, 4);
