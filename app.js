@@ -419,6 +419,10 @@ function addItem(item) {
     starContainer.appendChild(star);
   }
   wrapper.appendChild(starContainer);
+
+  const scoreDisplay = document.createElement('div');
+  scoreDisplay.classList.add('score-display');
+  wrapper.appendChild(scoreDisplay);
   skipCheckbox.addEventListener('change', updateAverage);
   container.appendChild(wrapper);
 }
@@ -656,13 +660,27 @@ function applyMode() {
   const exportBtn = document.getElementById('export-btn');
 
   if (modeToggle.checked) {
-    if (kpiContainer) kpiContainer.style.display = 'none';
+    if (kpiContainer) kpiContainer.style.display = '';
     if (summaryContainer) summaryContainer.style.display = 'none';
     if (dropArea) dropArea.style.display = '';
     if (exportBtn) {
       exportBtn.disabled = true;
       exportBtn.style.display = 'none';
     }
+    kpiItems.forEach(item => {
+      const skipCheckbox = document.getElementById(`${item.id}-skip`);
+      if (skipCheckbox) skipCheckbox.disabled = true;
+      const wrapper = document.getElementById(item.id);
+      if (wrapper) {
+        const starContainer = wrapper.querySelector('.star-rating');
+        if (starContainer) starContainer.classList.add('disabled');
+        const scoreEl = wrapper.querySelector('.score-display');
+        if (scoreEl) {
+          scoreEl.textContent = '55.5';
+          scoreEl.style.display = '';
+        }
+      }
+    });
     resetScores();
   } else {
     if (kpiContainer) kpiContainer.style.display = '';
@@ -672,6 +690,17 @@ function applyMode() {
       exportBtn.disabled = false;
       exportBtn.style.display = '';
     }
+    kpiItems.forEach(item => {
+      const skipCheckbox = document.getElementById(`${item.id}-skip`);
+      if (skipCheckbox) skipCheckbox.disabled = false;
+      const wrapper = document.getElementById(item.id);
+      if (wrapper) {
+        const starContainer = wrapper.querySelector('.star-rating');
+        if (starContainer) starContainer.classList.remove('disabled');
+        const scoreEl = wrapper.querySelector('.score-display');
+        if (scoreEl) scoreEl.style.display = 'none';
+      }
+    });
     updateAverage();
   }
 }
