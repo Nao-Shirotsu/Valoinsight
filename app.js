@@ -91,6 +91,7 @@ const selectionContainer = document.getElementById('selection-container');
 const dropArea = document.getElementById('json-drop-area');
 let selectedMap = null;
 let selectedAgent = null;
+let loadedDatasets = [];
 
 function buildSelectionRow(options, className, onSelect) {
   const row = document.createElement('div');
@@ -420,9 +421,18 @@ function addItem(item) {
   }
   wrapper.appendChild(starContainer);
 
-  const scoreDisplay = document.createElement('div');
+  const scoreWrapper = document.createElement('div');
+  scoreWrapper.classList.add('score-container');
+
+  const countDisplay = document.createElement('span');
+  countDisplay.classList.add('data-count');
+  scoreWrapper.appendChild(countDisplay);
+
+  const scoreDisplay = document.createElement('span');
   scoreDisplay.classList.add('score-display');
-  wrapper.appendChild(scoreDisplay);
+  scoreWrapper.appendChild(scoreDisplay);
+
+  wrapper.appendChild(scoreWrapper);
   skipCheckbox.addEventListener('change', updateAverage);
   container.appendChild(wrapper);
 }
@@ -513,32 +523,35 @@ kpiData.forEach(section => {
     drawRadarChart(zeros);
   }
 
-  function loadJsonData(data) {
+  function loadJsonData(dataArray) {
+    loadedDatasets = [];
+    const incoming = Array.isArray(dataArray) ? dataArray : [dataArray];
+    loadedDatasets.push(...incoming);
     const attrTotals = {};
     const attrCounts = {};
     attributeKeys.forEach(key => {
       attrTotals[key] = 0;
       attrCounts[key] = 0;
     });
+    const kpiTotals = {};
+    const kpiCounts = {};
+    kpiItems.forEach(item => {
+      kpiTotals[item.id] = 0;
+      kpiCounts[item.id] = 0;
+    });
     let total = 0;
     let count = 0;
-    if (Array.isArray(data.kpiElements)) {
+    loadedDatasets.forEach(data => {
+      if (!Array.isArray(data.kpiElements)) return;
       data.kpiElements.forEach(el => {
-        const wrapper = document.getElementById(el.id);
-        if (wrapper) {
-          const scoreEl = wrapper.querySelector('.score-display');
-          if (scoreEl) {
-            if (el.skip) {
-              scoreEl.textContent = 'N/A';
-            } else if (typeof el.score === 'number') {
-              scoreEl.textContent = Number(el.score).toFixed(1);
-            } else {
-              scoreEl.textContent = statsPlaceholderValue;
-            }
-          }
-        }
         if (el.skip) return;
         const score = typeof el.score === 'number' ? el.score : 0;
+        if (kpiTotals[el.id] === undefined) {
+          kpiTotals[el.id] = 0;
+          kpiCounts[el.id] = 0;
+        }
+        kpiTotals[el.id] += score;
+        kpiCounts[el.id] += 1;
         total += score;
         count++;
         if (Array.isArray(el.attributes)) {
@@ -552,7 +565,23 @@ kpiData.forEach(section => {
           });
         }
       });
-    }
+    });
+    kpiItems.forEach(item => {
+      const wrapper = document.getElementById(item.id);
+      if (!wrapper) return;
+      const scoreContainer = wrapper.querySelector('.score-container');
+      const scoreEl = wrapper.querySelector('.score-display');
+      const countEl = wrapper.querySelector('.data-count');
+      if (!scoreContainer || !scoreEl || !countEl) return;
+      if (kpiCounts[item.id]) {
+        countEl.textContent = `(${kpiCounts[item.id]} data)`;
+        scoreEl.textContent = `(${(kpiTotals[item.id] / kpiCounts[item.id]).toFixed(1)})`;
+      } else {
+        countEl.textContent = '(0 data)';
+        scoreEl.textContent = '(N/A)';
+      }
+      scoreContainer.style.display = 'flex';
+    });
     const average = count ? total / count : 0;
     averageEl.textContent = average.toFixed(1);
     attributeKeys.forEach(key => {
@@ -563,6 +592,10 @@ kpiData.forEach(section => {
     const chartValues = attributeKeys.map(key => attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0);
     currentChartValues = chartValues;
     drawRadarChart(chartValues);
+    const footer = document.getElementById('average-container');
+    if (footer) {
+      document.body.style.setProperty('--footer-height', `${footer.offsetHeight}px`);
+    }
   }
 
 function setRating(wrapper, rating) {
@@ -598,6 +631,42 @@ if (csvInput) {
 }
 
 
+function readJsonFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = evt => {
+      try {
+        resolve(JSON.parse(evt.target.result));
+      } catch (err) {
+        reject(err);
+      }
+    };
+    reader.onerror = reject;
+    reader.readAsText(file);
+  });
+}
+
+async function collectJsonFromEntry(entry) {
+  if (entry.isFile) {
+    const file = await new Promise((resolve, reject) => entry.file(resolve, reject));
+    if (file.name.endsWith('.json')) {
+      return [await readJsonFile(file)];
+    }
+    return [];
+  } else if (entry.isDirectory) {
+    const dirReader = entry.createReader();
+    const entries = await new Promise((resolve, reject) => dirReader.readEntries(resolve, reject));
+    const results = [];
+    for (const ent of entries) {
+      if (ent.isFile && ent.name.endsWith('.json')) {
+        results.push(...await collectJsonFromEntry(ent));
+      }
+    }
+    return results;
+  }
+  return [];
+}
+
 if (dropArea) {
   ['dragenter', 'dragover'].forEach(eventName => {
     dropArea.addEventListener(eventName, e => {
@@ -611,19 +680,35 @@ if (dropArea) {
       dropArea.classList.remove('dragover');
     });
   });
-  dropArea.addEventListener('drop', e => {
-    const file = e.dataTransfer.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = evt => {
-      try {
-        const data = JSON.parse(evt.target.result);
-        loadJsonData(data);
-      } catch (err) {
-        console.error(err);
+  dropArea.addEventListener('drop', async e => {
+    e.preventDefault();
+    dropArea.classList.remove('dragover');
+    const items = e.dataTransfer.items;
+    const promises = [];
+    if (items && items.length) {
+      for (const item of items) {
+        const entry = item.webkitGetAsEntry ? item.webkitGetAsEntry() : null;
+        if (entry) {
+          promises.push(collectJsonFromEntry(entry));
+        }
       }
-    };
-    reader.readAsText(file);
+    } else {
+      const files = e.dataTransfer.files;
+      for (const file of files) {
+        if (file.name.endsWith('.json')) {
+          promises.push(readJsonFile(file).then(data => [data]));
+        }
+      }
+    }
+    try {
+      const results = await Promise.all(promises);
+      const datasets = results.flat();
+      if (datasets.length) {
+        loadJsonData(datasets);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   });
 }
 
@@ -690,10 +775,13 @@ function applyMode() {
         if (skipContainer) skipContainer.style.display = 'none';
         const starContainer = wrapper.querySelector('.star-rating');
         if (starContainer) starContainer.style.display = 'none';
+        const scoreContainer = wrapper.querySelector('.score-container');
         const scoreEl = wrapper.querySelector('.score-display');
-        if (scoreEl) {
-          scoreEl.textContent = statsPlaceholderValue;
-          scoreEl.style.display = 'inline-block';
+        const countEl = wrapper.querySelector('.data-count');
+        if (scoreContainer && scoreEl && countEl) {
+          scoreEl.textContent = `(${statsPlaceholderValue})`;
+          countEl.textContent = '(0 data)';
+          scoreContainer.style.display = 'flex';
         }
       }
     });
@@ -715,8 +803,8 @@ function applyMode() {
         if (skipContainer) skipContainer.style.display = '';
         const starContainer = wrapper.querySelector('.star-rating');
         if (starContainer) starContainer.style.display = '';
-        const scoreEl = wrapper.querySelector('.score-display');
-        if (scoreEl) scoreEl.style.display = 'none';
+        const scoreContainer = wrapper.querySelector('.score-container');
+        if (scoreContainer) scoreContainer.style.display = 'none';
       }
     });
     updateAverage();

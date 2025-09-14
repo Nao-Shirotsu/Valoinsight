@@ -377,11 +377,22 @@ h1 {
   color: gold;
 }
 
-.score-display {
-  align-self: center;
-  margin-left: 8px;
-  font-size: 0.9em;
+.score-container {
   display: none;
+  align-items: center;
+  margin-left: 8px;
+  gap: 6px;
+}
+
+.data-count {
+  background-color: #e2e8f0;
+  border-radius: 4px;
+  padding: 0 4px;
+  font-size: 0.8em;
+}
+
+.score-display {
+  font-size: 1.2em;
 }
 
 #summary-container {
