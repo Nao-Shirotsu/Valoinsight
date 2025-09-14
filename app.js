@@ -575,6 +575,10 @@ kpiData.forEach(section => {
     const chartValues = attributeKeys.map(key => attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0);
     currentChartValues = chartValues;
     drawRadarChart(chartValues);
+    const footer = document.getElementById('average-container');
+    if (footer) {
+      document.body.style.setProperty('--footer-height', `${footer.offsetHeight}px`);
+    }
   }
 
 function setRating(wrapper, rating) {
