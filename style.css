@@ -392,14 +392,13 @@ h1 {
 }
 
 .score-display {
-  font-size: 1.2em;
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 0.5vw;
 }
 
 .score-number {
-  font-size: 2em;
+  font-size: 1.75em;
   line-height: 1;
 }
 
