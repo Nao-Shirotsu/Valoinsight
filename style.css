@@ -122,36 +122,82 @@ h1 {
   z-index: 1000;
   font-size: var(--heading-font-size);
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
-  gap: 20px;
-  flex-wrap: wrap;
+  justify-content: center;
 }
-
 #mode-switch {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.toggle-label {
   display: flex;
-  gap: 6px;
-  margin-right: 20px;
-}
-
-.mode-button {
-  padding: 4px 8px;
-  border: 1px solid #ccc;
-  background-color: #f0f0f0;
+  align-items: center;
+  background-color: #ccc;
+  border-radius: 16px;
   cursor: pointer;
-  font-size: 1rem;
+  position: relative;
+  width: 100px;
+  height: 32px;
+  font-size: 0.9rem;
 }
 
-.mode-button.active {
-  background-color: #d0d0d0;
+.toggle-label span {
+  flex: 1;
+  text-align: center;
+  z-index: 1;
+}
+
+.toggle-label::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(50% - 4px);
+  height: calc(100% - 4px);
+  background: #fff;
+  border-radius: 14px;
+  transition: transform 0.2s;
+}
+
+#mode-toggle:checked + .toggle-label::after {
+  transform: translateX(100%);
+}
+
+#mode-toggle:checked + .toggle-label .toggle-grading {
+  color: #666;
+}
+
+#mode-toggle:checked + .toggle-label .toggle-stats {
+  color: #000;
+}
+
+#mode-toggle:not(:checked) + .toggle-label .toggle-grading {
+  color: #000;
+}
+
+#mode-toggle:not(:checked) + .toggle-label .toggle-stats {
+  color: #666;
+}
+
+#chart-score-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 #radar-chart {
   /* Wider aspect ratio (3:2) so horizontal labels aren't cut off */
   width: clamp(225px, 33vw, 330px);
   height: clamp(150px, 22vw, 220px);
-  margin: 0 20px 0 0;
+  margin: 0;
 }
 
 #score-container {
@@ -208,12 +254,12 @@ h1 {
 }
 
 #export-btn {
-    position: absolute;
-    right: calc(10px + (100vw - 99%));
-    bottom: 10px;
-    transform: none;
-    padding: 6px 12px;
-    font-size: 1rem;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 6px 12px;
+  font-size: 1rem;
 }
 
 .section-heading {

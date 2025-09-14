@@ -568,26 +568,18 @@ document.getElementById('export-btn').addEventListener('click', () => {
   URL.revokeObjectURL(url);
 });
 
-const modeGradingBtn = document.getElementById('mode-grading');
-const modeStatsBtn = document.getElementById('mode-stats');
+const modeToggle = document.getElementById('mode-toggle');
 
-function setMode(mode) {
-  if (mode === 'stats') {
-    modeGradingBtn.classList.remove('active');
-    modeStatsBtn.classList.add('active');
-    document.getElementById('selection-container').style.display = 'none';
+function applyMode() {
+  if (modeToggle.checked) {
     document.getElementById('kpi-container').style.display = 'none';
     document.getElementById('summary-container').style.display = 'none';
   } else {
-    modeGradingBtn.classList.add('active');
-    modeStatsBtn.classList.remove('active');
-    document.getElementById('selection-container').style.display = '';
     document.getElementById('kpi-container').style.display = '';
     document.getElementById('summary-container').style.display = '';
   }
   updateAverage();
 }
 
-modeGradingBtn.addEventListener('click', () => setMode('grading'));
-modeStatsBtn.addEventListener('click', () => setMode('stats'));
-setMode('grading');
+modeToggle.addEventListener('change', applyMode);
+applyMode();
