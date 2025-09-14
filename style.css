@@ -60,10 +60,26 @@ h1 {
     border: 2px solid #000;
     cursor: pointer;
     overflow: hidden;
+    position: relative;
 }
 
 .selection-button.selected {
   border-color: #ff7777;
+}
+
+.map-label {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 10%;
+  background-color: #000;
+  color: #fff;
+  font-size: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 }
 
 .map-button {
