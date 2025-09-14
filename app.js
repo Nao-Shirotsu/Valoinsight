@@ -111,9 +111,14 @@ function buildSelectionRow(options, className, onSelect) {
       btn.appendChild(label);
     }
     btn.addEventListener('click', () => {
+      const isSelected = btn.classList.contains('selected');
       Array.from(row.children).forEach(child => child.classList.remove('selected'));
-      btn.classList.add('selected');
-      onSelect(value);
+      if (isSelected) {
+        onSelect(null);
+      } else {
+        btn.classList.add('selected');
+        onSelect(value);
+      }
     });
     row.appendChild(btn);
   });
