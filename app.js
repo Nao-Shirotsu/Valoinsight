@@ -653,6 +653,7 @@ document.getElementById('export-btn').addEventListener('click', () => {
 });
 
 const modeToggle = document.getElementById('mode-toggle');
+const statsPlaceholderValue = 55.5;
 
 function applyMode() {
   const kpiContainer = document.getElementById('kpi-container');
@@ -672,11 +673,13 @@ function applyMode() {
       if (skipCheckbox) skipCheckbox.disabled = true;
       const wrapper = document.getElementById(item.id);
       if (wrapper) {
+        const skipContainer = wrapper.querySelector('.skip-container');
+        if (skipContainer) skipContainer.style.display = 'none';
         const starContainer = wrapper.querySelector('.star-rating');
-        if (starContainer) starContainer.classList.add('disabled');
+        if (starContainer) starContainer.style.display = 'none';
         const scoreEl = wrapper.querySelector('.score-display');
         if (scoreEl) {
-          scoreEl.textContent = '55.5';
+          scoreEl.textContent = statsPlaceholderValue;
           scoreEl.style.display = '';
         }
       }
@@ -695,8 +698,10 @@ function applyMode() {
       if (skipCheckbox) skipCheckbox.disabled = false;
       const wrapper = document.getElementById(item.id);
       if (wrapper) {
+        const skipContainer = wrapper.querySelector('.skip-container');
+        if (skipContainer) skipContainer.style.display = '';
         const starContainer = wrapper.querySelector('.star-rating');
-        if (starContainer) starContainer.classList.remove('disabled');
+        if (starContainer) starContainer.style.display = '';
         const scoreEl = wrapper.querySelector('.score-display');
         if (scoreEl) scoreEl.style.display = 'none';
       }
