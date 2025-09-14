@@ -44,14 +44,16 @@ h1 {
 }
 
 #json-drop-area {
-  width: 25vw;
+  width: 12vw;
+  height: 6vw;
   min-width: 150px;
   padding: 20px 10px;
   border: 2px dashed #bbb;
   text-align: center;
   color: #666;
   background-color: #fafafa;
-  margin: 0;
+  font-size: 1.25vw;
+  margin-right: 10%;
 }
 
 #json-drop-area.dragover {
