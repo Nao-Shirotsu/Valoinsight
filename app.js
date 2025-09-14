@@ -99,12 +99,13 @@ function buildSelectionRow(options, className, onSelect) {
     btn.classList.add('selection-button', className);
     const img = document.createElement('img');
     img.src = opt.src;
-    img.alt = opt.value;
+    const value = opt.src.split('/').pop().replace('.webp', '');
+    img.alt = value;
     btn.appendChild(img);
     btn.addEventListener('click', () => {
       Array.from(row.children).forEach(child => child.classList.remove('selected'));
       btn.classList.add('selected');
-      onSelect(opt.value);
+      onSelect(value);
     });
     row.appendChild(btn);
   });
@@ -113,51 +114,51 @@ function buildSelectionRow(options, className, onSelect) {
 
 if (selectionContainer) {
   const mapOptions = [
-    { value: 'abyss', src: 'assets/maps/abyss.webp' },
-    { value: 'ascent', src: 'assets/maps/ascent.webp' },
-    { value: 'bind', src: 'assets/maps/bind.webp' },
-    { value: 'breeze', src: 'assets/maps/breeze.webp' },
-    { value: 'corrode', src: 'assets/maps/corrode.webp' },
-    { value: 'fracture', src: 'assets/maps/fracture.webp' },
-    { value: 'haven', src: 'assets/maps/haven.webp' },
-    { value: 'icebox', src: 'assets/maps/icebox.webp' },
-    { value: 'lotus', src: 'assets/maps/lotus.webp' },
-    { value: 'pearl', src: 'assets/maps/pearl.webp' },
-    { value: 'split', src: 'assets/maps/split.webp' },
-    { value: 'sunset', src: 'assets/maps/sunset.webp' }
+    { src: 'assets/maps/abyss.webp' },
+    { src: 'assets/maps/ascent.webp' },
+    { src: 'assets/maps/bind.webp' },
+    { src: 'assets/maps/breeze.webp' },
+    { src: 'assets/maps/corrode.webp' },
+    { src: 'assets/maps/fracture.webp' },
+    { src: 'assets/maps/haven.webp' },
+    { src: 'assets/maps/icebox.webp' },
+    { src: 'assets/maps/lotus.webp' },
+    { src: 'assets/maps/pearl.webp' },
+    { src: 'assets/maps/split.webp' },
+    { src: 'assets/maps/sunset.webp' }
   ];
   buildSelectionRow(mapOptions, 'map-button', value => {
     selectedMap = value;
   });
 
   const agentOptions = [
-    { value: 'astra', src: 'assets/agents/astra.webp' },
-    { value: 'breach', src: 'assets/agents/breach.webp' },
-    { value: 'brimstone', src: 'assets/agents/brimstone.webp' },
-    { value: 'chamber', src: 'assets/agents/chamber.webp' },
-    { value: 'clove', src: 'assets/agents/clove.webp' },
-    { value: 'cypher', src: 'assets/agents/cypher.webp' },
-    { value: 'deadlock', src: 'assets/agents/deadlock.webp' },
-    { value: 'fade', src: 'assets/agents/fade.webp' },
-    { value: 'gekko', src: 'assets/agents/gekko.webp' },
-    { value: 'harbor', src: 'assets/agents/harbor.webp' },
-    { value: 'iso', src: 'assets/agents/iso.webp' },
-    { value: 'jett', src: 'assets/agents/jett.webp' },
-    { value: 'kayo', src: 'assets/agents/kayo.webp' },
-    { value: 'killjoy', src: 'assets/agents/killjoy.webp' },
-    { value: 'neon', src: 'assets/agents/neon.webp' },
-    { value: 'omen', src: 'assets/agents/omen.webp' },
-    { value: 'phoenix', src: 'assets/agents/phoenix.webp' },
-    { value: 'raze', src: 'assets/agents/raze.webp' },
-    { value: 'reyna', src: 'assets/agents/reyna.webp' },
-    { value: 'sage', src: 'assets/agents/sage.webp' },
-    { value: 'skye', src: 'assets/agents/skye.webp' },
-    { value: 'sova', src: 'assets/agents/sova.webp' },
-    { value: 'tejo', src: 'assets/agents/tejo.webp' },
-    { value: 'viper', src: 'assets/agents/viper.webp' },
-    { value: 'vyse', src: 'assets/agents/vyse.webp' },
-    { value: 'waylay', src: 'assets/agents/waylay.webp' },
-    { value: 'yoru', src: 'assets/agents/yoru.webp' }
+    { src: 'assets/agents/astra.webp' },
+    { src: 'assets/agents/breach.webp' },
+    { src: 'assets/agents/brimstone.webp' },
+    { src: 'assets/agents/chamber.webp' },
+    { src: 'assets/agents/clove.webp' },
+    { src: 'assets/agents/cypher.webp' },
+    { src: 'assets/agents/deadlock.webp' },
+    { src: 'assets/agents/fade.webp' },
+    { src: 'assets/agents/gekko.webp' },
+    { src: 'assets/agents/harbor.webp' },
+    { src: 'assets/agents/iso.webp' },
+    { src: 'assets/agents/jett.webp' },
+    { src: 'assets/agents/kayo.webp' },
+    { src: 'assets/agents/killjoy.webp' },
+    { src: 'assets/agents/neon.webp' },
+    { src: 'assets/agents/omen.webp' },
+    { src: 'assets/agents/phoenix.webp' },
+    { src: 'assets/agents/raze.webp' },
+    { src: 'assets/agents/reyna.webp' },
+    { src: 'assets/agents/sage.webp' },
+    { src: 'assets/agents/skye.webp' },
+    { src: 'assets/agents/sova.webp' },
+    { src: 'assets/agents/tejo.webp' },
+    { src: 'assets/agents/viper.webp' },
+    { src: 'assets/agents/vyse.webp' },
+    { src: 'assets/agents/waylay.webp' },
+    { src: 'assets/agents/yoru.webp' }
   ];
   buildSelectionRow(agentOptions, 'agent-button', value => {
     selectedAgent = value;
