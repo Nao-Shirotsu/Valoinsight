@@ -88,6 +88,7 @@ const kpiData = [
 const kpiItems = [];
 const container = document.getElementById('kpi-container');
 const selectionContainer = document.getElementById('selection-container');
+const dropArea = document.getElementById('json-drop-area');
 let selectedMap = null;
 let selectedAgent = null;
 
@@ -497,6 +498,56 @@ kpiData.forEach(section => {
     }
   }
 
+  function resetScores() {
+    averageEl.textContent = '0.0';
+    attributeKeys.forEach(key => {
+      const span = document.getElementById(`avg-${key}`);
+      if (span) span.textContent = '0.0';
+    });
+    const zeros = new Array(attributeKeys.length).fill(0);
+    currentChartValues = zeros;
+    drawRadarChart(zeros);
+  }
+
+  function loadJsonData(data) {
+    const attrTotals = {};
+    const attrCounts = {};
+    attributeKeys.forEach(key => {
+      attrTotals[key] = 0;
+      attrCounts[key] = 0;
+    });
+    let total = 0;
+    let count = 0;
+    if (Array.isArray(data.kpiElements)) {
+      data.kpiElements.forEach(el => {
+        if (el.skip) return;
+        const score = typeof el.score === 'number' ? el.score : 0;
+        total += score;
+        count++;
+        if (Array.isArray(el.attributes)) {
+          el.attributes.forEach(attr => {
+            if (attrTotals[attr] === undefined) {
+              attrTotals[attr] = 0;
+              attrCounts[attr] = 0;
+            }
+            attrTotals[attr] += score;
+            attrCounts[attr] += 1;
+          });
+        }
+      });
+    }
+    const average = count ? total / count : 0;
+    averageEl.textContent = average.toFixed(1);
+    attributeKeys.forEach(key => {
+      const avg = attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0;
+      const span = document.getElementById(`avg-${key}`);
+      if (span) span.textContent = avg.toFixed(1);
+    });
+    const chartValues = attributeKeys.map(key => attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0);
+    currentChartValues = chartValues;
+    drawRadarChart(chartValues);
+  }
+
 function setRating(wrapper, rating) {
   wrapper.dataset.rating = rating;
   const stars = wrapper.querySelectorAll('.star');
@@ -529,6 +580,35 @@ if (csvInput) {
   });
 }
 
+
+if (dropArea) {
+  ['dragenter', 'dragover'].forEach(eventName => {
+    dropArea.addEventListener(eventName, e => {
+      e.preventDefault();
+      dropArea.classList.add('dragover');
+    });
+  });
+  ['dragleave', 'drop'].forEach(eventName => {
+    dropArea.addEventListener(eventName, e => {
+      e.preventDefault();
+      dropArea.classList.remove('dragover');
+    });
+  });
+  dropArea.addEventListener('drop', e => {
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = evt => {
+      try {
+        const data = JSON.parse(evt.target.result);
+        loadJsonData(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    reader.readAsText(file);
+  });
+}
 
 document.getElementById('export-btn').addEventListener('click', () => {
   const kpiElements = kpiItems.map(item => {
@@ -578,13 +658,16 @@ function applyMode() {
   if (modeToggle.checked) {
     if (kpiContainer) kpiContainer.style.display = 'none';
     if (summaryContainer) summaryContainer.style.display = 'none';
+    if (dropArea) dropArea.style.display = '';
     if (exportBtn) exportBtn.disabled = true;
+    resetScores();
   } else {
     if (kpiContainer) kpiContainer.style.display = '';
     if (summaryContainer) summaryContainer.style.display = '';
+    if (dropArea) dropArea.style.display = 'none';
     if (exportBtn) exportBtn.disabled = false;
+    updateAverage();
   }
-  updateAverage();
 }
 
 modeToggle.addEventListener('change', applyMode);

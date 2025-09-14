@@ -43,6 +43,21 @@ h1 {
   margin: 0 auto;
 }
 
+#json-drop-area {
+  width: 70%;
+  margin: 20px auto;
+  padding: 40px 10px;
+  border: 2px dashed #bbb;
+  text-align: center;
+  color: #666;
+  background-color: #fafafa;
+}
+
+#json-drop-area.dragover {
+  border-color: #333;
+  background-color: #f0f0f0;
+}
+
 #selection-container {
   width: 95%;
   margin: 0 auto 20px;
