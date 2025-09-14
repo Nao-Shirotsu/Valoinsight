@@ -142,7 +142,9 @@ if (selectionContainer) {
   ];
   buildSelectionRow(mapOptions, 'map-button', value => {
     selectedMap = value;
-    refreshStats();
+    if (modeToggle.checked) {
+      refreshStats();
+    }
   });
 
   const agentOptions = [
@@ -176,7 +178,9 @@ if (selectionContainer) {
   ];
   buildSelectionRow(agentOptions, 'agent-button', value => {
     selectedAgent = value;
-    refreshStats();
+    if (modeToggle.checked) {
+      refreshStats();
+    }
   });
 
   const selectionDivider = document.createElement('hr');
@@ -603,6 +607,7 @@ kpiData.forEach(section => {
   }
 
   function refreshStats() {
+    if (!modeToggle.checked) return;
     const filtered = loadedDatasets.filter(data => {
       if (selectedMap && data.map !== selectedMap) return false;
       if (selectedAgent && data.agent !== selectedAgent) return false;
