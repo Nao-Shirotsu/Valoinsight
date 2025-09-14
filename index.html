@@ -2,22 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>valoinsight by Shirotsu</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>VALORANT KPI採点ツール</h1>
-    <input type="file" id="csvFile" accept=".csv" />
+    <h1>VALORANT ふりかえりツール</h1>
     <form id="kpi-form">
-        <table id="kpi-table">
-            <thead>
-                <tr><th>KPI</th><th>Score</th><th>Notes</th></tr>
-            </thead>
-            <tbody id="kpi-container"></tbody>
-        </table>
+        <div id="kpi-container"></div>
     </form>
-    <div>
-        <strong>Average score:</strong> <span id="average">0</span>
+    <div id="summary-container">
+        <h2 class="summary-heading">総括ノート</h2>
+        <label for="summary-good" class="summary-label">良かった点</label>
+        <textarea id="summary-good" class="summary-input"></textarea>
+        <label for="summary-bad" class="summary-label">悪かった点</label>
+        <textarea id="summary-bad" class="summary-input"></textarea>
+        <label for="summary-focus" class="summary-label">重点的に伸ばすべき要素は何でしたか</label>
+        <textarea id="summary-focus" class="summary-input"></textarea>
+    </div>
+    <div id="average-container">
+        <canvas id="radar-chart"></canvas>
+        <div id="score-container">
+            <div id="overall-average">総合スコア <span id="average">0.0</span> / 100</div>
+            <div id="attribute-averages">
+                <div class="attribute-average physical">
+                    <span class="attribute-label">フィジカル</span>
+                    <span class="attribute-score"><span id="avg-physical">0.0</span></span>
+                </div>
+                <div class="attribute-average teamplay">
+                    <span class="attribute-label">チームプレイ</span>
+                    <span class="attribute-score"><span id="avg-teamplay">0.0</span></span>
+                </div>
+                <div class="attribute-average judgement">
+                    <span class="attribute-label">状況判断</span>
+                    <span class="attribute-score"><span id="avg-judgement">0.0</span></span>
+                </div>
+                <div class="attribute-average alert">
+                    <span class="attribute-label">警戒力</span>
+                    <span class="attribute-score"><span id="avg-alert">0.0</span></span>
+                </div>
+                <div class="attribute-average thinking">
+                    <span class="attribute-label">俯瞰思考</span>
+                    <span class="attribute-score"><span id="avg-thinking">0.0</span></span>
+                </div>
+                <div class="attribute-average study">
+                    <span class="attribute-label">座学</span>
+                    <span class="attribute-score"><span id="avg-study">0.0</span></span>
+                </div>
+            </div>
+        </div>
+        <button id="export-btn">ファイルに保存</button>
     </div>
     <script src="app.js"></script>
 </body>

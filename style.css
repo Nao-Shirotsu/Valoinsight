@@ -1,9 +1,19 @@
 /* Simple and refined styling for VALORANT KPI tool */
+:root {
+  --heading-font-size: clamp(1.5rem, 5vw, 2rem);
+  --color-physical: #ffd1d1;
+  --color-alert: #ffe8cc;
+  --color-thinking: #d6f5d6;
+  --color-teamplay: #e6d5ff;
+  --color-judgement: #fff9cc;
+  --color-study: #d6f0ff;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   margin: 0;
-  padding: 40px 20px;
+  padding: 0 20px var(--footer-height, 150px);
   background-color: #f5f7fa;
   color: #333;
 }
@@ -11,29 +21,209 @@ body {
 h1 {
   text-align: center;
   font-weight: 300;
-  margin-bottom: 30px;
-}
-
-input[type="file"] {
-  display: block;
-  margin: 0 auto 20px;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  cursor: pointer;
+  margin: 20px 0 30px;
+  font-size: var(--heading-font-size);
 }
 
 #kpi-container {
-  max-width: 600px;
+  width: 95%;
   margin: 0 auto;
 }
 
-div {
+
+#average-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 8px 10px;
+  border-top: 1px solid #ccc;
+  z-index: 1000;
+  font-size: var(--heading-font-size);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+#radar-chart {
+  /* Wider aspect ratio (3:2) so horizontal labels aren't cut off */
+  width: clamp(225px, 33vw, 330px);
+  height: clamp(150px, 22vw, 220px);
+  margin: 0 20px 0 0;
+}
+
+#score-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+#attribute-averages {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, auto);
+  column-gap: 12px;
+  row-gap: 2px;
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+.attribute-average {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.attribute-average.physical {
+  background-color: var(--color-physical);
+}
+
+.attribute-average.alert {
+  background-color: var(--color-alert);
+}
+
+.attribute-average.thinking {
+  background-color: var(--color-thinking);
+}
+
+.attribute-average.teamplay {
+  background-color: var(--color-teamplay);
+}
+
+.attribute-average.judgement {
+  background-color: var(--color-judgement);
+}
+
+.attribute-average.study {
+  background-color: var(--color-study);
+}
+
+.attribute-label {
+  width: 6em;
+}
+
+#export-btn {
+    position: absolute;
+    right: calc(10px + (100vw - 99%));
+    bottom: 10px;
+    transform: none;
+    padding: 6px 12px;
+    font-size: 1rem;
+}
+
+.section-heading {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.subsection-heading {
+  margin-top: 15px;
+  text-align: left;
+}
+
+.divider {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+.kpi-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 8px 0;
+  padding: 4px 8px;
+  border-radius: 1% / 7%;
+  background-color: #f1f2fb;
+}
+
+.kpi-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-note {
+  color: #666;
+  font-size: 0.85em;
+  margin-top: 2px;
+}
+
+.item-tags {
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.attribute-tag {
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 0.75em;
+}
+
+.skip-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  align-self: center;
+}
+
+.skip-label {
+  font-size: 0.625em;
   text-align: center;
 }
 
-label {
+.star-rating {
+  display: flex;
+  gap: 4px;
+  align-self: center;
+}
+
+.star {
+  font-size: 1.6em;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star.selected {
+  color: gold;
+}
+
+#summary-container {
+  width: 95%;
+  margin: 40px auto 120px;
+}
+
+.summary-heading {
+  text-align: center;
+  background-color: #e2e8f0;
+  padding: 8px 0;
+  border-radius: 1% / 15%;
+  font-size: 1.3rem;
+  font-weight: 500;
+  width: 98%;
+}
+
+.summary-label {
   display: block;
-  margin-bottom: 10px;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+.summary-input {
+  width: 98%;
+  border: 1px solid #f2f2f8;
+  border-radius: 1% / 8%;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1em;
 }

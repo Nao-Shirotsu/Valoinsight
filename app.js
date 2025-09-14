@@ -2,28 +2,27 @@ const kpiData = [
   {
     heading: '編成中',
     items: [
-      { id: 'remember-vc', text: '誰のVCが無いか覚えてましたか' },
-      { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー、リーコン、スモーク、トラップ、フラッシュ'] },
-      { id: 'strategy-axis', text: '編成から立ち回りの軸を見いだせましたか' }
+      { id: 'remember-vc', text: '誰のVCが無いか覚えてましたか', attributes: ['teamplay', 'thinking'] },
+      { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ'], attributes: ['teamplay', 'study'] },
+      { id: 'strategy-axis', text: '編成から立ち回りの軸を見いだせましたか', attributes: ['teamplay', 'thinking', 'study'] }
     ]
   },
   {
     heading: '1st準備フェーズ',
     items: [
-      { id: 'self-role', text: '自分がロールを全うすべきか/イレギュラー対応すべきか判断できましたか' },
-      { id: 'ally-role', text: '味方がロールを全う出来そうか判断できましたか', note: ['例: 攻めでサイファーが逆サイト管理してくれそうか、イニシがデュエにくっついてアビリティ投げそうか'] },
-      { id: 'ally-counter', text: '味方が敵の編成から対策を考えられそうか判断できましたか', note: ['例: ネオンがワイヤーのある所に行かなそうか、行くとしてもアンチワイヤーを考えていそうか'] },
-      { id: 'weird-teammate', text: '味方に変な奴がいないか確認しましたか', note: ['例: 「SDGs」「◯◯トロールします」'] }
+      { id: 'self-role', text: '自分がロールを全うすべきか/イレギュラー対応すべきか判断できましたか', note: ['・0デュエ2イニシ編成で自分イニシ → 自分がデュエ的な戦う動きをする', '・攻めでサイファーが逆サイト管理してくれそう → デフォルト戦術', '・イニシがデュエにくっついてアビリティ投げそう → ラッシュ可能かも'], attributes: ['thinking', 'study'] },
+      { id: 'ally-counter', text: '必要に応じて適切に: 敵編成に対するアンチ戦術考案と味方への声掛けはできましたか', note: ['・味方が敵の編成から対策を考えられそうか判断する', '・ネオンがワイヤーのある所に行かなそうか、行くとしてもアンチワイヤーを考えていそうか、など'], attributes: ['thinking', 'study', 'teamplay'] },
+      { id: 'weird-teammate', text: '味方に変な奴がいる場合: その人との連携プレイの優先度を下げる決意をしましたか', note: ['・名前が「SDGs」「◯◯トロールします」', '・VCで明らかに様子がおかしい'], attributes: ['thinking', 'alert'] }
     ]
   },
   {
     heading: '各ラウンドの準備フェーズ',
     items: [
-      { id: 'weapon-econ', text: '敵味方の武器管理を適切に行えましたか', note: ['味方がハーフで4人買える時に適切に呼びかけできましたか', '敵がエコかどうか確認しましたか', '敵にオペレーターが出る可能性を認識しましたか'] },
-      { id: 'ult-management', text: '敵味方のアルティメット管理を適切に行えましたか', note: ['広範囲デバフ系ウルト(KJ, ブリーチ など)によってどう仕掛けるか・仕掛けられるか考えましたか'] },
-      { id: 'emotion-reset', text: '前ラウンドの感情処理を5秒以内に終わらせましたか (残20秒までに次の話を始められないと味方に浸透しない)' },
-      { id: 'counter-plan', text: '前のラウンドの内容をもとに適切に対策を考えられましたか' },
-      { id: 'propose-strat', text: '必要に応じて作戦を提案できましたか' }
+      { id: 'weapon-econ', text: '敵味方の武器管理を適切に行えましたか', note: ['・味方がハーフで4人買える時に呼びかけ', '・敵がエコかどうか', '・敵にオペレーターが出る可能性があるか'], attributes: ['thinking', 'study'] },
+      { id: 'ult-management', text: '敵味方のアルティメット管理を適切に行えましたか', note: ['・広範囲デバフ系ウルト(KJ, ブリーチ など)によってどう仕掛けるか・仕掛けられるか'], attributes: ['thinking', 'study'] },
+      { id: 'emotion-reset', text: '前ラウンドの感情処理を5秒以内に終わらせましたか', note: ['・残20秒までに次の話を始められないと味方に浸透しない'], attributes: ['thinking'] },
+      { id: 'counter-plan', text: '前のラウンドの内容をもとに適切に対策を考えられましたか', attributes: ['thinking', 'study'] },
+      { id: 'propose-strat', text: '必要に応じて作戦を提案できましたか', attributes: ['thinking', 'teamplay'] }
     ]
   },
   {
@@ -32,121 +31,450 @@ const kpiData = [
       {
         heading: '撃ち合い',
         items: [
-          { id: 'headline', text: 'ヘッドラインを維持できましたか' },
-          { id: 'angle-advantage', text: '必要に応じて適切にアングル(遠近壁)有利を取れていましたか' },
-          { id: 'off-angle', text: '必要に応じて適切にオフアングルを使えましたか' },
-          { id: 'peeker-adv', text: '必要に応じて適切にピーカーズアドバンテージを取れていましたか' },
-          { id: 'timing-peek', text: '必要に応じて適切にタイミングピークできましたか' },
-          { id: 'slicing-pie', text: '必要に応じて適切にカッティングパイできましたか' },
-          { id: 'cover-angle', text: '味方がカバー射線を通せるアングル&位置の維持はできましたか' },
-          { id: 'magazine', text: 'マガジン残弾数管理は適切でしたか' },
-          { id: 'anti-wallbang', text: 'モク抜きされにくい位置にいましたか' },
-          { id: 'anti-flash', text: 'フラッシュを食らっても生存できる位置にいましたか' }
+          { id: 'headline', text: 'ヘッドラインを維持できましたか', attributes: ['physical'] },
+          { id: 'angle-advantage', text: '必要に応じて適切にアングル(遠近壁)有利を取れていましたか', attributes: ['physical'] },
+          { id: 'off-angle', text: '必要に応じて適切にオフアングルを使えましたか', attributes: ['physical', 'judgement'] },
+          { id: 'peeker-adv', text: '必要に応じて適切にピーカーズアドバンテージを取れていましたか', attributes: ['physical'] },
+          { id: 'timing-peek', text: '必要に応じて適切にタイミングピークできましたか', attributes: ['physical'] },
+          { id: 'slicing-pie', text: '必要に応じて適切にカッティングパイできましたか', attributes: ['physical'] },
+          { id: 'cover-angle', text: '味方がカバー射線を通せるアングル&位置の維持はできましたか', attributes: ['physical', 'judgement', 'teamplay'] },
+          { id: 'magazine', text: 'マガジン残弾数管理は適切でしたか', attributes: ['physical'] },
+          { id: 'anti-wallbang', text: 'モク抜きされにくい位置にいましたか', attributes: ['judgement'] },
+          { id: 'anti-flash', text: 'フラッシュを食らっても生存できる位置にいましたか', attributes: ['judgement'] },
+          { id: 'variable-peak', text: '体の出し方に緩急をつけられましたか', attributes: ['physical'] },
+          { id: 'safe-melee', text: '近接武器・アビリティは安全な状況でのみ構えていましたか', attributes: ['judgement'] }
         ]
       },
       {
         heading: '盤面管理',
         items: [
-          { id: 'engage-decision', text: '接敵していいか判断してからピークしましたか' },
-          { id: 'reposition', text: '必要に応じて適切にポジションを変えましたか' },
-          { id: 'consider-enemy-count', text: 'エントリー時に敵の数と質の両方を考慮しましたか' },
-          { id: 'not-miss-rotate', text: 'ローテートが出来る状況を見落としませんでしたか' },
-          { id: 'rotate-reason', text: 'ローテートする判断の際、適切な根拠はありましたか' },
-          { id: 'ult-change', text: '敵味方のアルティメット状況変化を認識していましたか' },
-          { id: 'silent-steps', text: '必要に応じて適切に足音を消せましたか', note: ['ラウンド開始直後の情報取り段階', 'ローテート中'] },
-          { id: 'push-care', text: 'プッシュケアできましたか' },
-          { id: 'scoreboard-check', text: '可能な時、オーブとプラントの音でスコアボードを確認できましたか' },
-          { id: 'backstab-care', text: '裏取りされうるエリアで適切に警戒できましたか' }
+          { id: 'engage-decision', text: '接敵していいか判断してからピークしましたか', attributes: ['judgement', 'alert'] },
+          { id: 'reposition', text: '必要に応じて適切にポジションを変えましたか', attributes: ['judgement', 'alert'] },
+          { id: 'consider-enemy-count', text: 'エントリーの前に敵の数と質の両方を考慮しましたか', attributes: ['judgement', 'thinking', 'study'] },
+          { id: 'not-miss-rotate', text: 'ローテートが出来る状況を見落としませんでしたか', attributes: ['judgement', 'thinking'] },
+          { id: 'rotate-reason', text: 'ローテートする判断の際、適切な根拠はありましたか', attributes: ['judgement', 'thinking', 'study'] },
+          { id: 'ult-change', text: '敵味方のアルティメット状況変化を認識していましたか', attributes: ['judgement', 'alert'] },
+          { id: 'silent-steps', text: '必要に応じて適切に足音を消せましたか', note: ['・ラウンド開始直後の情報取り段階', '・ローテート画策中'], attributes: ['judgement', 'alert', 'thinking'] },
+          { id: 'push-care', text: 'プッシュケアできましたか', attributes: ['judgement','alert'] },
+          { id: 'scoreboard-check', text: '可能な時、オーブとプラントの音でスコアボードを確認できましたか', attributes: ['judgement', 'thinking'] },
+          { id: 'backstab-care', text: '裏取りされうるエリアで適切に警戒できましたか', attributes: ['judgement', 'alert'] },
+          { id: 'clearing', text: 'クリアリングミスはありませんでしたか', attributes: ['alert'] }
         ]
       },
       {
-        heading: '連携',
+        heading: 'チームプレイ',
         items: [
-          { id: 'death-call', text: '死亡時に即座に必要なことを報告できましたか' },
-          { id: 'ask-help', text: '自分が困った時に適切に助けを要求しましたか' },
-          { id: 'follow-entry', text: '適切にエントリーに着いていきましたか' },
-          { id: 'support-duelist', text: 'デュエリスト(先頭の人)が困っている時に適切に提案したり、適切に支援アビリティを出せましたか' },
-          { id: 'cover-line', text: '必要に応じて適切に味方へのカバーの射線を通せましたか' },
-          { id: 'safe-melee', text: '近接武器・アビリティは安全な状況でのみ構えていましたか' },
-          { id: 'protect-defuser', text: '解除者の射線に敵が立たないようにできましたか' }
+          { id: 'death-call', text: '死亡時に即座に必要なことを報告できましたか', attributes: ['teamplay', 'judgement'] },
+          { id: 'ask-help', text: '自分が困った時に適切に助けを要求しましたか', attributes: ['teamplay', 'judgement'] },
+          { id: 'follow-entry', text: '適切にエントリーに着いていきましたか', attributes: ['teamplay', 'judgement'] },
+          { id: 'support-duelist', text: 'デュエリスト(先頭の人)が困っている時に適切に提案したり、適切に支援アビリティを出せましたか', attributes: ['teamplay', 'thinking'] },
+          { id: 'cover-line', text: '必要に応じて適切に味方へのカバーの射線を通せましたか', attributes: ['teamplay', 'physical'] },
+          { id: 'protect-defuser', text: '解除者の射線に敵が立たないようにできましたか', attributes: ['teamplay', 'judgement'] }
         ]
       },
       {
         heading: 'プラント・ポストプラント',
         items: [
-          { id: 'plant-delay', text: 'どこで遅延行為がしやすいか考えてプラント位置を決めましたか' },
-          { id: 'postplant-position', text: '見方が設置した位置に対して強い位置取りができましたか' },
-          { id: 'ability-awareness', text: '味方と敵の残アビリティを認識できましたか' },
-          { id: 'ally-reaction', text: '味方の動きを見てそれに対応した適切なポジショニングはできましたか' }
+          { id: 'plant-delay', text: 'どこで遅延行為がしやすいか考えてプラント位置を決めましたか', attributes: ['study', 'judgement', 'thinking'] },
+          { id: 'postplant-position', text: '見方が設置した位置に対して強い位置取りができましたか', attributes: ['study', 'judgement'] },
+          { id: 'ability-awareness', text: '味方と敵の残アビリティを認識できましたか', attributes: ['study', 'judgement', 'teamplay'] },
+          { id: 'ally-reaction', text: '味方の動きを見てそれに対応した適切なポジショニングはできましたか', attributes: ['study', 'judgement', 'thinking', 'teamplay'] }
         ]
       }
     ]
   }
 ];
-// Flatten KPI structure into a simple list of items
+// Build KPI sections including headings while collecting items
 const kpiItems = [];
-kpiData.forEach(section => {
-  if (section.items) kpiItems.push(...section.items);
-  if (section.subsections) {
-    section.subsections.forEach(sub => {
-      if (sub.items) kpiItems.push(...sub.items);
+const container = document.getElementById('kpi-container');
+const averageEl = document.getElementById('average');
+const attributeKeys = ['physical', 'teamplay', 'judgement', 'alert', 'thinking', 'study'];
+const attributeLabels = {
+  physical: 'フィジカル',
+  teamplay: 'チームプレイ',
+  judgement: '状況判断',
+  alert: '警戒力',
+  thinking: '俯瞰思考',
+  study: '座学'
+};
+
+const rootStyles = getComputedStyle(document.documentElement);
+const attributeColors = {
+  physical: rootStyles.getPropertyValue('--color-physical').trim(),
+  teamplay: rootStyles.getPropertyValue('--color-teamplay').trim(),
+  judgement: rootStyles.getPropertyValue('--color-judgement').trim(),
+  alert: rootStyles.getPropertyValue('--color-alert').trim(),
+  thinking: rootStyles.getPropertyValue('--color-thinking').trim(),
+  study: rootStyles.getPropertyValue('--color-study').trim()
+};
+
+const radarCanvas = document.getElementById('radar-chart');
+const radarCtx = radarCanvas ? radarCanvas.getContext('2d') : null;
+let currentChartValues = new Array(attributeKeys.length).fill(0);
+
+// storage for summary notes
+const summaryNotes = {
+  good: '',
+  bad: '',
+  focus: ''
+};
+
+['good', 'bad', 'focus'].forEach(type => {
+  const el = document.getElementById(`summary-${type}`);
+  if (el) {
+    el.addEventListener('input', e => {
+      summaryNotes[type] = e.target.value;
     });
   }
 });
 
-const container = document.getElementById('kpi-container');
-const averageEl = document.getElementById('average');
+// expose for later export
+window.summaryNotes = summaryNotes;
 
-// Build a table row for each KPI item
-kpiItems.forEach(item => {
-  const row = document.createElement('tr');
-  row.innerHTML = `
-    <td>${item.text}</td>
-    <td><input type="number" id="${item.id}" min="0" max="100"></td>
-    <td><input type="text" id="${item.id}-note"></td>
-  `;
-  container.appendChild(row);
+function drawRoundedRect(ctx, x, y, width, height, radius) {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawRadarChart(values) {
+  if (!radarCtx) return;
+  const ctx = radarCtx;
+  const canvas = radarCanvas;
+  const count = values.length;
+  const maxVal = 100;
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  // shrink drawing area to 80% so labels have more room
+  const maxRadius = Math.min(centerX, centerY) - 10;
+  const radius = maxRadius * 0.8;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const angleStep = (Math.PI * 2) / count;
+
+  ctx.strokeStyle = '#ccc';
+  ctx.fillStyle = '#000';
+  for (let i = 0; i < count; i++) {
+    const angle = -Math.PI / 2 + i * angleStep;
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+
+    const label = attributeLabels[attributeKeys[i]] || '';
+    // leave extra space for the score beneath the label
+    const labelRadius = radius + 12;
+    const lx = centerX + labelRadius * Math.cos(angle);
+    const ly = centerY + labelRadius * Math.sin(angle);
+    if (Math.abs(Math.cos(angle)) < 0.1) {
+      ctx.textAlign = 'center';
+    } else {
+      ctx.textAlign = Math.cos(angle) > 0 ? 'left' : 'right';
+    }
+    if (Math.abs(Math.sin(angle)) < 0.1) {
+      ctx.textBaseline = 'middle';
+    } else {
+      ctx.textBaseline = Math.sin(angle) > 0 ? 'top' : 'bottom';
+    }
+    ctx.font = '12px sans-serif';
+    const metrics = ctx.measureText(label);
+    const textWidth = metrics.width;
+    const textHeight = (metrics.actualBoundingBoxAscent || 0) + (metrics.actualBoundingBoxDescent || 0) || 12;
+    const paddingX = 4;
+    const paddingY = 2;
+    const rectWidth = textWidth + paddingX * 2;
+    const rectHeight = textHeight + paddingY * 2;
+    let rectX = lx - paddingX;
+    if (ctx.textAlign === 'center') {
+      rectX -= textWidth / 2;
+    } else if (ctx.textAlign === 'right') {
+      rectX -= textWidth;
+    }
+    let rectY = ly - paddingY;
+    if (ctx.textBaseline === 'middle') {
+      rectY -= textHeight / 2;
+    } else if (ctx.textBaseline === 'bottom') {
+      rectY -= textHeight;
+    }
+    ctx.fillStyle = attributeColors[attributeKeys[i]];
+    drawRoundedRect(ctx, rectX, rectY, rectWidth, rectHeight, 4);
+    ctx.fillStyle = '#000';
+    ctx.fillText(label, lx, ly);
+
+    // Draw the score just inside the chart under the label
+    const scoreRadius = radius - 4;
+    const sx = centerX + scoreRadius * Math.cos(angle);
+    const sy = centerY + scoreRadius * Math.sin(angle);
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(values[i].toFixed(1), sx, sy);
+  }
+
+  ctx.beginPath();
+  for (let i = 0; i < count; i++) {
+    const angle = -Math.PI / 2 + i * angleStep;
+    const r = (values[i] / maxVal) * radius;
+    const x = centerX + r * Math.cos(angle);
+    const y = centerY + r * Math.sin(angle);
+    if (i === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(255, 99, 132, 0.3)';
+  ctx.strokeStyle = '#ff6384';
+  ctx.stroke();
+  ctx.fill();
+}
+
+function resizeLayout() {
+  if (!radarCanvas) return;
+  // Base canvas height on viewport width, then widen to a 3:2 ratio
+  const height = Math.min(Math.max(window.innerWidth * 0.22, 150), 220);
+  const width = height * 1.5;
+  radarCanvas.width = width;
+  radarCanvas.height = height;
+  const footer = document.getElementById('average-container');
+  if (footer) {
+    document.body.style.setProperty('--footer-height', `${footer.offsetHeight}px`);
+  }
+  drawRadarChart(currentChartValues);
+}
+
+window.addEventListener('resize', resizeLayout);
+resizeLayout();
+
+function addItem(item) {
+  // normalize attribute field to an array
+  if (!item.attributes) {
+    item.attributes = Array.isArray(item.attribute)
+      ? item.attribute
+      : [item.attribute];
+  }
+
+  kpiItems.push(item);
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('kpi-item');
+  wrapper.id = item.id;
+
+  const textContainer = document.createElement('div');
+  textContainer.classList.add('kpi-text');
+
+  const label = document.createElement('label');
+  label.textContent = item.text;
+  textContainer.appendChild(label);
+
+  if (item.note) {
+    const noteEl = document.createElement('div');
+    noteEl.classList.add('item-note');
+    noteEl.innerHTML = item.note.join('<br>');
+    textContainer.appendChild(noteEl);
+  }
+
+  // attribute tags
+  const tagContainer = document.createElement('div');
+  tagContainer.classList.add('item-tags');
+  item.attributes.forEach(attr => {
+    const tag = document.createElement('span');
+    tag.classList.add('attribute-tag');
+    tag.textContent = attributeLabels[attr] || attr;
+    if (attributeColors[attr]) {
+      tag.style.backgroundColor = attributeColors[attr];
+    }
+    tagContainer.appendChild(tag);
+  });
+  textContainer.appendChild(tagContainer);
+
+  wrapper.appendChild(textContainer);
+
+  const skipContainer = document.createElement('div');
+  skipContainer.classList.add('skip-container');
+  const skipCheckbox = document.createElement('input');
+  skipCheckbox.type = 'checkbox';
+  skipCheckbox.id = `${item.id}-skip`;
+  const skipLabel = document.createElement('label');
+  skipLabel.setAttribute('for', `${item.id}-skip`);
+  skipLabel.textContent = '除外';
+  skipLabel.classList.add('skip-label');
+  skipContainer.appendChild(skipCheckbox);
+  skipContainer.appendChild(skipLabel);
+  wrapper.appendChild(skipContainer);
+
+  const starContainer = document.createElement('div');
+  starContainer.classList.add('star-rating');
+  for (let i = 1; i <= 5; i++) {
+    const star = document.createElement('span');
+    star.classList.add('star');
+    star.innerHTML = '★';
+    star.dataset.value = i;
+    star.addEventListener('click', () => {
+      const current = parseInt(wrapper.dataset.rating || '0');
+      const newRating = current === i ? 0 : i;
+      setRating(wrapper, newRating);
+      updateAverage();
+    });
+    starContainer.appendChild(star);
+  }
+  wrapper.appendChild(starContainer);
+  skipCheckbox.addEventListener('change', updateAverage);
+  container.appendChild(wrapper);
+}
+
+kpiData.forEach(section => {
+  const sectionHeading = document.createElement('h2');
+  sectionHeading.classList.add('section-heading');
+  sectionHeading.textContent = section.heading;
+  container.appendChild(sectionHeading);
+
+  if (section.items) {
+    section.items.forEach(item => addItem(item));
+  }
+  if (section.subsections) {
+    section.subsections.forEach(sub => {
+      const subHeading = document.createElement('h3');
+      subHeading.classList.add('subsection-heading');
+      subHeading.textContent = sub.heading;
+      container.appendChild(subHeading);
+      if (sub.items) {
+        sub.items.forEach(item => addItem(item));
+      }
+    });
+    const sectionDivider = document.createElement('hr');
+    sectionDivider.classList.add('divider');
+    container.appendChild(sectionDivider);
+  } else {
+    const sectionDivider = document.createElement('hr');
+    sectionDivider.classList.add('divider');
+    container.appendChild(sectionDivider);
+  }
 });
 
-function updateAverage() {
-  let total = 0;
-  let count = 0;
-  kpiItems.forEach(item => {
-    const value = parseFloat(document.getElementById(item.id).value);
-    if (!isNaN(value)) {
-      total += value;
-      count++;
+  function updateAverage() {
+    let total = 0;
+    let count = 0;
+    const attrTotals = {};
+    const attrCounts = {};
+    attributeKeys.forEach(key => {
+      attrTotals[key] = 0;
+      attrCounts[key] = 0;
+    });
+
+    kpiItems.forEach(item => {
+      const skip = document.getElementById(`${item.id}-skip`).checked;
+      if (skip) return;
+      const wrapper = document.getElementById(item.id);
+      const rating = parseInt(wrapper.dataset.rating);
+      if (!isNaN(rating)) {
+        const score = rating * 20;
+        total += score;
+        count++;
+        item.attributes.forEach(attr => {
+          if (attrTotals[attr] === undefined) {
+            attrTotals[attr] = 0;
+            attrCounts[attr] = 0;
+          }
+          attrTotals[attr] += score;
+          attrCounts[attr] += 1;
+        });
+      }
+    });
+
+    const average = count ? total / count : 0;
+    averageEl.textContent = average.toFixed(1);
+    attributeKeys.forEach(key => {
+      const avg = attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0;
+      const span = document.getElementById(`avg-${key}`);
+      if (span) span.textContent = avg.toFixed(1);
+    });
+    const chartValues = attributeKeys.map(key => attrCounts[key] ? (attrTotals[key] / attrCounts[key]) : 0);
+    currentChartValues = chartValues;
+    drawRadarChart(chartValues);
+    const footer = document.getElementById('average-container');
+    if (footer) {
+      document.body.style.setProperty('--footer-height', `${footer.offsetHeight}px`);
     }
+  }
+
+function setRating(wrapper, rating) {
+  wrapper.dataset.rating = rating;
+  const stars = wrapper.querySelectorAll('.star');
+  stars.forEach((star, idx) => {
+    star.classList.toggle('selected', idx < rating);
   });
-  const average = count ? (total / count).toFixed(2) : 0;
-  averageEl.textContent = average;
+}
+
+const csvInput = document.getElementById('csvFile');
+if (csvInput) {
+  csvInput.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const text = evt.target.result.trim();
+      const lines = text.split(/\r?\n/).slice(1); // skip header
+      lines.forEach(line => {
+        const [id, score] = line.split(',');
+        const wrapper = document.getElementById(id);
+        if (wrapper) {
+          const rating = parseInt(score, 10) / 20;
+          setRating(wrapper, rating);
+        }
+      });
+      updateAverage();
+    };
+    reader.readAsText(file);
+  });
 }
 
 
-kpiItems.forEach(item => {
-  document.getElementById(item.id).addEventListener('input', updateAverage);
-});
+document.getElementById('export-btn').addEventListener('click', () => {
+  const kpiElements = kpiItems.map(item => {
+    const skip = document.getElementById(`${item.id}-skip`).checked;
+    const wrapper = document.getElementById(item.id);
+    const rating = parseInt(wrapper.dataset.rating || '0');
+    return {
+      id: item.id,
+      text: item.text,
+      attributes: item.attributes,
+      skip: skip,
+      score: rating * 20
+    };
+  });
 
-document.getElementById('csvFile').addEventListener('change', e => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function(evt) {
-    const text = evt.target.result.trim();
-    const lines = text.split(/\r?\n/).slice(1); // skip header
-    lines.forEach(line => {
-      const [id, score, note] = line.split(',');
-      const scoreInput = document.getElementById(id);
-      if (scoreInput) {
-        scoreInput.value = score;
-        const noteInput = document.getElementById(`${id}-note`);
-        if (noteInput) {
-          noteInput.value = note || '';
-        }
-      }
-    });
-    updateAverage();
+  const textnotes = {
+    wasgood: summaryNotes.good,
+    wasbad: summaryNotes.bad,
+    important: summaryNotes.focus
   };
-  reader.readAsText(file);
+
+  const exportData = {
+    kpiElements,
+    textnotes
+  };
+
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'kpi_data.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 });
