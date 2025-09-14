@@ -574,11 +574,11 @@ kpiData.forEach(section => {
       const countEl = wrapper.querySelector('.data-count');
       if (!scoreContainer || !scoreEl || !countEl) return;
       if (kpiCounts[item.id]) {
-        countEl.textContent = `(${kpiCounts[item.id]} data)`;
-        scoreEl.textContent = `(${(kpiTotals[item.id] / kpiCounts[item.id]).toFixed(1)})`;
+        countEl.textContent = `${kpiCounts[item.id]} data`;
+        scoreEl.textContent = `${(kpiTotals[item.id] / kpiCounts[item.id]).toFixed(1)}`;
       } else {
-        countEl.textContent = '(0 data)';
-        scoreEl.textContent = '(N/A)';
+        countEl.textContent = '0 data';
+        scoreEl.textContent = 'N/A';
       }
       scoreContainer.style.display = 'flex';
     });
