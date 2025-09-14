@@ -98,6 +98,16 @@ const attributeLabels = {
   study: '座学'
 };
 
+const rootStyles = getComputedStyle(document.documentElement);
+const attributeColors = {
+  physical: rootStyles.getPropertyValue('--color-physical').trim(),
+  teamplay: rootStyles.getPropertyValue('--color-teamplay').trim(),
+  judgement: rootStyles.getPropertyValue('--color-judgement').trim(),
+  alert: rootStyles.getPropertyValue('--color-alert').trim(),
+  thinking: rootStyles.getPropertyValue('--color-thinking').trim(),
+  study: rootStyles.getPropertyValue('--color-study').trim()
+};
+
 const radarCanvas = document.getElementById('radar-chart');
 const radarCtx = radarCanvas ? radarCanvas.getContext('2d') : null;
 let currentChartValues = new Array(attributeKeys.length).fill(0);
@@ -140,7 +150,6 @@ function drawRadarChart(values) {
 
   ctx.strokeStyle = '#ccc';
   ctx.font = '12px sans-serif';
-  ctx.fillStyle = '#000';
   for (let i = 0; i < count; i++) {
     const angle = -Math.PI / 2 + i * angleStep;
     const x = centerX + radius * Math.cos(angle);
@@ -150,7 +159,8 @@ function drawRadarChart(values) {
     ctx.lineTo(x, y);
     ctx.stroke();
 
-    const label = attributeLabels[attributeKeys[i]] || '';
+    const key = attributeKeys[i];
+    const label = attributeLabels[key] || '';
     const labelRadius = radius + 10;
     const lx = centerX + labelRadius * Math.cos(angle);
     const ly = centerY + labelRadius * Math.sin(angle);
@@ -164,6 +174,29 @@ function drawRadarChart(values) {
     } else {
       ctx.textBaseline = Math.sin(angle) > 0 ? 'top' : 'bottom';
     }
+    const color = attributeColors[key] || '#fff';
+    const metrics = ctx.measureText(label);
+    const padding = 2;
+    const textHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+    let rectX = lx;
+    if (ctx.textAlign === 'center') {
+      rectX -= metrics.width / 2 + padding;
+    } else if (ctx.textAlign === 'right') {
+      rectX -= metrics.width + padding;
+    } else {
+      rectX -= padding;
+    }
+    let rectY = ly;
+    if (ctx.textBaseline === 'middle') {
+      rectY -= textHeight / 2 + padding;
+    } else if (ctx.textBaseline === 'bottom') {
+      rectY -= textHeight + padding;
+    } else {
+      rectY -= padding;
+    }
+    ctx.fillStyle = color;
+    ctx.fillRect(rectX, rectY, metrics.width + padding * 2, textHeight + padding * 2);
+    ctx.fillStyle = '#000';
     ctx.fillText(label, lx, ly);
   }
 
