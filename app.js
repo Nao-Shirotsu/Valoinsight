@@ -91,17 +91,21 @@ const selectionContainer = document.getElementById('selection-container');
 let selectedMap = null;
 let selectedAgent = null;
 
-function buildSelectionRow(letters, className, onSelect) {
+function buildSelectionRow(options, className, onSelect) {
   const row = document.createElement('div');
   row.classList.add('selection-row');
-  letters.forEach(letter => {
+  options.forEach(opt => {
     const btn = document.createElement('div');
-    btn.textContent = letter;
     btn.classList.add('selection-button', className);
+    const img = document.createElement('img');
+    img.src = opt.src;
+    const value = opt.src.split('/').pop().replace('.webp', '');
+    img.alt = value;
+    btn.appendChild(img);
     btn.addEventListener('click', () => {
       Array.from(row.children).forEach(child => child.classList.remove('selected'));
       btn.classList.add('selected');
-      onSelect(letter);
+      onSelect(value);
     });
     row.appendChild(btn);
   });
@@ -109,12 +113,60 @@ function buildSelectionRow(letters, className, onSelect) {
 }
 
 if (selectionContainer) {
-  buildSelectionRow(['A', 'B', 'C'], 'map-button', letter => {
-    selectedMap = letter;
+  const mapOptions = [
+    { src: 'assets/maps/abyss.webp' },
+    { src: 'assets/maps/ascent.webp' },
+    { src: 'assets/maps/bind.webp' },
+    { src: 'assets/maps/breeze.webp' },
+    { src: 'assets/maps/corrode.webp' },
+    { src: 'assets/maps/fracture.webp' },
+    { src: 'assets/maps/haven.webp' },
+    { src: 'assets/maps/icebox.webp' },
+    { src: 'assets/maps/lotus.webp' },
+    { src: 'assets/maps/pearl.webp' },
+    { src: 'assets/maps/split.webp' },
+    { src: 'assets/maps/sunset.webp' }
+  ];
+  buildSelectionRow(mapOptions, 'map-button', value => {
+    selectedMap = value;
   });
-  buildSelectionRow(['s', 't', 'u', 'v', 'w'], 'agent-button', letter => {
-    selectedAgent = letter;
+
+  const agentOptions = [
+    { src: 'assets/agents/astra.webp' },
+    { src: 'assets/agents/breach.webp' },
+    { src: 'assets/agents/brimstone.webp' },
+    { src: 'assets/agents/chamber.webp' },
+    { src: 'assets/agents/clove.webp' },
+    { src: 'assets/agents/cypher.webp' },
+    { src: 'assets/agents/deadlock.webp' },
+    { src: 'assets/agents/fade.webp' },
+    { src: 'assets/agents/gekko.webp' },
+    { src: 'assets/agents/harbor.webp' },
+    { src: 'assets/agents/iso.webp' },
+    { src: 'assets/agents/jett.webp' },
+    { src: 'assets/agents/kayo.webp' },
+    { src: 'assets/agents/killjoy.webp' },
+    { src: 'assets/agents/neon.webp' },
+    { src: 'assets/agents/omen.webp' },
+    { src: 'assets/agents/phoenix.webp' },
+    { src: 'assets/agents/raze.webp' },
+    { src: 'assets/agents/reyna.webp' },
+    { src: 'assets/agents/sage.webp' },
+    { src: 'assets/agents/skye.webp' },
+    { src: 'assets/agents/sova.webp' },
+    { src: 'assets/agents/tejo.webp' },
+    { src: 'assets/agents/viper.webp' },
+    { src: 'assets/agents/vyse.webp' },
+    { src: 'assets/agents/waylay.webp' },
+    { src: 'assets/agents/yoru.webp' }
+  ];
+  buildSelectionRow(agentOptions, 'agent-button', value => {
+    selectedAgent = value;
   });
+
+  const selectionDivider = document.createElement('hr');
+  selectionDivider.classList.add('divider');
+  selectionContainer.appendChild(selectionDivider);
 }
 const averageEl = document.getElementById('average');
 const attributeKeys = ['physical', 'teamplay', 'judgement', 'alert', 'thinking', 'study'];
