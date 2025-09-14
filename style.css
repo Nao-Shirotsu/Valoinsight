@@ -59,15 +59,23 @@ h1 {
 
 #attribute-averages {
   display: flex;
-  justify-content: flex-start;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
   font-size: 1rem;
   margin-top: 4px;
 }
 
 .attribute-average {
+  display: flex;
+  align-items: center;
   white-space: nowrap;
+}
+
+.attribute-label {
+  width: 6em;
+}
+
+.attribute-score::before {
+  content: ': ';
 }
 
 #export-btn {
