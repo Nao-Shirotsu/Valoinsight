@@ -4,7 +4,7 @@ const kpiData = [
     items: [
       { id: 'remember-vc', text: '誰のVCが無いか覚えてましたか', attributes: ['teamplay', 'thinking'] },
       { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ'], attributes: ['teamplay', 'study'] },
-      { id: 'strategy-axis', text: '編成から立ち回りの軸を見いだせましたか', attributes: ['teamplay', 'study', 'thinking'] }
+      { id: 'strategy-axis', text: '編成から立ち回りの軸を見いだせましたか', attributes: ['teamplay', 'thinking', 'study'] }
     ]
   },
   {
@@ -75,10 +75,10 @@ const kpiData = [
       {
         heading: 'プラント・ポストプラント',
         items: [
-          { id: 'plant-delay', text: 'どこで遅延行為がしやすいか考えてプラント位置を決めましたか', attributes: ['study', 'thinking', 'judgement'] },
+          { id: 'plant-delay', text: 'どこで遅延行為がしやすいか考えてプラント位置を決めましたか', attributes: ['study', 'judgement', 'thinking'] },
           { id: 'postplant-position', text: '見方が設置した位置に対して強い位置取りができましたか', attributes: ['study', 'judgement'] },
           { id: 'ability-awareness', text: '味方と敵の残アビリティを認識できましたか', attributes: ['study', 'judgement', 'teamplay'] },
-          { id: 'ally-reaction', text: '味方の動きを見てそれに対応した適切なポジショニングはできましたか', attributes: ['study', 'thinking', 'judgement', 'teamplay'] }
+          { id: 'ally-reaction', text: '味方の動きを見てそれに対応した適切なポジショニングはできましたか', attributes: ['study', 'judgement', 'thinking', 'teamplay'] }
         ]
       }
     ]
