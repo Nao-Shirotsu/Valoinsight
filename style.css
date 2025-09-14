@@ -173,22 +173,23 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 4px;
   gap: 2px;
+  align-self: center;
 }
 
 .skip-label {
-  font-size: 0.75em;
+  font-size: 0.625em;
   text-align: center;
 }
 
 .star-rating {
   display: flex;
   gap: 4px;
+  align-self: center;
 }
 
 .star {
-  font-size: 1.2em;
+  font-size: 1.6em;
   cursor: pointer;
   color: #ccc;
 }
