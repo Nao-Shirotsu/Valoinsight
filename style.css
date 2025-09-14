@@ -141,14 +141,7 @@ h1 {
   margin: 8px 0;
   padding: 4px 8px;
   border-radius: 1% / 7%
-}
-
-.kpi-item:nth-of-type(odd) {
-  background-color: #f1f2f9;
-}
-
-.kpi-item:nth-of-type(even) {
-  background-color: #f2f5fa;
+  background-color: #f1f2fb;
 }
 
 .kpi-text {
