@@ -49,6 +49,8 @@ h1 {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .selection-button {
@@ -57,6 +59,7 @@ h1 {
   align-items: center;
   border: 2px solid #000;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .selection-button.selected {
@@ -73,6 +76,12 @@ h1 {
   width: 40px;
   height: 40px;
   font-size: 1rem;
+}
+
+.selection-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 
