@@ -769,7 +769,9 @@ document.getElementById('export-btn').addEventListener('click', () => {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'kpi_data.json';
+  const mapName = selectedMap ? selectedMap.toLowerCase() : 'unknown';
+  const agentName = selectedAgent ? selectedAgent.toLowerCase() : 'unknown';
+  a.download = `valoinsight_${mapName}_${agentName}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
