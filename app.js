@@ -769,8 +769,8 @@ document.getElementById('export-btn').addEventListener('click', () => {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  const mapName = selectedMap ? selectedMap.toLowerCase() : 'unknown-map';
-  const agentName = selectedAgent ? selectedAgent.toLowerCase() : 'unknown-agent';
+  const mapName = selectedMap ? selectedMap.toLowerCase() : 'unknown';
+  const agentName = selectedAgent ? selectedAgent.toLowerCase() : 'unknown';
   a.download = `valoinsight_${mapName}_${agentName}.json`;
   document.body.appendChild(a);
   a.click();
