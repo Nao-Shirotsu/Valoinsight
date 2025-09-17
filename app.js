@@ -2,7 +2,7 @@ const kpiData = [
   {
     heading: '編成中',
     items: [
-      { id: 'remember-vc', text: '誰のVCが無いか覚えてましたか', attributes: ['teamplay', 'thinking'] },
+      { id: 'remember-vc', text: 'ああああああああ', attributes: ['teamplay', 'thinking'] },
       { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ'], attributes: ['teamplay', 'study'] },
       { id: 'strategy-axis', text: '編成から立ち回りの軸を見いだせましたか', attributes: ['teamplay', 'thinking', 'study'] }
     ]
