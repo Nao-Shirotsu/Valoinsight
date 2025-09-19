@@ -996,7 +996,8 @@ document.getElementById('export-btn').addEventListener('click', () => {
   a.href = url;
   const mapName = selectedMap ? selectedMap.toLowerCase() : 'unknown';
   const agentName = selectedAgent ? selectedAgent.toLowerCase() : 'unknown';
-  a.download = `valoinsight_${mapName}_${agentName}.json`;
+  const complexityName = complexityToggle && complexityToggle.checked ? 'advanced' : 'simple';
+  a.download = `valoinsight_${complexityName}_${mapName}_${agentName}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
