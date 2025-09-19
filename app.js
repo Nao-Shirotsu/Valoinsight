@@ -80,7 +80,7 @@ const kpiData = [
           { id: 'ability-awareness', text: '味方と敵の残アビリティを認識できましたか', attributes: ['study', 'judgement', 'teamplay'] },
           { id: 'ally-reaction', text: '味方の動きを見てそれに対応した適切なポジショニングはできましたか', attributes: ['study', 'judgement', 'thinking', 'teamplay'] }
         ]
-      }
+      },
       {
         heading: '座学',
         items: [         
@@ -90,21 +90,21 @@ const kpiData = [
           { id: 'spike-benefits', text: 'スパイクを設置・解除した際に得られるメリットを全て知っていますか', attributes: ['study'] },
           { id: 'spike-timers', text: 'スパイクの設置・爆発・解除にかかる秒数を知っていますか', attributes: ['study'] },
           { id: 'spike-cues', text: '設置後のスパイクの見た目や音の変化で分かる情報を全て知っていますか', attributes: ['study'] },
-          { id: 'map-official-calls', text: '今回のマップの、公式なエリアの名称を全て知っていますか', note: ['・ラフター, タピオカなど], attributes: ['study'] },
-          { id: 'map-nickname-calls', text: '今回のマップの、非公式なエリアの俗称を概ね知っていますか', note: ['・ヘヴン, ザリガニなど], attributes: ['study'] },
+          { id: 'map-official-calls', text: '今回のマップの、公式なエリアの名称を全て知っていますか', note: ['・ラフター, タピオカなど'], attributes: ['study'] },
+          { id: 'map-nickname-calls', text: '今回のマップの、非公式なエリアの俗称を概ね知っていますか', note: ['・ヘヴン, ザリガニなど'], attributes: ['study'] },
           { id: 'sniper-spots', text: 'スナイパーがよく出てくる場所とエージェントを知っていますか', attributes: ['study'] },
           { id: 'shotgun-spots', text: 'ショットガンがよく出てくる場所を知っていますか', attributes: ['study'] },
           { id: 'map-key-areas', text: '今回のマップで一般的に重要とされるエリアはどこか、理由も含めて説明できますか', attributes: ['study'] },
           { id: 'map-essential-agents', text: '今回のマップで一般的に必須とされるエージェントを、理由も含めて説明できますか', attributes: ['study'] },
           { id: 'map-plant-spots', text: '今回のマップの、一般的なプラント位置を全て知っていますか', attributes: ['study'] },
-          { id: 'map-chokepoints', text: '今回のマップにおける、一般的なチョークポイントを知っていますか', note: ['・チョークポイントとは：敵が出てくる所] , attributes: ['study'] },
+          { id: 'map-chokepoints', text: '今回のマップにおける、一般的なチョークポイントを知っていますか', note: ['・チョークポイントとは：敵が出てくる所'] , attributes: ['study'] },
           { id: 'map-off-angles', text: '今回のマップにおける、一般的なオフアングルを知っていますか', attributes: ['study'] },
-          { id: 'map-highground', text: '今回のマップにおける、一般的な高所ポジションを知っていますか', note: ['・ジェットやオーメンなど、移動アビリティ使用後限定のポジションを含む] , attributes: ['study'] },
+          { id: 'map-highground', text: '今回のマップにおける、一般的な高所ポジションを知っていますか', note: ['・ジェットやオーメンなど、移動アビリティ使用後限定のポジションを含む'] , attributes: ['study'] },
           { id: 'signature-knowledge', text: '今回の試合で使われた全てのエージェントのシグネチャーアビリティと、そのリキャストタイムを知っていますか', attributes: ['study'] },
           { id: 'flash-stun-knowledge', text: '今回の試合で使われたエージェントの、全てのフラッシュ・スタンの効果と範囲を知っていますか', attributes: ['study'] },
           { id: 'flash-stun-spots', text: '今回のマップで、一般的にフラッシュやスタンが良く使われる場所を知っていますか', attributes: ['study'] },
           { id: 'sentinel-trap-knowledge', text: '今回の試合で使われた全てのセンチネルの持つ、トラップの一般的な定点と対策を知っていますか', attributes: ['study'] },
-          { id: 'smoke-usage-knowledge', text: '一般的なスモークの置き方と、その使い方を全て知っていますか', note: ['・閉じ・耐え・もっこり・1way など] attributes: ['study'] },
+          { id: 'smoke-usage-knowledge', text: '一般的なスモークの置き方と、その使い方を全て知っていますか', note: ['・閉じ・耐え・もっこり・1way など'], attributes: ['study'] },
           { id: 'recon-usage-knowledge', text: '索敵アビリティが一般的にどこに投げられ、それがどのエリアを映す為のものか知っていますか', attributes: ['study'] },
           { id: 'drone-required-areas', text: '今回のマップで、ドローン系の索敵が無ければ極めて進みづらいエリアがどこかを知っていますか', attributes: ['study'] },
           { id: 'molly-count-knowledge', text: '今回の試合で互いのチームにモロトフが合計何個あり、それぞれ何秒あるか知っていますか', attributes: ['study'] },
