@@ -7,6 +7,7 @@
   --color-teamplay: #e6d5ff;
   --color-judgement: #fff9cc;
   --color-study: #d6f0ff;
+  --skip-label-offset: 0.75rem;
 }
 
 body {
@@ -350,14 +351,20 @@ h1 {
 }
 
 .skip-container {
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2px;
+  justify-content: center;
   align-self: center;
+  padding-bottom: var(--skip-label-offset);
+  transform: translateY(calc(var(--skip-label-offset) / 2));
 }
 
 .skip-label {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 0.625em;
   text-align: center;
 }
