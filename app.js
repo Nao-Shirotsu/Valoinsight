@@ -80,7 +80,7 @@ const kpiData = [
           { id: 'ability-awareness', text: '味方と敵の残アビリティを認識できましたか', attributes: ['study', 'judgement', 'teamplay'] },
           { id: 'ally-reaction', text: '味方の動きを見てそれに対応した適切なポジショニングはできましたか', attributes: ['study', 'judgement', 'thinking', 'teamplay'] }
         ]
-      }
+      },
       {
         heading: '座学',
         items: [         
