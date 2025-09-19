@@ -497,7 +497,16 @@ function addItem(item, sectionHeading = null, subsectionHeading = null) {
   scoreWrapper.appendChild(scoreDisplay);
 
   wrapper.appendChild(scoreWrapper);
-  skipCheckbox.addEventListener('change', updateAverage);
+  const updateSkipAppearance = () => {
+    wrapper.classList.toggle('kpi-item-skipped', skipCheckbox.checked);
+  };
+
+  skipCheckbox.addEventListener('change', () => {
+    updateSkipAppearance();
+    updateAverage();
+  });
+
+  updateSkipAppearance();
   container.appendChild(wrapper);
 }
 

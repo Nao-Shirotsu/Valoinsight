@@ -1,9 +1,15 @@
 # Valoinsight
 
-website: https://nao-shirotsu.github.io/Valoinsight/
+VALORANT上達のためのKPI採点ツール
 
-Simple static site to visualise VALORANT match KPI scores. KPI items are hard-coded and scores can be entered manually. The page displays the average score of the entered KPIs. The evaluation and summary notes can also be exported as a JSON file via the **エクスポート** button in the fixed footer.
+ウェブサイト: https://nao-shirotsu.github.io/Valoinsight/
 
-## Usage
+## 仕様
+### 採点モード
+試合を振り返り、項目ごとに採点することで総合スコア/指標ごとのスコアが見られます。結果はjsonでエクスポートできます。
+### 統計モード
+1つ以上の採点jsonファイルをドラッグアンドドロップすることで、全ファイルを合わせたスコアが閲覧できます。マップ/エージェントによるフィルタも可能。
+ 
+## Contribute
 
-Open `index.html` in your browser. Enter scores for each KPI. The average score will update automatically as scores are entered.
+develop ブランチへPRを送ってください。
