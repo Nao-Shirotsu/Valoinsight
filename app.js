@@ -359,37 +359,60 @@ function resizeLayout() {
 window.addEventListener('resize', resizeLayout);
 resizeLayout();
 
-function addItem(item) {
-  // normalize attribute field to an array
-  if (!item.attributes) {
-    item.attributes = Array.isArray(item.attribute)
-      ? item.attribute
-      : [item.attribute];
+function normalizeAttributes(attrs) {
+  if (Array.isArray(attrs)) {
+    return attrs.slice();
   }
+  if (!attrs) {
+    return [];
+  }
+  return [attrs];
+}
 
-  kpiItems.push(item);
+function normalizeNotes(note) {
+  if (Array.isArray(note)) {
+    return note.slice();
+  }
+  if (note === undefined || note === null || note === '') {
+    return null;
+  }
+  return [note];
+}
+
+function addItem(item, sectionHeading = null, subsectionHeading = null) {
+  if (!item || !item.id) return;
+  const normalized = {
+    id: item.id,
+    text: item.text || '',
+    attributes: normalizeAttributes(item.attributes || item.attribute),
+    note: normalizeNotes(item.note),
+    sectionHeading: sectionHeading ?? item.sectionHeading ?? null,
+    subsectionHeading: subsectionHeading ?? item.subsectionHeading ?? null
+  };
+
+  kpiItems.push(normalized);
   const wrapper = document.createElement('div');
   wrapper.classList.add('kpi-item');
-  wrapper.id = item.id;
+  wrapper.id = normalized.id;
 
   const textContainer = document.createElement('div');
   textContainer.classList.add('kpi-text');
 
   const label = document.createElement('label');
-  label.textContent = item.text;
+  label.textContent = normalized.text;
   textContainer.appendChild(label);
 
-  if (item.note) {
+  if (normalized.note && normalized.note.length) {
     const noteEl = document.createElement('div');
     noteEl.classList.add('item-note');
-    noteEl.innerHTML = item.note.join('<br>');
+    noteEl.innerHTML = normalized.note.join('<br>');
     textContainer.appendChild(noteEl);
   }
 
   // attribute tags
   const tagContainer = document.createElement('div');
   tagContainer.classList.add('item-tags');
-  item.attributes.forEach(attr => {
+  normalized.attributes.forEach(attr => {
     const tag = document.createElement('span');
     tag.classList.add('attribute-tag');
     tag.textContent = attributeLabels[attr] || attr;
@@ -406,9 +429,9 @@ function addItem(item) {
   skipContainer.classList.add('skip-container');
   const skipCheckbox = document.createElement('input');
   skipCheckbox.type = 'checkbox';
-  skipCheckbox.id = `${item.id}-skip`;
+  skipCheckbox.id = `${normalized.id}-skip`;
   const skipLabel = document.createElement('label');
-  skipLabel.setAttribute('for', `${item.id}-skip`);
+  skipLabel.setAttribute('for', `${normalized.id}-skip`);
   skipLabel.textContent = '除外';
   skipLabel.classList.add('skip-label');
   skipContainer.appendChild(skipCheckbox);
@@ -466,7 +489,7 @@ function buildDefaultKpiLayout() {
     container.appendChild(sectionHeading);
 
     if (section.items) {
-      section.items.forEach(item => addItem(item));
+      section.items.forEach(item => addItem(item, section.heading));
     }
     if (section.subsections) {
       section.subsections.forEach(sub => {
@@ -475,7 +498,7 @@ function buildDefaultKpiLayout() {
         subHeading.textContent = sub.heading;
         container.appendChild(subHeading);
         if (sub.items) {
-          sub.items.forEach(item => addItem(item));
+          sub.items.forEach(item => addItem(item, section.heading, sub.heading));
         }
       });
       const sectionDivider = document.createElement('hr');
@@ -489,34 +512,104 @@ function buildDefaultKpiLayout() {
   });
 }
 
+function forEachKpiElement(data, callback) {
+  if (!data) return;
+  if (Array.isArray(data.kpiGroups)) {
+    data.kpiGroups.forEach(section => {
+      const sectionHeading = section && section.heading !== undefined ? section.heading : null;
+      if (Array.isArray(section.items)) {
+        section.items.forEach(item => callback(item, sectionHeading, null));
+      }
+      if (Array.isArray(section.subsections)) {
+        section.subsections.forEach(sub => {
+          const subHeading = sub && sub.heading !== undefined ? sub.heading : null;
+          if (Array.isArray(sub.items)) {
+            sub.items.forEach(item => callback(item, sectionHeading, subHeading));
+          }
+        });
+      }
+    });
+    return;
+  }
+  if (Array.isArray(data.kpiElements)) {
+    data.kpiElements.forEach(item => callback(item, null, null));
+  }
+}
+
 function buildStatsLayoutFromDatasets(datasets) {
   if (!container) return;
   const seenIds = new Set();
-  const statsItems = [];
+  const sections = [];
+  const sectionMap = new Map();
+
+  const getSection = heading => {
+    const key = heading || '';
+    if (!sectionMap.has(key)) {
+      const section = { heading: heading, items: [], subsections: [] };
+      sectionMap.set(key, section);
+      sections.push(section);
+    }
+    return sectionMap.get(key);
+  };
+
+  const addToSection = (sectionHeading, subsectionHeading, item) => {
+    if (!item || !item.id || seenIds.has(item.id)) return;
+    seenIds.add(item.id);
+    const section = getSection(sectionHeading);
+
+    const normalizedItem = {
+      id: item.id,
+      text: item.text || '',
+      attributes: item.attributes,
+      attribute: item.attribute,
+      note: item.note,
+      sectionHeading: sectionHeading,
+      subsectionHeading: subsectionHeading
+    };
+
+    if (subsectionHeading) {
+      let subsection = section.subsections.find(sub => sub.heading === subsectionHeading);
+      if (!subsection) {
+        subsection = { heading: subsectionHeading, items: [] };
+        section.subsections.push(subsection);
+      }
+      subsection.items.push(normalizedItem);
+    } else {
+      section.items.push(normalizedItem);
+    }
+  };
+
   datasets.forEach(data => {
-    if (!data || !Array.isArray(data.kpiElements)) return;
-    data.kpiElements.forEach(el => {
-      if (!el || !el.id || seenIds.has(el.id)) return;
-      seenIds.add(el.id);
-      const item = {
-        id: el.id,
-        text: el.text || '',
-        attributes: Array.isArray(el.attributes)
-          ? el.attributes
-          : el.attributes
-            ? [el.attributes]
-            : [],
-        note: Array.isArray(el.note)
-          ? el.note
-          : typeof el.note === 'string'
-            ? [el.note]
-            : undefined
-      };
-      statsItems.push(item);
+    forEachKpiElement(data, (item, sectionHeading, subsectionHeading) => {
+      addToSection(sectionHeading, subsectionHeading, item);
     });
   });
+
   clearKpiContainer();
-  statsItems.forEach(item => addItem(item));
+  sections.forEach(section => {
+    if (section.heading) {
+      const sectionHeadingEl = document.createElement('h2');
+      sectionHeadingEl.classList.add('section-heading');
+      sectionHeadingEl.textContent = section.heading;
+      container.appendChild(sectionHeadingEl);
+    }
+
+    if (section.items.length) {
+      section.items.forEach(item => addItem(item, section.heading));
+    }
+
+    section.subsections.forEach(sub => {
+      const subHeadingEl = document.createElement('h3');
+      subHeadingEl.classList.add('subsection-heading');
+      subHeadingEl.textContent = sub.heading;
+      container.appendChild(subHeadingEl);
+      sub.items.forEach(item => addItem(item, section.heading, sub.heading));
+    });
+
+    const divider = document.createElement('hr');
+    divider.classList.add('divider');
+    container.appendChild(divider);
+  });
   applyMode();
 }
 
@@ -593,8 +686,7 @@ function buildStatsLayoutFromDatasets(datasets) {
     let total = 0;
     let count = 0;
     dataArray.forEach(data => {
-      if (!Array.isArray(data.kpiElements)) return;
-      data.kpiElements.forEach(el => {
+      forEachKpiElement(data, el => {
         if (el.skip) return;
         const score = typeof el.score === 'number' ? el.score : 0;
         if (kpiTotals[el.id] === undefined) {
@@ -785,17 +877,57 @@ if (dropArea) {
 }
 
 document.getElementById('export-btn').addEventListener('click', () => {
-  const kpiElements = kpiItems.map(item => {
+  const groupOrder = [];
+  const groupMap = new Map();
+
+  const getGroup = heading => {
+    const key = heading || '';
+    if (!groupMap.has(key)) {
+      const group = { heading: heading || null, items: [], subsections: [] };
+      groupMap.set(key, group);
+      groupOrder.push(group);
+    }
+    return groupMap.get(key);
+  };
+
+  const buildElement = item => {
     const skip = document.getElementById(`${item.id}-skip`).checked;
     const wrapper = document.getElementById(item.id);
     const rating = parseInt(wrapper.dataset.rating || '0');
-    return {
+    const element = {
       id: item.id,
       text: item.text,
       attributes: item.attributes,
       skip: skip,
       score: rating * 20
     };
+    if (item.note && item.note.length) {
+      element.note = item.note.slice();
+    }
+    return element;
+  };
+
+  kpiItems.forEach(item => {
+    const group = getGroup(item.sectionHeading);
+    const element = buildElement(item);
+    if (item.subsectionHeading) {
+      let subsection = group.subsections.find(sub => sub.heading === item.subsectionHeading);
+      if (!subsection) {
+        subsection = { heading: item.subsectionHeading, items: [] };
+        group.subsections.push(subsection);
+      }
+      subsection.items.push(element);
+    } else {
+      group.items.push(element);
+    }
+  });
+
+  const flatElements = [];
+  groupOrder.forEach(group => {
+    group.items.forEach(el => flatElements.push(el));
+    group.subsections.forEach(sub => {
+      sub.items.forEach(el => flatElements.push(el));
+    });
   });
 
   const textnotes = {
@@ -807,7 +939,8 @@ document.getElementById('export-btn').addEventListener('click', () => {
   const exportData = {
     map: selectedMap,
     agent: selectedAgent,
-    kpiElements,
+    kpiGroups: groupOrder,
+    kpiElements: flatElements,
     textnotes
   };
 
