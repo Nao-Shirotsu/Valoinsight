@@ -448,34 +448,77 @@ function addItem(item) {
   container.appendChild(wrapper);
 }
 
-kpiData.forEach(section => {
-  const sectionHeading = document.createElement('h2');
-  sectionHeading.classList.add('section-heading');
-  sectionHeading.textContent = section.heading;
-  container.appendChild(sectionHeading);
+function clearKpiContainer() {
+  if (!container) return;
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+  kpiItems.length = 0;
+}
 
-  if (section.items) {
-    section.items.forEach(item => addItem(item));
-  }
-  if (section.subsections) {
-    section.subsections.forEach(sub => {
-      const subHeading = document.createElement('h3');
-      subHeading.classList.add('subsection-heading');
-      subHeading.textContent = sub.heading;
-      container.appendChild(subHeading);
-      if (sub.items) {
-        sub.items.forEach(item => addItem(item));
-      }
+function buildDefaultKpiLayout() {
+  if (!container) return;
+  clearKpiContainer();
+  kpiData.forEach(section => {
+    const sectionHeading = document.createElement('h2');
+    sectionHeading.classList.add('section-heading');
+    sectionHeading.textContent = section.heading;
+    container.appendChild(sectionHeading);
+
+    if (section.items) {
+      section.items.forEach(item => addItem(item));
+    }
+    if (section.subsections) {
+      section.subsections.forEach(sub => {
+        const subHeading = document.createElement('h3');
+        subHeading.classList.add('subsection-heading');
+        subHeading.textContent = sub.heading;
+        container.appendChild(subHeading);
+        if (sub.items) {
+          sub.items.forEach(item => addItem(item));
+        }
+      });
+      const sectionDivider = document.createElement('hr');
+      sectionDivider.classList.add('divider');
+      container.appendChild(sectionDivider);
+    } else {
+      const sectionDivider = document.createElement('hr');
+      sectionDivider.classList.add('divider');
+      container.appendChild(sectionDivider);
+    }
+  });
+}
+
+function buildStatsLayoutFromDatasets(datasets) {
+  if (!container) return;
+  const seenIds = new Set();
+  const statsItems = [];
+  datasets.forEach(data => {
+    if (!data || !Array.isArray(data.kpiElements)) return;
+    data.kpiElements.forEach(el => {
+      if (!el || !el.id || seenIds.has(el.id)) return;
+      seenIds.add(el.id);
+      const item = {
+        id: el.id,
+        text: el.text || '',
+        attributes: Array.isArray(el.attributes)
+          ? el.attributes
+          : el.attributes
+            ? [el.attributes]
+            : [],
+        note: Array.isArray(el.note)
+          ? el.note
+          : typeof el.note === 'string'
+            ? [el.note]
+            : undefined
+      };
+      statsItems.push(item);
     });
-    const sectionDivider = document.createElement('hr');
-    sectionDivider.classList.add('divider');
-    container.appendChild(sectionDivider);
-  } else {
-    const sectionDivider = document.createElement('hr');
-    sectionDivider.classList.add('divider');
-    container.appendChild(sectionDivider);
-  }
-});
+  });
+  clearKpiContainer();
+  statsItems.forEach(item => addItem(item));
+  applyMode();
+}
 
   function updateAverage() {
     let total = 0;
@@ -621,6 +664,9 @@ kpiData.forEach(section => {
     loadedDatasets = [];
     const incoming = Array.isArray(dataArray) ? dataArray : [dataArray];
     loadedDatasets.push(...incoming);
+    if (modeToggle && modeToggle.checked) {
+      buildStatsLayoutFromDatasets(loadedDatasets);
+    }
     refreshStats();
   }
 
@@ -782,62 +828,71 @@ const modeToggle = document.getElementById('mode-toggle');
 const statsPlaceholderValue = 0.0;
 
 function applyMode() {
+  const isStatsMode = modeToggle && modeToggle.checked;
   const kpiContainer = document.getElementById('kpi-container');
   const summaryContainer = document.getElementById('summary-container');
   const exportBtn = document.getElementById('export-btn');
 
-  if (modeToggle.checked) {
-    if (kpiContainer) kpiContainer.style.display = '';
-    if (summaryContainer) summaryContainer.style.display = 'none';
-    if (dropArea) dropArea.style.display = '';
-    if (exportBtn) {
-      exportBtn.disabled = true;
-      exportBtn.style.display = 'none';
+  if (kpiContainer) kpiContainer.style.display = '';
+  if (summaryContainer) {
+    summaryContainer.style.display = isStatsMode ? 'none' : '';
+  }
+  if (dropArea) {
+    dropArea.style.display = isStatsMode ? '' : 'none';
+  }
+  if (exportBtn) {
+    exportBtn.disabled = isStatsMode;
+    exportBtn.style.display = isStatsMode ? 'none' : '';
+  }
+
+  kpiItems.forEach(item => {
+    const skipCheckbox = document.getElementById(`${item.id}-skip`);
+    const wrapper = document.getElementById(item.id);
+    if (!wrapper) return;
+    const skipContainer = wrapper.querySelector('.skip-container');
+    const starContainer = wrapper.querySelector('.star-rating');
+    const scoreContainer = wrapper.querySelector('.score-container');
+    const scoreEl = wrapper.querySelector('.score-display');
+    const countEl = wrapper.querySelector('.data-count');
+
+    if (skipCheckbox) {
+      skipCheckbox.disabled = isStatsMode;
     }
-    kpiItems.forEach(item => {
-      const skipCheckbox = document.getElementById(`${item.id}-skip`);
-      if (skipCheckbox) skipCheckbox.disabled = true;
-      const wrapper = document.getElementById(item.id);
-      if (wrapper) {
-        const skipContainer = wrapper.querySelector('.skip-container');
-        if (skipContainer) skipContainer.style.display = 'none';
-        const starContainer = wrapper.querySelector('.star-rating');
-        if (starContainer) starContainer.style.display = 'none';
-        const scoreContainer = wrapper.querySelector('.score-container');
-        const scoreEl = wrapper.querySelector('.score-display');
-        const countEl = wrapper.querySelector('.data-count');
-        if (scoreContainer && scoreEl && countEl) {
-          scoreEl.innerHTML = `平均スコア <span class="score-number">${statsPlaceholderValue}</span>`;
-          countEl.textContent = '該当 0 件';
-          scoreContainer.style.display = 'flex';
-        }
+
+    if (skipContainer) {
+      skipContainer.style.display = isStatsMode ? 'none' : '';
+    }
+    if (starContainer) {
+      starContainer.style.display = isStatsMode ? 'none' : '';
+    }
+    if (scoreContainer) {
+      scoreContainer.style.display = 'flex';
+      if (!isStatsMode) {
+        scoreContainer.style.display = 'none';
       }
-    });
+    }
+    if (isStatsMode && scoreEl && countEl) {
+      scoreEl.innerHTML = `平均スコア <span class="score-number">${statsPlaceholderValue}</span>`;
+      countEl.textContent = '該当 0 件';
+    }
+  });
+
+  if (isStatsMode) {
     resetScores();
   } else {
-    if (kpiContainer) kpiContainer.style.display = '';
-    if (summaryContainer) summaryContainer.style.display = '';
-    if (dropArea) dropArea.style.display = 'none';
-    if (exportBtn) {
-      exportBtn.disabled = false;
-      exportBtn.style.display = '';
-    }
-    kpiItems.forEach(item => {
-      const skipCheckbox = document.getElementById(`${item.id}-skip`);
-      if (skipCheckbox) skipCheckbox.disabled = false;
-      const wrapper = document.getElementById(item.id);
-      if (wrapper) {
-        const skipContainer = wrapper.querySelector('.skip-container');
-        if (skipContainer) skipContainer.style.display = '';
-        const starContainer = wrapper.querySelector('.star-rating');
-        if (starContainer) starContainer.style.display = '';
-        const scoreContainer = wrapper.querySelector('.score-container');
-        if (scoreContainer) scoreContainer.style.display = 'none';
-      }
-    });
     updateAverage();
   }
 }
 
-modeToggle.addEventListener('change', applyMode);
+modeToggle.addEventListener('change', () => {
+  if (modeToggle.checked) {
+    loadedDatasets = [];
+    clearKpiContainer();
+  } else {
+    buildDefaultKpiLayout();
+  }
+  applyMode();
+});
+
+buildDefaultKpiLayout();
 applyMode();
