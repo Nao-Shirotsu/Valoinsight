@@ -58,7 +58,7 @@ const kpiData = [
           { id: 'push-care', text: 'プッシュケアできましたか', attributes: ['judgement','alert'] },
           { id: 'scoreboard-check', text: '可能な時、オーブとプラントの音でスコアボードを確認できましたか', attributes: ['judgement', 'thinking'] },
           { id: 'backstab-care', text: '裏取りされうるエリアで適切に警戒できましたか', attributes: ['judgement', 'alert'] },
-          { id: 'clearing', text: 'クリアリングミスはありませんでしたか', attributes: ['alert'] }
+          { id: 'clearing', text: '丁寧にクリアリングできましたか', attributes: ['alert'] }
         ]
       },
       {
@@ -79,6 +79,36 @@ const kpiData = [
           { id: 'postplant-position', text: '見方が設置した位置に対して強い位置取りができましたか', attributes: ['study', 'judgement'] },
           { id: 'ability-awareness', text: '味方と敵の残アビリティを認識できましたか', attributes: ['study', 'judgement', 'teamplay'] },
           { id: 'ally-reaction', text: '味方の動きを見てそれに対応した適切なポジショニングはできましたか', attributes: ['study', 'judgement', 'thinking', 'teamplay'] }
+        ]
+      }
+      {
+        heading: '座学',
+        items: [         
+          { id: 'weapon-knowledge', text: '全ての武器のダメージと特徴を知っていますか', attributes: ['study'] },
+          { id: 'buy-amount-memory', text: 'フルバイとハーフアーマーバイの金額を覚えていますか', attributes: ['study'] },
+          { id: 'ability-cost-awareness', text: '自分のアビリティの合計金額を知っていますか', attributes: ['study'] },
+          { id: 'spike-benefits', text: 'スパイクを設置・解除した際に得られるメリットを全て知っていますか', attributes: ['study'] },
+          { id: 'spike-timers', text: 'スパイクの設置・爆発・解除にかかる秒数を知っていますか', attributes: ['study'] },
+          { id: 'spike-cues', text: '設置後のスパイクの見た目や音の変化で分かる情報を全て知っていますか', attributes: ['study'] },
+          { id: 'map-official-calls', text: '今回のマップの、公式なエリアの名称を全て知っていますか', note: ['・ラフター, タピオカなど], attributes: ['study'] },
+          { id: 'map-nickname-calls', text: '今回のマップの、非公式なエリアの俗称を概ね知っていますか', note: ['・ヘヴン, ザリガニなど], attributes: ['study'] },
+          { id: 'sniper-spots', text: 'スナイパーがよく出てくる場所とエージェントを知っていますか', attributes: ['study'] },
+          { id: 'shotgun-spots', text: 'ショットガンがよく出てくる場所を知っていますか', attributes: ['study'] },
+          { id: 'map-key-areas', text: '今回のマップで一般的に重要とされるエリアはどこか、理由も含めて説明できますか', attributes: ['study'] },
+          { id: 'map-essential-agents', text: '今回のマップで一般的に必須とされるエージェントを、理由も含めて説明できますか', attributes: ['study'] },
+          { id: 'map-plant-spots', text: '今回のマップの、一般的なプラント位置を全て知っていますか', attributes: ['study'] },
+          { id: 'map-chokepoints', text: '今回のマップにおける、一般的なチョークポイントを知っていますか', note: ['・チョークポイントとは：敵が出てくる所] , attributes: ['study'] },
+          { id: 'map-off-angles', text: '今回のマップにおける、一般的なオフアングルを知っていますか', attributes: ['study'] },
+          { id: 'map-highground', text: '今回のマップにおける、一般的な高所ポジションを知っていますか', note: ['・ジェットやオーメンなど、移動アビリティ使用後限定のポジションを含む] , attributes: ['study'] },
+          { id: 'signature-knowledge', text: '今回の試合で使われた全てのエージェントのシグネチャーアビリティと、そのリキャストタイムを知っていますか', attributes: ['study'] },
+          { id: 'flash-stun-knowledge', text: '今回の試合で使われたエージェントの、全てのフラッシュ・スタンの効果と範囲を知っていますか', attributes: ['study'] },
+          { id: 'flash-stun-spots', text: '今回のマップで、一般的にフラッシュやスタンが良く使われる場所を知っていますか', attributes: ['study'] },
+          { id: 'sentinel-trap-knowledge', text: '今回の試合で使われた全てのセンチネルの持つ、トラップの一般的な定点と対策を知っていますか', attributes: ['study'] },
+          { id: 'smoke-usage-knowledge', text: '一般的なスモークの置き方と、その使い方を全て知っていますか', note: ['・閉じ・耐え・もっこり・1way など] attributes: ['study'] },
+          { id: 'recon-usage-knowledge', text: '索敵アビリティが一般的にどこに投げられ、それがどのエリアを映す為のものか知っていますか', attributes: ['study'] },
+          { id: 'drone-required-areas', text: '今回のマップで、ドローン系の索敵が無ければ極めて進みづらいエリアがどこかを知っていますか', attributes: ['study'] },
+          { id: 'molly-count-knowledge', text: '今回の試合で互いのチームにモロトフが合計何個あり、それぞれ何秒あるか知っていますか', attributes: ['study'] },
+          { id: 'utility-ult-counterplay', text: '敵のイニシエーターとキルジョイとクローヴのウルトの性能と対策を知っていますか', attributes: ['study'] }
         ]
       }
     ]
@@ -359,37 +389,60 @@ function resizeLayout() {
 window.addEventListener('resize', resizeLayout);
 resizeLayout();
 
-function addItem(item) {
-  // normalize attribute field to an array
-  if (!item.attributes) {
-    item.attributes = Array.isArray(item.attribute)
-      ? item.attribute
-      : [item.attribute];
+function normalizeAttributes(attrs) {
+  if (Array.isArray(attrs)) {
+    return attrs.slice();
   }
+  if (!attrs) {
+    return [];
+  }
+  return [attrs];
+}
 
-  kpiItems.push(item);
+function normalizeNotes(note) {
+  if (Array.isArray(note)) {
+    return note.slice();
+  }
+  if (note === undefined || note === null || note === '') {
+    return null;
+  }
+  return [note];
+}
+
+function addItem(item, sectionHeading = null, subsectionHeading = null) {
+  if (!item || !item.id) return;
+  const normalized = {
+    id: item.id,
+    text: item.text || '',
+    attributes: normalizeAttributes(item.attributes || item.attribute),
+    note: normalizeNotes(item.note),
+    sectionHeading: sectionHeading ?? item.sectionHeading ?? null,
+    subsectionHeading: subsectionHeading ?? item.subsectionHeading ?? null
+  };
+
+  kpiItems.push(normalized);
   const wrapper = document.createElement('div');
   wrapper.classList.add('kpi-item');
-  wrapper.id = item.id;
+  wrapper.id = normalized.id;
 
   const textContainer = document.createElement('div');
   textContainer.classList.add('kpi-text');
 
   const label = document.createElement('label');
-  label.textContent = item.text;
+  label.textContent = normalized.text;
   textContainer.appendChild(label);
 
-  if (item.note) {
+  if (normalized.note && normalized.note.length) {
     const noteEl = document.createElement('div');
     noteEl.classList.add('item-note');
-    noteEl.innerHTML = item.note.join('<br>');
+    noteEl.innerHTML = normalized.note.join('<br>');
     textContainer.appendChild(noteEl);
   }
 
   // attribute tags
   const tagContainer = document.createElement('div');
   tagContainer.classList.add('item-tags');
-  item.attributes.forEach(attr => {
+  normalized.attributes.forEach(attr => {
     const tag = document.createElement('span');
     tag.classList.add('attribute-tag');
     tag.textContent = attributeLabels[attr] || attr;
@@ -406,9 +459,9 @@ function addItem(item) {
   skipContainer.classList.add('skip-container');
   const skipCheckbox = document.createElement('input');
   skipCheckbox.type = 'checkbox';
-  skipCheckbox.id = `${item.id}-skip`;
+  skipCheckbox.id = `${normalized.id}-skip`;
   const skipLabel = document.createElement('label');
-  skipLabel.setAttribute('for', `${item.id}-skip`);
+  skipLabel.setAttribute('for', `${normalized.id}-skip`);
   skipLabel.textContent = '除外';
   skipLabel.classList.add('skip-label');
   skipContainer.appendChild(skipCheckbox);
@@ -448,34 +501,143 @@ function addItem(item) {
   container.appendChild(wrapper);
 }
 
-kpiData.forEach(section => {
-  const sectionHeading = document.createElement('h2');
-  sectionHeading.classList.add('section-heading');
-  sectionHeading.textContent = section.heading;
-  container.appendChild(sectionHeading);
-
-  if (section.items) {
-    section.items.forEach(item => addItem(item));
+function clearKpiContainer() {
+  if (!container) return;
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
   }
-  if (section.subsections) {
-    section.subsections.forEach(sub => {
-      const subHeading = document.createElement('h3');
-      subHeading.classList.add('subsection-heading');
-      subHeading.textContent = sub.heading;
-      container.appendChild(subHeading);
-      if (sub.items) {
-        sub.items.forEach(item => addItem(item));
+  kpiItems.length = 0;
+}
+
+function buildDefaultKpiLayout() {
+  if (!container) return;
+  clearKpiContainer();
+  kpiData.forEach(section => {
+    const sectionHeading = document.createElement('h2');
+    sectionHeading.classList.add('section-heading');
+    sectionHeading.textContent = section.heading;
+    container.appendChild(sectionHeading);
+
+    if (section.items) {
+      section.items.forEach(item => addItem(item, section.heading));
+    }
+    if (section.subsections) {
+      section.subsections.forEach(sub => {
+        const subHeading = document.createElement('h3');
+        subHeading.classList.add('subsection-heading');
+        subHeading.textContent = sub.heading;
+        container.appendChild(subHeading);
+        if (sub.items) {
+          sub.items.forEach(item => addItem(item, section.heading, sub.heading));
+        }
+      });
+      const sectionDivider = document.createElement('hr');
+      sectionDivider.classList.add('divider');
+      container.appendChild(sectionDivider);
+    } else {
+      const sectionDivider = document.createElement('hr');
+      sectionDivider.classList.add('divider');
+      container.appendChild(sectionDivider);
+    }
+  });
+}
+
+function forEachKpiElement(data, callback) {
+  if (!data) return;
+  if (Array.isArray(data.kpiGroups)) {
+    data.kpiGroups.forEach(section => {
+      const sectionHeading = section && section.heading !== undefined ? section.heading : null;
+      if (Array.isArray(section.items)) {
+        section.items.forEach(item => callback(item, sectionHeading, null));
+      }
+      if (Array.isArray(section.subsections)) {
+        section.subsections.forEach(sub => {
+          const subHeading = sub && sub.heading !== undefined ? sub.heading : null;
+          if (Array.isArray(sub.items)) {
+            sub.items.forEach(item => callback(item, sectionHeading, subHeading));
+          }
+        });
       }
     });
-    const sectionDivider = document.createElement('hr');
-    sectionDivider.classList.add('divider');
-    container.appendChild(sectionDivider);
-  } else {
-    const sectionDivider = document.createElement('hr');
-    sectionDivider.classList.add('divider');
-    container.appendChild(sectionDivider);
   }
-});
+}
+
+function buildStatsLayoutFromDatasets(datasets) {
+  if (!container) return;
+  const seenIds = new Set();
+  const sections = [];
+  const sectionMap = new Map();
+
+  const getSection = heading => {
+    const key = heading || '';
+    if (!sectionMap.has(key)) {
+      const section = { heading: heading, items: [], subsections: [] };
+      sectionMap.set(key, section);
+      sections.push(section);
+    }
+    return sectionMap.get(key);
+  };
+
+  const addToSection = (sectionHeading, subsectionHeading, item) => {
+    if (!item || !item.id || seenIds.has(item.id)) return;
+    seenIds.add(item.id);
+    const section = getSection(sectionHeading);
+
+    const normalizedItem = {
+      id: item.id,
+      text: item.text || '',
+      attributes: item.attributes,
+      attribute: item.attribute,
+      note: item.note,
+      sectionHeading: sectionHeading,
+      subsectionHeading: subsectionHeading
+    };
+
+    if (subsectionHeading) {
+      let subsection = section.subsections.find(sub => sub.heading === subsectionHeading);
+      if (!subsection) {
+        subsection = { heading: subsectionHeading, items: [] };
+        section.subsections.push(subsection);
+      }
+      subsection.items.push(normalizedItem);
+    } else {
+      section.items.push(normalizedItem);
+    }
+  };
+
+  datasets.forEach(data => {
+    forEachKpiElement(data, (item, sectionHeading, subsectionHeading) => {
+      addToSection(sectionHeading, subsectionHeading, item);
+    });
+  });
+
+  clearKpiContainer();
+  sections.forEach(section => {
+    if (section.heading) {
+      const sectionHeadingEl = document.createElement('h2');
+      sectionHeadingEl.classList.add('section-heading');
+      sectionHeadingEl.textContent = section.heading;
+      container.appendChild(sectionHeadingEl);
+    }
+
+    if (section.items.length) {
+      section.items.forEach(item => addItem(item, section.heading));
+    }
+
+    section.subsections.forEach(sub => {
+      const subHeadingEl = document.createElement('h3');
+      subHeadingEl.classList.add('subsection-heading');
+      subHeadingEl.textContent = sub.heading;
+      container.appendChild(subHeadingEl);
+      sub.items.forEach(item => addItem(item, section.heading, sub.heading));
+    });
+
+    const divider = document.createElement('hr');
+    divider.classList.add('divider');
+    container.appendChild(divider);
+  });
+  applyMode();
+}
 
   function updateAverage() {
     let total = 0;
@@ -550,8 +712,7 @@ kpiData.forEach(section => {
     let total = 0;
     let count = 0;
     dataArray.forEach(data => {
-      if (!Array.isArray(data.kpiElements)) return;
-      data.kpiElements.forEach(el => {
+      forEachKpiElement(data, el => {
         if (el.skip) return;
         const score = typeof el.score === 'number' ? el.score : 0;
         if (kpiTotals[el.id] === undefined) {
@@ -621,6 +782,9 @@ kpiData.forEach(section => {
     loadedDatasets = [];
     const incoming = Array.isArray(dataArray) ? dataArray : [dataArray];
     loadedDatasets.push(...incoming);
+    if (modeToggle && modeToggle.checked) {
+      buildStatsLayoutFromDatasets(loadedDatasets);
+    }
     refreshStats();
   }
 
@@ -739,17 +903,49 @@ if (dropArea) {
 }
 
 document.getElementById('export-btn').addEventListener('click', () => {
-  const kpiElements = kpiItems.map(item => {
+  const groupOrder = [];
+  const groupMap = new Map();
+
+  const getGroup = heading => {
+    const key = heading || '';
+    if (!groupMap.has(key)) {
+      const group = { heading: heading || null, items: [], subsections: [] };
+      groupMap.set(key, group);
+      groupOrder.push(group);
+    }
+    return groupMap.get(key);
+  };
+
+  const buildElement = item => {
     const skip = document.getElementById(`${item.id}-skip`).checked;
     const wrapper = document.getElementById(item.id);
     const rating = parseInt(wrapper.dataset.rating || '0');
-    return {
+    const element = {
       id: item.id,
       text: item.text,
       attributes: item.attributes,
       skip: skip,
       score: rating * 20
     };
+    if (item.note && item.note.length) {
+      element.note = item.note.slice();
+    }
+    return element;
+  };
+
+  kpiItems.forEach(item => {
+    const group = getGroup(item.sectionHeading);
+    const element = buildElement(item);
+    if (item.subsectionHeading) {
+      let subsection = group.subsections.find(sub => sub.heading === item.subsectionHeading);
+      if (!subsection) {
+        subsection = { heading: item.subsectionHeading, items: [] };
+        group.subsections.push(subsection);
+      }
+      subsection.items.push(element);
+    } else {
+      group.items.push(element);
+    }
   });
 
   const textnotes = {
@@ -761,7 +957,7 @@ document.getElementById('export-btn').addEventListener('click', () => {
   const exportData = {
     map: selectedMap,
     agent: selectedAgent,
-    kpiElements,
+    kpiGroups: groupOrder,
     textnotes
   };
 
@@ -782,62 +978,71 @@ const modeToggle = document.getElementById('mode-toggle');
 const statsPlaceholderValue = 0.0;
 
 function applyMode() {
+  const isStatsMode = modeToggle && modeToggle.checked;
   const kpiContainer = document.getElementById('kpi-container');
   const summaryContainer = document.getElementById('summary-container');
   const exportBtn = document.getElementById('export-btn');
 
-  if (modeToggle.checked) {
-    if (kpiContainer) kpiContainer.style.display = '';
-    if (summaryContainer) summaryContainer.style.display = 'none';
-    if (dropArea) dropArea.style.display = '';
-    if (exportBtn) {
-      exportBtn.disabled = true;
-      exportBtn.style.display = 'none';
+  if (kpiContainer) kpiContainer.style.display = '';
+  if (summaryContainer) {
+    summaryContainer.style.display = isStatsMode ? 'none' : '';
+  }
+  if (dropArea) {
+    dropArea.style.display = isStatsMode ? '' : 'none';
+  }
+  if (exportBtn) {
+    exportBtn.disabled = isStatsMode;
+    exportBtn.style.display = isStatsMode ? 'none' : '';
+  }
+
+  kpiItems.forEach(item => {
+    const skipCheckbox = document.getElementById(`${item.id}-skip`);
+    const wrapper = document.getElementById(item.id);
+    if (!wrapper) return;
+    const skipContainer = wrapper.querySelector('.skip-container');
+    const starContainer = wrapper.querySelector('.star-rating');
+    const scoreContainer = wrapper.querySelector('.score-container');
+    const scoreEl = wrapper.querySelector('.score-display');
+    const countEl = wrapper.querySelector('.data-count');
+
+    if (skipCheckbox) {
+      skipCheckbox.disabled = isStatsMode;
     }
-    kpiItems.forEach(item => {
-      const skipCheckbox = document.getElementById(`${item.id}-skip`);
-      if (skipCheckbox) skipCheckbox.disabled = true;
-      const wrapper = document.getElementById(item.id);
-      if (wrapper) {
-        const skipContainer = wrapper.querySelector('.skip-container');
-        if (skipContainer) skipContainer.style.display = 'none';
-        const starContainer = wrapper.querySelector('.star-rating');
-        if (starContainer) starContainer.style.display = 'none';
-        const scoreContainer = wrapper.querySelector('.score-container');
-        const scoreEl = wrapper.querySelector('.score-display');
-        const countEl = wrapper.querySelector('.data-count');
-        if (scoreContainer && scoreEl && countEl) {
-          scoreEl.innerHTML = `平均スコア <span class="score-number">${statsPlaceholderValue}</span>`;
-          countEl.textContent = '該当 0 件';
-          scoreContainer.style.display = 'flex';
-        }
+
+    if (skipContainer) {
+      skipContainer.style.display = isStatsMode ? 'none' : '';
+    }
+    if (starContainer) {
+      starContainer.style.display = isStatsMode ? 'none' : '';
+    }
+    if (scoreContainer) {
+      scoreContainer.style.display = 'flex';
+      if (!isStatsMode) {
+        scoreContainer.style.display = 'none';
       }
-    });
+    }
+    if (isStatsMode && scoreEl && countEl) {
+      scoreEl.innerHTML = `平均スコア <span class="score-number">${statsPlaceholderValue}</span>`;
+      countEl.textContent = '該当 0 件';
+    }
+  });
+
+  if (isStatsMode) {
     resetScores();
   } else {
-    if (kpiContainer) kpiContainer.style.display = '';
-    if (summaryContainer) summaryContainer.style.display = '';
-    if (dropArea) dropArea.style.display = 'none';
-    if (exportBtn) {
-      exportBtn.disabled = false;
-      exportBtn.style.display = '';
-    }
-    kpiItems.forEach(item => {
-      const skipCheckbox = document.getElementById(`${item.id}-skip`);
-      if (skipCheckbox) skipCheckbox.disabled = false;
-      const wrapper = document.getElementById(item.id);
-      if (wrapper) {
-        const skipContainer = wrapper.querySelector('.skip-container');
-        if (skipContainer) skipContainer.style.display = '';
-        const starContainer = wrapper.querySelector('.star-rating');
-        if (starContainer) starContainer.style.display = '';
-        const scoreContainer = wrapper.querySelector('.score-container');
-        if (scoreContainer) scoreContainer.style.display = 'none';
-      }
-    });
     updateAverage();
   }
 }
 
-modeToggle.addEventListener('change', applyMode);
+modeToggle.addEventListener('change', () => {
+  if (modeToggle.checked) {
+    loadedDatasets = [];
+    clearKpiContainer();
+  } else {
+    buildDefaultKpiLayout();
+  }
+  applyMode();
+});
+
+buildDefaultKpiLayout();
 applyMode();
