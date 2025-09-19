@@ -358,7 +358,7 @@ h1 {
 }
 
 .skip-label {
-  font-size: 0.625em;
+  font-size: 0.9375em;
   text-align: center;
 }
 
@@ -368,13 +368,17 @@ h1 {
   align-self: center;
 }
 
+.skip-container input[type="checkbox"] {
+  transform: scale(1.75);
+}
+
 .star-rating.disabled {
   pointer-events: none;
   opacity: 0.5;
 }
 
 .star {
-  font-size: clamp(1rem, calc(1rem + 0.625vw), 1.6rem);;
+  font-size: clamp(1.5vw, calc(1rem + 1vw), 3vw);
   cursor: pointer;
   color: #ccc;
 }
