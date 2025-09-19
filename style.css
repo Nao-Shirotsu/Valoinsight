@@ -324,6 +324,24 @@ h1 {
   background-color: #f1f2fb;
 }
 
+.kpi-item.kpi-item-skipped {
+  background-color: #d9dbe2;
+  color: #777;
+}
+
+.kpi-item.kpi-item-skipped .attribute-tag,
+.kpi-item.kpi-item-skipped .item-note {
+  opacity: 0.6;
+}
+
+.kpi-item.kpi-item-skipped .star {
+  color: #bbb;
+}
+
+.kpi-item.kpi-item-skipped .star.selected {
+  color: #c7c7c7;
+}
+
 .kpi-text {
   flex: 1;
   display: flex;
