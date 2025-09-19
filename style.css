@@ -43,6 +43,12 @@ h1 {
   margin: 0 auto;
 }
 
+@media (min-width: 1800px) {
+  #kpi-container {
+    width: 55%;
+  }
+}
+
 #json-drop-area {
   width: 12vw;
   height: 6vw;
