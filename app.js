@@ -58,7 +58,7 @@ const kpiData = [
           { id: 'push-care', text: 'プッシュケアできましたか', attributes: ['judgement','alert'] },
           { id: 'scoreboard-check', text: '可能な時、オーブとプラントの音でスコアボードを確認できましたか', attributes: ['judgement', 'thinking'] },
           { id: 'backstab-care', text: '裏取りされうるエリアで適切に警戒できましたか', attributes: ['judgement', 'alert'] },
-          { id: 'clearing', text: 'クリアリングミスはありませんでしたか', attributes: ['alert'] }
+          { id: 'clearing', text: '丁寧にクリアリングできましたか', attributes: ['alert'] }
         ]
       },
       {
