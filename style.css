@@ -174,7 +174,7 @@ h1 {
 #complexity-switch-container {
   display: flex;
   justify-content: center;
-  margin: 20px 0 10px;
+  margin: 0 0 20px;
 }
 
 #complexity-switch {
@@ -193,6 +193,13 @@ h1 {
   font-size: 0.9rem;
 }
 
+#complexity-switch .toggle-label {
+  width: 225px;
+  height: 48px;
+  border-radius: 24px;
+  font-size: 1.35rem;
+}
+
 .toggle-label span {
   flex: 1;
   text-align: center;
@@ -208,7 +215,12 @@ h1 {
   height: calc(100% - 4px);
   background: #fff;
   border-radius: 14px;
-  transition: transform 0.2s;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+#complexity-toggle + .toggle-label::after {
+  border-radius: 21px;
+  background: #fff9d6;
 }
 
 #mode-toggle:checked + .toggle-label::after {
@@ -217,6 +229,11 @@ h1 {
 
 #complexity-toggle:checked + .toggle-label::after {
   transform: translateX(100%);
+  background: #ffe7e7;
+}
+
+#complexity-toggle:not(:checked) + .toggle-label::after {
+  background: #fff9d6;
 }
 
 #mode-toggle:checked + .toggle-label .toggle-grading {
