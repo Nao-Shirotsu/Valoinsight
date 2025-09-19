@@ -80,8 +80,10 @@ const kpiData = [
           { id: 'ability-awareness', text: '味方と敵の残アビリティを認識できましたか', attributes: ['study', 'judgement', 'teamplay'] },
           { id: 'ally-reaction', text: '味方の動きを見てそれに対応した適切なポジショニングはできましたか', attributes: ['study', 'judgement', 'thinking', 'teamplay'] }
         ]
-      },
-      {
+      }
+    ]
+  },
+  {
         heading: '座学',
         items: [         
           { id: 'weapon-knowledge', text: '全ての武器のダメージと特徴を知っていますか', attributes: ['study'] },
@@ -111,8 +113,6 @@ const kpiData = [
           { id: 'utility-ult-counterplay', text: '敵のイニシエーターとキルジョイとクローヴのウルトの性能と対策を知っていますか', attributes: ['study'] }
         ]
       }
-    ]
-  }
 ];
 // Build KPI sections including headings while collecting items
 const kpiItems = [];
@@ -650,23 +650,23 @@ function buildStatsLayoutFromDatasets(datasets) {
     });
 
     kpiItems.forEach(item => {
-      const skip = document.getElementById(`${item.id}-skip`).checked;
-      if (skip) return;
+      const skipCheckbox = document.getElementById(`${item.id}-skip`);
+      if (skipCheckbox && skipCheckbox.checked) return;
       const wrapper = document.getElementById(item.id);
-      const rating = parseInt(wrapper.dataset.rating);
-      if (!isNaN(rating)) {
-        const score = rating * 20;
-        total += score;
-        count++;
-        item.attributes.forEach(attr => {
-          if (attrTotals[attr] === undefined) {
-            attrTotals[attr] = 0;
-            attrCounts[attr] = 0;
-          }
-          attrTotals[attr] += score;
-          attrCounts[attr] += 1;
-        });
-      }
+      if (!wrapper) return;
+      const parsed = parseInt(wrapper.dataset.rating, 10);
+      const rating = Number.isNaN(parsed) ? 0 : parsed;
+      const score = rating * 20;
+      total += score;
+      count++;
+      item.attributes.forEach(attr => {
+        if (attrTotals[attr] === undefined) {
+          attrTotals[attr] = 0;
+          attrCounts[attr] = 0;
+        }
+        attrTotals[attr] += score;
+        attrCounts[attr] += 1;
+      });
     });
 
     const average = count ? total / count : 0;
