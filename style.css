@@ -171,6 +171,16 @@ h1 {
   display: none;
 }
 
+#complexity-switch-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 10px;
+}
+
+#complexity-switch {
+  display: inline-flex;
+}
+
 .toggle-label {
   display: flex;
   align-items: center;
@@ -205,6 +215,10 @@ h1 {
   transform: translateX(100%);
 }
 
+#complexity-toggle:checked + .toggle-label::after {
+  transform: translateX(100%);
+}
+
 #mode-toggle:checked + .toggle-label .toggle-grading {
   color: #666;
 }
@@ -219,6 +233,27 @@ h1 {
 
 #mode-toggle:not(:checked) + .toggle-label .toggle-stats {
   color: #666;
+}
+
+#complexity-toggle:checked + .toggle-label .toggle-simple {
+  color: #666;
+}
+
+#complexity-toggle:checked + .toggle-label .toggle-advanced {
+  color: #000;
+}
+
+#complexity-toggle:not(:checked) + .toggle-label .toggle-simple {
+  color: #000;
+}
+
+#complexity-toggle:not(:checked) + .toggle-label .toggle-advanced {
+  color: #666;
+}
+
+.toggle-switch input:disabled + .toggle-label {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 #chart-score-container {
