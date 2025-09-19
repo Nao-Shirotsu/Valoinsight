@@ -650,23 +650,23 @@ function buildStatsLayoutFromDatasets(datasets) {
     });
 
     kpiItems.forEach(item => {
-      const skip = document.getElementById(`${item.id}-skip`).checked;
-      if (skip) return;
+      const skipCheckbox = document.getElementById(`${item.id}-skip`);
+      if (skipCheckbox && skipCheckbox.checked) return;
       const wrapper = document.getElementById(item.id);
-      const rating = parseInt(wrapper.dataset.rating);
-      if (!isNaN(rating)) {
-        const score = rating * 20;
-        total += score;
-        count++;
-        item.attributes.forEach(attr => {
-          if (attrTotals[attr] === undefined) {
-            attrTotals[attr] = 0;
-            attrCounts[attr] = 0;
-          }
-          attrTotals[attr] += score;
-          attrCounts[attr] += 1;
-        });
-      }
+      if (!wrapper) return;
+      const parsed = parseInt(wrapper.dataset.rating, 10);
+      const rating = Number.isNaN(parsed) ? 0 : parsed;
+      const score = rating * 20;
+      total += score;
+      count++;
+      item.attributes.forEach(attr => {
+        if (attrTotals[attr] === undefined) {
+          attrTotals[attr] = 0;
+          attrCounts[attr] = 0;
+        }
+        attrTotals[attr] += score;
+        attrCounts[attr] += 1;
+      });
     });
 
     const average = count ? total / count : 0;
