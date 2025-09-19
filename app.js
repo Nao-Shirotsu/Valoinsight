@@ -529,10 +529,6 @@ function forEachKpiElement(data, callback) {
         });
       }
     });
-    return;
-  }
-  if (Array.isArray(data.kpiElements)) {
-    data.kpiElements.forEach(item => callback(item, null, null));
   }
 }
 
@@ -922,14 +918,6 @@ document.getElementById('export-btn').addEventListener('click', () => {
     }
   });
 
-  const flatElements = [];
-  groupOrder.forEach(group => {
-    group.items.forEach(el => flatElements.push(el));
-    group.subsections.forEach(sub => {
-      sub.items.forEach(el => flatElements.push(el));
-    });
-  });
-
   const textnotes = {
     wasgood: summaryNotes.good,
     wasbad: summaryNotes.bad,
@@ -940,7 +928,6 @@ document.getElementById('export-btn').addEventListener('click', () => {
     map: selectedMap,
     agent: selectedAgent,
     kpiGroups: groupOrder,
-    kpiElements: flatElements,
     textnotes
   };
 
