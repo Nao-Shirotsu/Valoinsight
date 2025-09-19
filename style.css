@@ -314,48 +314,14 @@ h1 {
   margin: 20px 0;
 }
 
-.kpi-item-row {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 12px;
-  align-items: stretch;
-  margin: 8px 0;
-}
-
 .kpi-item {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 8px 12px;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  padding: 4px 8px;
   border-radius: 1% / 7%;
   background-color: #f1f2fb;
-  min-height: 100%;
-}
-
-.kpi-item-row.excluded .kpi-item,
-.kpi-item.excluded {
-  background-color: #d9dce3;
-  color: #666;
-}
-
-.kpi-item-row.excluded .item-note,
-.kpi-item.excluded .item-note {
-  color: #777;
-}
-
-.kpi-item-row.excluded .attribute-tag,
-.kpi-item.excluded .attribute-tag {
-  opacity: 0.7;
-}
-
-.kpi-item-row.excluded .star,
-.kpi-item.excluded .star {
-  color: #bbb;
-}
-
-.kpi-item-row.excluded .star.selected,
-.kpi-item.excluded .star.selected {
-  color: #d4c86b;
 }
 
 .kpi-text {
@@ -387,9 +353,8 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 4px 0;
+  gap: 2px;
+  align-self: center;
 }
 
 .skip-label {
@@ -400,16 +365,7 @@ h1 {
 .star-rating {
   display: flex;
   gap: 4px;
-  justify-content: center;
-}
-
-.kpi-bottom {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  width: 100%;
+  align-self: center;
 }
 
 .star-rating.disabled {
@@ -430,7 +386,7 @@ h1 {
 .score-container {
   display: none;
   align-items: center;
-  justify-content: center;
+  margin-left: 8px;
   gap: 6px;
 }
 
