@@ -422,8 +422,23 @@ function addItem(item, sectionHeading = null, subsectionHeading = null) {
 
   kpiItems.push(normalized);
   const wrapper = document.createElement('div');
-  wrapper.classList.add('kpi-item');
+  wrapper.classList.add('kpi-item-row');
   wrapper.id = normalized.id;
+
+  const skipContainer = document.createElement('div');
+  skipContainer.classList.add('skip-container');
+  const skipCheckbox = document.createElement('input');
+  skipCheckbox.type = 'checkbox';
+  skipCheckbox.id = `${normalized.id}-skip`;
+  const skipLabel = document.createElement('label');
+  skipLabel.setAttribute('for', `${normalized.id}-skip`);
+  skipLabel.textContent = '除外';
+  skipLabel.classList.add('skip-label');
+  skipContainer.appendChild(skipCheckbox);
+  skipContainer.appendChild(skipLabel);
+
+  const itemContainer = document.createElement('div');
+  itemContainer.classList.add('kpi-item');
 
   const textContainer = document.createElement('div');
   textContainer.classList.add('kpi-text');
@@ -453,20 +468,10 @@ function addItem(item, sectionHeading = null, subsectionHeading = null) {
   });
   textContainer.appendChild(tagContainer);
 
-  wrapper.appendChild(textContainer);
+  itemContainer.appendChild(textContainer);
 
-  const skipContainer = document.createElement('div');
-  skipContainer.classList.add('skip-container');
-  const skipCheckbox = document.createElement('input');
-  skipCheckbox.type = 'checkbox';
-  skipCheckbox.id = `${normalized.id}-skip`;
-  const skipLabel = document.createElement('label');
-  skipLabel.setAttribute('for', `${normalized.id}-skip`);
-  skipLabel.textContent = '除外';
-  skipLabel.classList.add('skip-label');
-  skipContainer.appendChild(skipCheckbox);
-  skipContainer.appendChild(skipLabel);
-  wrapper.appendChild(skipContainer);
+  const bottomContainer = document.createElement('div');
+  bottomContainer.classList.add('kpi-bottom');
 
   const starContainer = document.createElement('div');
   starContainer.classList.add('star-rating');
@@ -483,7 +488,7 @@ function addItem(item, sectionHeading = null, subsectionHeading = null) {
     });
     starContainer.appendChild(star);
   }
-  wrapper.appendChild(starContainer);
+  bottomContainer.appendChild(starContainer);
 
   const scoreWrapper = document.createElement('div');
   scoreWrapper.classList.add('score-container');
@@ -496,8 +501,22 @@ function addItem(item, sectionHeading = null, subsectionHeading = null) {
   scoreDisplay.classList.add('score-display');
   scoreWrapper.appendChild(scoreDisplay);
 
-  wrapper.appendChild(scoreWrapper);
-  skipCheckbox.addEventListener('change', updateAverage);
+  bottomContainer.appendChild(scoreWrapper);
+
+  itemContainer.appendChild(bottomContainer);
+
+  wrapper.appendChild(skipContainer);
+  wrapper.appendChild(itemContainer);
+  const syncExcludedState = () => {
+    const isExcluded = !!skipCheckbox.checked;
+    wrapper.classList.toggle('excluded', isExcluded);
+    itemContainer.classList.toggle('excluded', isExcluded);
+  };
+  skipCheckbox.addEventListener('change', () => {
+    syncExcludedState();
+    updateAverage();
+  });
+  syncExcludedState();
   container.appendChild(wrapper);
 }
 
