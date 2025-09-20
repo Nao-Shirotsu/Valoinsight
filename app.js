@@ -1,4 +1,4 @@
-const kpiData = [
+const advancedKpiData = [
   {
     heading: '編成中',
     items: [
@@ -114,11 +114,23 @@ const kpiData = [
         ]
       }
 ];
+
+const simpleKpiData = [
+  {
+    heading: 'シンプル項目',
+    items: [
+      { id: 'simple-overview', text: '試合全体の動きに満足できましたか', attributes: ['thinking', 'judgement'] },
+      { id: 'simple-communication', text: '必要なコミュニケーションは取れましたか', attributes: ['teamplay', 'alert'] },
+      { id: 'simple-mechanics', text: 'エイムとアビリティの操作に安定感はありましたか', attributes: ['physical', 'study'] }
+    ]
+  }
+];
 // Build KPI sections including headings while collecting items
 const kpiItems = [];
 const container = document.getElementById('kpi-container');
 const selectionContainer = document.getElementById('selection-container');
 const dropArea = document.getElementById('json-drop-area');
+const complexityToggle = document.getElementById('complexity-toggle');
 let selectedMap = null;
 let selectedAgent = null;
 let loadedDatasets = [];
@@ -518,10 +530,18 @@ function clearKpiContainer() {
   kpiItems.length = 0;
 }
 
+function getActiveKpiData() {
+  if (complexityToggle && complexityToggle.checked) {
+    return advancedKpiData;
+  }
+  return simpleKpiData;
+}
+
 function buildDefaultKpiLayout() {
   if (!container) return;
   clearKpiContainer();
-  kpiData.forEach(section => {
+  const dataset = getActiveKpiData();
+  dataset.forEach(section => {
     const sectionHeading = document.createElement('h2');
     sectionHeading.classList.add('section-heading');
     sectionHeading.textContent = section.heading;
@@ -976,7 +996,8 @@ document.getElementById('export-btn').addEventListener('click', () => {
   a.href = url;
   const mapName = selectedMap ? selectedMap.toLowerCase() : 'unknown';
   const agentName = selectedAgent ? selectedAgent.toLowerCase() : 'unknown';
-  a.download = `valoinsight_${mapName}_${agentName}.json`;
+  const complexityName = complexityToggle && complexityToggle.checked ? 'advanced' : 'simple';
+  a.download = `valoinsight_${complexityName}_${mapName}_${agentName}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -985,6 +1006,15 @@ document.getElementById('export-btn').addEventListener('click', () => {
 
 const modeToggle = document.getElementById('mode-toggle');
 const statsPlaceholderValue = 0.0;
+
+if (complexityToggle) {
+  complexityToggle.addEventListener('change', () => {
+    if (!modeToggle || !modeToggle.checked) {
+      buildDefaultKpiLayout();
+      applyMode();
+    }
+  });
+}
 
 function applyMode() {
   const isStatsMode = modeToggle && modeToggle.checked;
@@ -1002,6 +1032,10 @@ function applyMode() {
   if (exportBtn) {
     exportBtn.disabled = isStatsMode;
     exportBtn.style.display = isStatsMode ? 'none' : '';
+  }
+
+  if (complexityToggle) {
+    complexityToggle.disabled = isStatsMode;
   }
 
   kpiItems.forEach(item => {
