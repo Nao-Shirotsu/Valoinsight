@@ -117,11 +117,19 @@ const advancedKpiData = [
 
 const simpleKpiData = [
   {
-    heading: 'シンプル項目',
     items: [
-      { id: 'simple-overview', text: '試合全体の動きに満足できましたか', attributes: ['thinking', 'judgement'] },
-      { id: 'simple-communication', text: '必要なコミュニケーションは取れましたか', attributes: ['teamplay', 'alert'] },
-      { id: 'simple-mechanics', text: 'エイムとアビリティの操作に安定感はありましたか', attributes: ['physical', 'study'] }
+      { id: 'xx1', text: 'エイム/ピークの仕方は良かったですか', attributes: ['physical'] },
+      { id: 'xx2', text: '遮蔽物を活かせましたか', attributes: ['physical'] },
+      { id: 'xx3', text: '味方に付いていきましたか/味方が付いてこれることを確認してから行きましたか', attributes: ['teamplay'] },
+      { id: 'xx4', text: '味方のためにアビリティを使えましたか', attributes: ['teamplay'] },
+      { id: 'xx5', text: '安全な時はミニマップを見ていましたか', attributes: ['judgement'] }
+      { id: 'xx6', text: 'エントリー前に敵が多くないか判断しましたか', attributes: ['judgement'] }
+      { id: 'xx7', text: '丁寧にクリアリングできましたか', attributes: ['alert'] }
+      { id: 'xx8', text: 'フラッシュ/モク抜きでやられにくい位置にいましたか', attributes: ['alert'] }
+      { id: 'xx9', text: '敵味方のアルティメット状況を見てから動き出せましたか', attributes: ['thinking'] }
+      { id: 'x10', text: '前ラウンドの敵の動きの対策を考えてから動き出せましたか', attributes: ['thinking'] }
+      { id: 'x11', text: '今回のマップの重要なエリアはどこか説明できますか', attributes: ['study'] },
+      { id: 'x12', text: '敵味方全員のアビリティと使い方を説明できますか', attributes: ['study'] }
     ]
   }
 ];
