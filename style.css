@@ -445,51 +445,44 @@ h1 {
 
 .simple-rating {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   align-self: center;
 }
 
 .simple-rating-option {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 6px 12px;
-  border: 1px solid #cbd5f5;
-  border-radius: 12px;
-  background-color: #f8fafc;
-  color: #1f2937;
+  padding: 0;
+  border: none;
+  background: none;
   cursor: pointer;
-  font-size: 0.85em;
   font-family: inherit;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
-.simple-rating-option:hover {
+.simple-rating-option:hover .simple-rating-emoji,
+.simple-rating-option:focus-visible .simple-rating-emoji {
   transform: translateY(-1px);
-  background-color: #eef2ff;
-}
-
-.simple-rating-option.selected {
-  background-color: #dbeafe;
-  border-color: #60a5fa;
-  color: #1d4ed8;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 .simple-rating-option:focus-visible {
   outline: 2px solid #3b82f6;
-  outline-offset: 2px;
+  outline-offset: 4px;
+  border-radius: 12px;
 }
 
 .simple-rating-emoji {
   font-size: clamp(1.4rem, 1.8vw, 2rem);
   line-height: 1;
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+  filter: grayscale(100%);
+  opacity: 0.4;
 }
 
-.simple-rating-label {
-  font-size: 0.85em;
+.simple-rating-option.selected .simple-rating-emoji {
+  filter: none;
+  opacity: 1;
 }
 
 .skip-container input[type="checkbox"] {
