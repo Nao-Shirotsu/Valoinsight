@@ -1,6 +1,6 @@
 /* Simple and refined styling for VALORANT KPI tool */
 :root {
-  --heading-font-size: clamp(1.5rem, 5vw, 2rem);
+  --heading-font-size: 1.75rem;
   --color-physical: #ffd1d1;
   --color-alert: #ffe8cc;
   --color-thinking: #d6f5d6;
