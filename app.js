@@ -523,9 +523,10 @@ function addItem(item, sectionHeading = null, subsectionHeading = null) {
       button.classList.add('simple-rating-option');
       button.dataset.ratingValue = option.score / 20;
       button.innerHTML = `
-        <span class="simple-rating-emoji">${option.emoji}</span>
-        <span class="simple-rating-label">${option.label}</span>
+        <span class="simple-rating-emoji" aria-hidden="true">${option.emoji}</span>
       `;
+      button.setAttribute('aria-label', option.label);
+      button.setAttribute('title', option.label);
       button.addEventListener('click', () => {
         const parsed = parseFloat(wrapper.dataset.rating);
         const current = Number.isNaN(parsed) ? null : parsed;
