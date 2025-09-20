@@ -117,6 +117,7 @@ const advancedKpiData = [
 
 const simpleKpiData = [
   {
+    heading: 'シンプル採点',
     items: [
       { id: 'xx1', text: 'エイム/ピークの仕方は良かったですか', attributes: ['physical'] },
       { id: 'xx2', text: '遮蔽物を活かせましたか', attributes: ['physical'] },
