@@ -489,22 +489,56 @@ function addItem(item, sectionHeading = null, subsectionHeading = null) {
   skipContainer.appendChild(skipLabel);
   wrapper.appendChild(skipContainer);
 
-  const starContainer = document.createElement('div');
-  starContainer.classList.add('star-rating');
-  for (let i = 1; i <= 5; i++) {
-    const star = document.createElement('span');
-    star.classList.add('star');
-    star.innerHTML = '★';
-    star.dataset.value = i;
-    star.addEventListener('click', () => {
-      const current = parseInt(wrapper.dataset.rating || '0');
-      const newRating = current === i ? 0 : i;
-      setRating(wrapper, newRating);
-      updateAverage();
+  const isAdvancedMode = complexityToggle && complexityToggle.checked;
+  wrapper.dataset.ratingMode = isAdvancedMode ? 'advanced' : 'simple';
+
+  let ratingContainer;
+  if (isAdvancedMode) {
+    ratingContainer = document.createElement('div');
+    ratingContainer.classList.add('star-rating');
+    for (let i = 1; i <= 5; i++) {
+      const star = document.createElement('span');
+      star.classList.add('star');
+      star.innerHTML = '★';
+      star.dataset.value = i;
+      star.addEventListener('click', () => {
+        const current = parseFloat(wrapper.dataset.rating || '0');
+        const newRating = current === i ? 0 : i;
+        setRating(wrapper, newRating);
+        updateAverage();
+      });
+      ratingContainer.appendChild(star);
+    }
+  } else {
+    ratingContainer = document.createElement('div');
+    ratingContainer.classList.add('simple-rating');
+    const simpleOptions = [
+      { label: '悪い', emoji: '👎', score: 0 },
+      { label: '普通', emoji: '😐', score: 50 },
+      { label: '良い', emoji: '👍', score: 100 }
+    ];
+    simpleOptions.forEach(option => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.classList.add('simple-rating-option');
+      button.dataset.ratingValue = option.score / 20;
+      button.innerHTML = `
+        <span class="simple-rating-emoji">${option.emoji}</span>
+        <span class="simple-rating-label">${option.label}</span>
+      `;
+      button.addEventListener('click', () => {
+        const parsed = parseFloat(wrapper.dataset.rating);
+        const current = Number.isNaN(parsed) ? null : parsed;
+        const normalizedScore = option.score / 20;
+        const isSame = current !== null && Math.abs(current - normalizedScore) < 0.001;
+        const newRating = isSame ? null : normalizedScore;
+        setRating(wrapper, newRating);
+        updateAverage();
+      });
+      ratingContainer.appendChild(button);
     });
-    starContainer.appendChild(star);
   }
-  wrapper.appendChild(starContainer);
+  wrapper.appendChild(ratingContainer);
 
   const scoreWrapper = document.createElement('div');
   scoreWrapper.classList.add('score-container');
@@ -692,7 +726,7 @@ function buildStatsLayoutFromDatasets(datasets) {
       if (skipCheckbox && skipCheckbox.checked) return;
       const wrapper = document.getElementById(item.id);
       if (!wrapper) return;
-      const parsed = parseInt(wrapper.dataset.rating, 10);
+      const parsed = parseFloat(wrapper.dataset.rating);
       const rating = Number.isNaN(parsed) ? 0 : parsed;
       const score = rating * 20;
       total += score;
@@ -827,11 +861,30 @@ function buildStatsLayoutFromDatasets(datasets) {
   }
 
 function setRating(wrapper, rating) {
-  wrapper.dataset.rating = rating;
-  const stars = wrapper.querySelectorAll('.star');
-  stars.forEach((star, idx) => {
-    star.classList.toggle('selected', idx < rating);
-  });
+  const numericValue = typeof rating === 'number' ? rating : parseFloat(rating);
+  const hasNumericValue = !Number.isNaN(numericValue);
+
+  if (!hasNumericValue) {
+    delete wrapper.dataset.rating;
+  } else {
+    wrapper.dataset.rating = numericValue;
+  }
+  const mode = wrapper.dataset.ratingMode || 'advanced';
+  if (mode === 'advanced') {
+    const numeric = hasNumericValue ? numericValue : 0;
+    const stars = wrapper.querySelectorAll('.star');
+    stars.forEach((star, idx) => {
+      star.classList.toggle('selected', idx < numeric);
+    });
+  } else {
+    const numeric = hasNumericValue ? numericValue : null;
+    const options = wrapper.querySelectorAll('.simple-rating-option');
+    options.forEach(option => {
+      const value = parseFloat(option.dataset.ratingValue || '0');
+      const isSelected = numeric !== null && Math.abs(value - numeric) < 0.001;
+      option.classList.toggle('selected', isSelected);
+    });
+  }
 }
 
 const csvInput = document.getElementById('csvFile');
@@ -957,7 +1010,7 @@ document.getElementById('export-btn').addEventListener('click', () => {
   const buildElement = item => {
     const skip = document.getElementById(`${item.id}-skip`).checked;
     const wrapper = document.getElementById(item.id);
-    const rating = parseInt(wrapper.dataset.rating || '0');
+    const rating = parseFloat(wrapper.dataset.rating || '0');
     const element = {
       id: item.id,
       text: item.text,
@@ -1052,7 +1105,7 @@ function applyMode() {
     const wrapper = document.getElementById(item.id);
     if (!wrapper) return;
     const skipContainer = wrapper.querySelector('.skip-container');
-    const starContainer = wrapper.querySelector('.star-rating');
+    const ratingContainer = wrapper.querySelector('.star-rating, .simple-rating');
     const scoreContainer = wrapper.querySelector('.score-container');
     const scoreEl = wrapper.querySelector('.score-display');
     const countEl = wrapper.querySelector('.data-count');
@@ -1064,8 +1117,8 @@ function applyMode() {
     if (skipContainer) {
       skipContainer.style.display = isStatsMode ? 'none' : '';
     }
-    if (starContainer) {
-      starContainer.style.display = isStatsMode ? 'none' : '';
+    if (ratingContainer) {
+      ratingContainer.style.display = isStatsMode ? 'none' : '';
     }
     if (scoreContainer) {
       scoreContainer.style.display = 'flex';
