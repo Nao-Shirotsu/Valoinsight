@@ -1084,6 +1084,7 @@ function applyMode() {
   const kpiContainer = document.getElementById('kpi-container');
   const summaryContainer = document.getElementById('summary-container');
   const exportBtn = document.getElementById('export-btn');
+  const complexitySwitchContainer = document.getElementById('complexity-switch-container');
 
   if (kpiContainer) kpiContainer.style.display = '';
   if (summaryContainer) {
@@ -1099,6 +1100,10 @@ function applyMode() {
 
   if (complexityToggle) {
     complexityToggle.disabled = isStatsMode;
+  }
+
+  if (complexitySwitchContainer) {
+    complexitySwitchContainer.style.display = isStatsMode ? 'none' : '';
   }
 
   kpiItems.forEach(item => {
