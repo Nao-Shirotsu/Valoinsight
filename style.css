@@ -1,19 +1,20 @@
 /* Simple and refined styling for VALORANT KPI tool */
 :root {
-  --heading-font-size: clamp(1.5rem, 5vw, 2rem);
+  --heading-font-size: 1.75rem;
   --color-physical: #ffd1d1;
   --color-alert: #ffe8cc;
   --color-thinking: #d6f5d6;
   --color-teamplay: #e6d5ff;
   --color-judgement: #fff9cc;
   --color-study: #d6f0ff;
+  --footer-height: 0px;
 }
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   margin: 0;
-  padding: 0 20px var(--footer-height, 150px);
+  padding: 0 20px calc(40px + var(--footer-height));
   background-color: #f5f7fa;
   color: #333;
 }
@@ -60,7 +61,17 @@ h1 {
   text-align: center;
   color: #666;
   background-color: #fafafa;
-  font-size: 1.875vw;
+  font-size: 1.5vw;
+}
+
+#json-drop-area .drop-line {
+  display: block;
+}
+
+#json-drop-area .drop-note {
+  display: block;
+  font-size: 0.8em;
+  color: #999;
 }
 
 #json-drop-area.dragover {
@@ -140,9 +151,10 @@ h1 {
   position: fixed;
   bottom: 0;
   left: 0;
+  right: 0;
   width: 100%;
   background-color: #fff;
-  padding: 8px 10px;
+  padding: 16px 10px;
   border-top: 1px solid #ccc;
   z-index: 1000;
   font-size: var(--heading-font-size);
@@ -152,16 +164,6 @@ h1 {
 }
 .toggle-switch input {
   display: none;
-}
-
-#complexity-switch-container {
-  display: flex;
-  justify-content: center;
-  margin: 0 0 20px;
-}
-
-#complexity-switch {
-  display: inline-flex;
 }
 
 #mode-switch-container {
@@ -175,12 +177,11 @@ h1 {
   justify-content: center;
   margin-bottom: 20px;
 }
-
 .toggle-label {
   display: flex;
   align-items: center;
   background-color: #ccc;
-  border-radius: 16px;
+  border-radius: 999px;
   cursor: pointer;
   position: relative;
   width: 150px;
@@ -188,17 +189,9 @@ h1 {
   font-size: 0.9rem;
 }
 
-#complexity-switch .toggle-label {
-  width: 225px;
-  height: 48px;
-  border-radius: 24px;
-  font-size: 1.25rem;
-}
-
 #mode-switch .toggle-label {
   width: 225px;
   height: 48px;
-  border-radius: 24px;
   font-size: 1.25rem;
 }
 
@@ -216,26 +209,12 @@ h1 {
   width: calc(50% - 4px);
   height: calc(100% - 4px);
   background: #fff;
-  border-radius: 14px;
+  border-radius: 999px;
   transition: transform 0.2s, background-color 0.2s;
-}
-
-#complexity-toggle + .toggle-label::after {
-  border-radius: 21px;
-  background: #fff9d6;
 }
 
 #mode-toggle:checked + .toggle-label::after {
   transform: translateX(100%);
-}
-
-#complexity-toggle:checked + .toggle-label::after {
-  transform: translateX(100%);
-  background: #ffe7e7;
-}
-
-#complexity-toggle:not(:checked) + .toggle-label::after {
-  background: #fff9d6;
 }
 
 #mode-toggle:checked + .toggle-label .toggle-grading {
@@ -251,22 +230,6 @@ h1 {
 }
 
 #mode-toggle:not(:checked) + .toggle-label .toggle-stats {
-  color: #666;
-}
-
-#complexity-toggle:checked + .toggle-label .toggle-simple {
-  color: #666;
-}
-
-#complexity-toggle:checked + .toggle-label .toggle-advanced {
-  color: #000;
-}
-
-#complexity-toggle:not(:checked) + .toggle-label .toggle-simple {
-  color: #000;
-}
-
-#complexity-toggle:not(:checked) + .toggle-label .toggle-advanced {
   color: #666;
 }
 
@@ -526,15 +489,21 @@ h1 {
   box-sizing: border-box;
 }
 
-#footer {
-  text-align: center;
+#compliance-section {
+  width: 95%;
+  margin: 40px auto 0;
 }
 
-#footer p {
+.riot-footer {
+  text-align: center;
+  margin: 16px auto 0;
+}
+
+.riot-footer p {
   margin: 6px 0;
 }
 
-#footer .riot-disclaimer {
+.riot-footer .riot-disclaimer {
   font-size: 0.75rem;
   color: #999;
 }
