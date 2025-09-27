@@ -98,12 +98,12 @@ const advancedKpiData = [
         {
           heading: 'マップ知識',
           items: [
-            { id: 'map-official-calls', text: '今回のマップの、場所ごとの名称・通称を全て知っていますか', note: ['正式名称: ラフター, タピオか, ...', 'プレイヤー間通称: ザリガニ, ヘヴン/アンダー, ...'], attributes: ['study'] },
+            { id: 'map-official-calls', text: '場所ごとの名称・通称を全て知っていますか', note: ['正式名称: ラフター, タピオか, ...', 'プレイヤー間通称: ザリガニ, ヘヴン/アンダー, ...'], attributes: ['study'] },
             //{ id: 'sniper-spots', text: 'スナイパーがよく出てくる場所とエージェントを知っていますか', attributes: ['study'] },
             //{ id: 'shotgun-spots', text: 'ショットガンがよく出てくる場所を知っていますか', attributes: ['study'] },
-            { id: 'map-key-areas', text: '今回のマップで、重要なエリアはどこか説明できますか', attributes: ['study'] },
-            { id: 'map-essential-agents', text: '今回のマップの、必須級エージェントの何が強くて必須か説明できますか', attributes: ['study'] },
-            { id: 'drone-required-areas', text: '今回のマップで、ドローン系の索敵が無ければ極めて進みづらいエリアがどこかを知っていますか', attributes: ['study'] },
+            { id: 'map-key-areas', text: '重要なエリアはどこか説明できますか', attributes: ['study'] },
+            { id: 'map-essential-agents', text: '必須級エージェントの何が強くて必須か説明できますか', attributes: ['study'] },
+            { id: 'drone-required-areas', text: 'ドローン系スキルが無いと進みみくいエリアがどこかを説明できますか', attributes: ['study'] },
             //{ id: 'map-plant-spots', text: '今回のマップの、一般的なプラント位置を全て知っていますか', attributes: ['study'] }
             //{ id: 'flash-stun-spots', text: '今回のマップで、一般的にフラッシュやスタンが良く使われる場所を知っていますか', attributes: ['study'] }
           //{ id: 'map-chokepoints', text: '今回のマップにおける、一般的なチョークポイントを知っていますか', note: ['・チョークポイントとは：敵が出てくる所'] , attributes: ['study'] },
