@@ -232,7 +232,7 @@ const attributeLabels = {
   teamplay: 'チームプレイ',
   judgement: '状況判断',
   alert: '警戒力',
-  thinking: '俯瞰思考',
+  thinking: 'マクロ思考',
   study: '座学'
 };
 
