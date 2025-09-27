@@ -98,8 +98,7 @@ const advancedKpiData = [
         {
           heading: 'マップ知識',
           items: [
-            { id: 'map-official-calls', text: '今回のマップの、場所ごとの名称・通称を全て知っていますか', note: ['拡大マップに記載の正式名称: ラフター, タピオか, ...', 'プレイヤー間での通称: ザリガニ, ヘヴン/アンダー,...'], attributes: ['study'] },
-            { id: 'map-nickname-calls', text: '今回のマップの、非公式なエリアの俗称を概ね知っていますか', note: ['・ヘヴン, ザリガニなど'], attributes: ['study'] },
+            { id: 'map-official-calls', text: '今回のマップの、場所ごとの名称・通称を全て知っていますか', note: ['正式名称: ラフター, タピオか, ...', 'プレイヤー間通称: ザリガニ, ヘヴン/アンダー, ...'], attributes: ['study'] },
             //{ id: 'sniper-spots', text: 'スナイパーがよく出てくる場所とエージェントを知っていますか', attributes: ['study'] },
             //{ id: 'shotgun-spots', text: 'ショットガンがよく出てくる場所を知っていますか', attributes: ['study'] },
             { id: 'map-key-areas', text: '今回のマップで、重要なエリアはどこか説明できますか', attributes: ['study'] },
