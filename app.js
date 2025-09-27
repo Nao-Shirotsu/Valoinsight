@@ -120,6 +120,8 @@ const kpiItems = [];
 const container = document.getElementById('kpi-container');
 const selectionContainer = document.getElementById('selection-container');
 const dropArea = document.getElementById('json-drop-area');
+const dropAreaContainer = dropArea ? dropArea.parentElement : null;
+const complexityToggle = document.getElementById('complexity-toggle');
 let selectedMap = null;
 let selectedAgent = null;
 let loadedDatasets = [];
@@ -1009,6 +1011,9 @@ function applyMode() {
   }
   if (dropArea) {
     dropArea.style.display = isStatsMode ? '' : 'none';
+  }
+  if (dropAreaContainer) {
+    dropAreaContainer.style.display = isStatsMode ? 'flex' : 'none';
   }
   if (exportBtn) {
     exportBtn.disabled = isStatsMode;
