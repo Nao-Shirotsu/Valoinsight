@@ -121,7 +121,6 @@ const container = document.getElementById('kpi-container');
 const selectionContainer = document.getElementById('selection-container');
 const dropArea = document.getElementById('json-drop-area');
 const dropAreaContainer = dropArea ? dropArea.parentElement : null;
-const complexityToggle = document.getElementById('complexity-toggle');
 let selectedMap = null;
 let selectedAgent = null;
 let loadedDatasets = [];
