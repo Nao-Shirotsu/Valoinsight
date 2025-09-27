@@ -171,16 +171,6 @@ h1 {
   display: none;
 }
 
-#complexity-switch-container {
-  display: flex;
-  justify-content: center;
-  margin: 0 0 20px;
-}
-
-#complexity-switch {
-  display: inline-flex;
-}
-
 .toggle-label {
   display: flex;
   align-items: center;
@@ -191,13 +181,6 @@ h1 {
   width: 150px;
   height: 32px;
   font-size: 0.9rem;
-}
-
-#complexity-switch .toggle-label {
-  width: 225px;
-  height: 48px;
-  border-radius: 24px;
-  font-size: 1.25rem;
 }
 
 .toggle-label span {
@@ -218,22 +201,8 @@ h1 {
   transition: transform 0.2s, background-color 0.2s;
 }
 
-#complexity-toggle + .toggle-label::after {
-  border-radius: 21px;
-  background: #fff9d6;
-}
-
 #mode-toggle:checked + .toggle-label::after {
   transform: translateX(100%);
-}
-
-#complexity-toggle:checked + .toggle-label::after {
-  transform: translateX(100%);
-  background: #ffe7e7;
-}
-
-#complexity-toggle:not(:checked) + .toggle-label::after {
-  background: #fff9d6;
 }
 
 #mode-toggle:checked + .toggle-label .toggle-grading {
@@ -249,22 +218,6 @@ h1 {
 }
 
 #mode-toggle:not(:checked) + .toggle-label .toggle-stats {
-  color: #666;
-}
-
-#complexity-toggle:checked + .toggle-label .toggle-simple {
-  color: #666;
-}
-
-#complexity-toggle:checked + .toggle-label .toggle-advanced {
-  color: #000;
-}
-
-#complexity-toggle:not(:checked) + .toggle-label .toggle-simple {
-  color: #000;
-}
-
-#complexity-toggle:not(:checked) + .toggle-label .toggle-advanced {
   color: #666;
 }
 
@@ -441,48 +394,6 @@ h1 {
   display: flex;
   gap: 4px;
   align-self: center;
-}
-
-.simple-rating {
-  display: flex;
-  gap: 12px;
-  align-self: center;
-}
-
-.simple-rating-option {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-family: inherit;
-  transition: transform 0.2s ease;
-}
-
-.simple-rating-option:hover .simple-rating-emoji,
-.simple-rating-option:focus-visible .simple-rating-emoji {
-  transform: translateY(-1px);
-}
-
-.simple-rating-option:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 4px;
-  border-radius: 12px;
-}
-
-.simple-rating-emoji {
-  font-size: clamp(1.4rem, 1.8vw, 2rem);
-  line-height: 1;
-  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
-  filter: grayscale(100%);
-  opacity: 0.4;
-}
-
-.simple-rating-option.selected .simple-rating-emoji {
-  filter: none;
-  opacity: 1;
 }
 
 .skip-container input[type="checkbox"] {
