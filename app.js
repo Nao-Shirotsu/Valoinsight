@@ -1,28 +1,22 @@
 const advancedKpiData = [
   {
-    heading: '編成中',
+    heading: '編成中～1st準備フェーズ',
     items: [
-      { id: 'remember-vc', text: '誰のVCが無いか覚えてましたか', attributes: ['teamplay', 'thinking'] },
-      { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ'], attributes: ['teamplay', 'study'] },
-      { id: 'strategy-axis', text: '編成から立ち回りの軸を見いだせましたか', attributes: ['teamplay', 'thinking', 'study'] }
-    ]
-  },
-  {
-    heading: '1st準備フェーズ',
-    items: [
+      { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ', '例: バインド 狭いエリアが多いため犬系アビリティが多めに欲しい'], attributes: ['teamplay', 'study'] },
       { id: 'self-role', text: '自分がロールを全うすべきか/イレギュラー対応すべきか判断できましたか', note: ['・0デュエ2イニシ編成で自分イニシ → 自分がデュエ的な戦う動きをする', '・攻めでサイファーが逆サイト管理してくれそう → デフォルト戦術', '・イニシがデュエにくっついてアビリティ投げそう → ラッシュ可能かも'], attributes: ['thinking', 'study'] },
-      { id: 'ally-counter', text: '必要に応じて適切に: 敵編成に対するアンチ戦術考案と味方への声掛けはできましたか', note: ['・味方が敵の編成から対策を考えられそうか判断する', '・ネオンがワイヤーのある所に行かなそうか、行くとしてもアンチワイヤーを考えていそうか、など'], attributes: ['thinking', 'study', 'teamplay'] },
-      { id: 'weird-teammate', text: '味方に変な奴がいる場合: その人との連携プレイの優先度を下げる決意をしましたか', note: ['・名前が「SDGs」「◯◯トロールします」', '・VCで明らかに様子がおかしい'], attributes: ['thinking', 'alert'] }
+      { id: 'strategy-axis', text: '編成から作戦を見出せましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ', '例: バインド 1イニシ+セージ → メインだけ取って多少無理やりでも設置通りそう'], attributes: ['teamplay', 'thinking', 'study'] },
+      { id: 'ally-counter', text: '敵の編成から何をやってきそうか/対策の取り方は見出せましたか', note: ['・味方が敵の編成から対策を考えられそうか判断する', '・ネオンがワイヤーのある所に行かなそうか、行くとしてもアンチワイヤーを考えていそうか、など'], attributes: ['thinking', 'study', 'teamplay'] }
     ]
   },
   {
     heading: '各ラウンドの準備フェーズ',
     items: [
-      { id: 'weapon-econ', text: '敵味方の武器管理を適切に行えましたか', note: ['・味方がハーフで4人買える時に呼びかけ', '・敵がエコかどうか', '・敵にオペレーターが出る可能性があるか'], attributes: ['thinking', 'study'] },
-      { id: 'ult-management', text: '敵味方のアルティメット管理を適切に行えましたか', note: ['・広範囲デバフ系ウルト(KJ, ブリーチ など)によってどう仕掛けるか・仕掛けられるか'], attributes: ['thinking', 'study'] },
-      { id: 'emotion-reset', text: '前ラウンドの感情処理を5秒以内に終わらせましたか', note: ['・残20秒までに次の話を始められないと味方に浸透しない'], attributes: ['thinking'] },
-      { id: 'counter-plan', text: '前のラウンドの内容をもとに適切に対策を考えられましたか', attributes: ['thinking', 'study'] },
-      { id: 'propose-strat', text: '必要に応じて作戦を提案できましたか', attributes: ['thinking', 'teamplay'] }
+      { id: 'weapon-econ', text: '節約/バイの判断を適切に行えましたか', note: ['・ライトシールドで4人買えるならバイを提案する', '・敵がエコならオペを出さない'], attributes: ['thinking', 'study'] },
+      { id: 'op-care', text: '敵がオペレーターを買える金額か確認しましたか', note: ['敵ジェットが5100ならオペ+ライトを買いそう → 丁寧にジャンプピーク/索敵をもらう'], attributes: ['thinking', 'study'] },
+      { id: 'ult-management', text: '敵味方のアルティメットチャージ数を確認しましたか', note: ['強いウルト(KJ, ブリーチ, ...)によってどう仕掛けるか/仕掛けられるか事前に想像しておく'], attributes: ['thinking', 'study'] },
+      { id: 'emotion-reset', text: '前ラウンドの感情をすぐリセットできましたか', note: ['次のことを考えるために早く冷静になる'], attributes: ['thinking'] },
+      { id: 'counter-plan', text: '前のラウンドで敵がしてきたことの対策を考えられましたか', attributes: ['thinking', 'study'] },
+      { id: 'propose-strat', text: '必要に応じて作戦を提案できましたか', note:['自分がやりたいこと/刺さりそうな作戦/敵がしてきたことの対策 を味方に共有する'], attributes: ['thinking', 'teamplay'] }
     ]
   },
   {
@@ -32,87 +26,99 @@ const advancedKpiData = [
         heading: '撃ち合い',
         items: [
           { id: 'headline', text: 'ヘッドラインを維持できましたか', attributes: ['physical'] },
-          { id: 'angle-advantage', text: '必要に応じて適切にアングル(遠近壁)有利を取れていましたか', attributes: ['physical'] },
-          { id: 'off-angle', text: '必要に応じて適切にオフアングルを使えましたか', attributes: ['physical', 'judgement'] },
-          { id: 'peeker-adv', text: '必要に応じて適切にピーカーズアドバンテージを取れていましたか', attributes: ['physical'] },
-          { id: 'timing-peek', text: '必要に応じて適切にタイミングピークできましたか', attributes: ['physical'] },
-          { id: 'slicing-pie', text: '必要に応じて適切にカッティングパイできましたか', attributes: ['physical'] },
-          { id: 'cover-angle', text: '味方がカバー射線を通せるアングル&位置の維持はできましたか', attributes: ['physical', 'judgement', 'teamplay'] },
-          { id: 'magazine', text: 'マガジン残弾数管理は適切でしたか', attributes: ['physical'] },
+          { id: 'angle-advantage', text: 'アングル(遠近壁)有利を取れていましたか', attributes: ['physical'] },
+          { id: 'peeker-adv', text: 'アングルがイーブンの時、ピーカーズアドバンテージを取れていましたか', attributes: ['physical'] },
+          { id: 'slicing-pie', text: '丁寧にストッピングしましたか', attributes: ['physical'] },
+          { id: 'cover-angle', text: '味方がカバー射線を通せる位置で戦えましたか', attributes: ['judgement', 'teamplay'] },
           { id: 'anti-wallbang', text: 'モク抜きされにくい位置にいましたか', attributes: ['judgement'] },
           { id: 'anti-flash', text: 'フラッシュを食らっても生存できる位置にいましたか', attributes: ['judgement'] },
-          { id: 'variable-peak', text: '体の出し方に緩急をつけられましたか', attributes: ['physical'] },
-          { id: 'safe-melee', text: '近接武器・アビリティは安全な状況でのみ構えていましたか', attributes: ['judgement'] }
         ]
       },
       {
         heading: '盤面管理',
         items: [
-          { id: 'engage-decision', text: '接敵していいか判断してからピークしましたか', attributes: ['judgement', 'alert'] },
-          { id: 'reposition', text: '必要に応じて適切にポジションを変えましたか', attributes: ['judgement', 'alert'] },
-          { id: 'consider-enemy-count', text: 'エントリーの前に敵の数と質の両方を考慮しましたか', attributes: ['judgement', 'thinking', 'study'] },
-          { id: 'not-miss-rotate', text: 'ローテートが出来る状況を見落としませんでしたか', attributes: ['judgement', 'thinking'] },
-          { id: 'rotate-reason', text: 'ローテートする判断の際、適切な根拠はありましたか', attributes: ['judgement', 'thinking', 'study'] },
-          { id: 'ult-change', text: '敵味方のアルティメット状況変化を認識していましたか', attributes: ['judgement', 'alert'] },
-          { id: 'silent-steps', text: '必要に応じて適切に足音を消せましたか', note: ['・ラウンド開始直後の情報取り段階', '・ローテート画策中'], attributes: ['judgement', 'alert', 'thinking'] },
-          { id: 'push-care', text: 'プッシュケアできましたか', attributes: ['judgement','alert'] },
-          { id: 'scoreboard-check', text: '可能な時、オーブとプラントの音でスコアボードを確認できましたか', attributes: ['judgement', 'thinking'] },
-          { id: 'backstab-care', text: '裏取りされうるエリアで適切に警戒できましたか', attributes: ['judgement', 'alert'] },
-          { id: 'clearing', text: '丁寧にクリアリングできましたか', attributes: ['alert'] }
+          { id: 'engage-decision', text: '接敵していいか判断してからピークしましたか', note:['・誰もカバーできない位置でピークすると良くて1v1, 悪くて1v3くらいになる', '・今自分がやられたら敵のローテが成功しそうなら戦ってはいけない'], attributes: ['judgement', 'alert'] },
+          { id: 'reposition', text: '適切にポジションを変えましたか', note:['毎回同じポジション/同じタイミングだと流石に読まれる。相手がされて嫌な位置取り/ピークをする'], attributes: ['judgement', 'alert'] },
+          { id: 'consider-enemy-count', text: '無理なエントリーをしませんでしたか', note:['マップや飛んできたアビリティから敵が何人いるか判断する。例えば4人確定ならエントリーは非常に厳しい'], attributes: ['judgement', 'thinking', 'study'] },
+          { id: 'not-miss-rotate', text: 'ローテートが出来る状況を見落としませんでしたか', note:['敵のエージェントの誰がマップに映ったか覚えておく。例えばAに5人見えたならBにフリーで設置できる'], attributes: ['judgement', 'thinking'] },
+          { id: 'rotate-reason', text: 'ローテートする判断の時、敵より早くサイトに到着できる根拠はありましたか', attributes: ['judgement', 'thinking', 'study'] },
+          { id: 'silent-steps', text: '適切に足音を消せましたか', note: ['・ラウンド開始直後の情報取り段階', '・ローテート画策中'], attributes: ['judgement', 'alert', 'thinking'] },
+          { id: 'clearing', text: '丁寧にクリアリングできましたか', note:['主導権がないエリアなど敵がいるかもしれない場所では特に丁寧に'], attributes: ['alert'] }
         ]
       },
       {
         heading: 'チームプレイ',
         items: [
-          { id: 'death-call', text: '死亡時に即座に必要なことを報告できましたか', attributes: ['teamplay', 'judgement'] },
-          { id: 'ask-help', text: '自分が困った時に適切に助けを要求しましたか', attributes: ['teamplay', 'judgement'] },
-          { id: 'follow-entry', text: '適切にエントリーに着いていきましたか', attributes: ['teamplay', 'judgement'] },
-          { id: 'support-duelist', text: 'デュエリスト(先頭の人)が困っている時に適切に提案したり、適切に支援アビリティを出せましたか', attributes: ['teamplay', 'thinking'] },
-          { id: 'cover-line', text: '必要に応じて適切に味方へのカバーの射線を通せましたか', attributes: ['teamplay', 'physical'] },
-          { id: 'protect-defuser', text: '解除者の射線に敵が立たないようにできましたか', attributes: ['teamplay', 'judgement'] }
+          { id: 'death-call', text: '死亡時に即座に必要なことを報告できましたか', note:['「誰々 120カット」「サイファーはミッドにいた」'], attributes: ['teamplay', 'judgement'] },
+          { id: 'ask-help', text: '自分が困った時に適切に助けを要求しましたか', note:['「プラント中カバーして！」「耐えスモ欲しい！」'], attributes: ['teamplay', 'judgement'] },
+          { id: 'follow-entry', text: 'エントリーに着いていきましたか', note:['デュエリストが行くと判断したなら自分も一緒に行くべき'], attributes: ['teamplay', 'judgement'] },
+          { id: 'support-duelist', text: 'デュエリスト(先頭の人)が困っている時に適切に提案したり、適切に支援アビリティを出せましたか', note:['・フラッシュで入れそうなら出す','・罠があるならアビリティで壊す','・ローテートを提案する'], attributes: ['teamplay', 'thinking'] },
+          { id: 'cover-line', text: '味方へのカバーはできましたか', attributes: ['teamplay', 'judgement'] },
+          { id: 'protect-defuser', text: '解除中正しい動きができましたか', attributes: ['teamplay', 'judgement'] }
         ]
       },
       {
         heading: 'プラント・ポストプラント',
         items: [
           { id: 'plant-delay', text: 'どこで遅延行為がしやすいか考えてプラント位置を決めましたか', attributes: ['study', 'judgement', 'thinking'] },
-          { id: 'postplant-position', text: '見方が設置した位置に対して強い位置取りができましたか', attributes: ['study', 'judgement'] },
-          { id: 'ability-awareness', text: '味方と敵の残アビリティを認識できましたか', attributes: ['study', 'judgement', 'teamplay'] },
-          { id: 'ally-reaction', text: '味方の動きを見てそれに対応した適切なポジショニングはできましたか', attributes: ['study', 'judgement', 'thinking', 'teamplay'] }
+          { id: 'postplant-position', text: 'プラント位置に対して強い位置取りができましたか', attributes: ['study', 'judgement'] },
+          { id: 'ability-awareness', text: '味方と敵の残アビリティを意識してリアルタイムで対策できましたか', attributes: ['study', 'judgement', 'teamplay'] },
+          { id: 'ally-reaction', text: '味方とプラントの位置に対して強い射線を通せましたか', attributes: ['study', 'judgement', 'thinking', 'teamplay'] }
         ]
       }
     ]
   },
   {
-        heading: '座学',
-        items: [         
-          { id: 'weapon-knowledge', text: '全ての武器のダメージと特徴を知っていますか', attributes: ['study'] },
-          { id: 'buy-amount-memory', text: 'フルバイとハーフアーマーバイの金額を覚えていますか', attributes: ['study'] },
-          { id: 'ability-cost-awareness', text: '自分のアビリティの合計金額を知っていますか', attributes: ['study'] },
-          { id: 'spike-benefits', text: 'スパイクを設置・解除した際に得られるメリットを全て知っていますか', attributes: ['study'] },
-          { id: 'spike-timers', text: 'スパイクの設置・爆発・解除にかかる秒数を知っていますか', attributes: ['study'] },
-          { id: 'spike-cues', text: '設置後のスパイクの見た目や音の変化で分かる情報を全て知っていますか', attributes: ['study'] },
-          { id: 'map-official-calls', text: '今回のマップの、公式なエリアの名称を全て知っていますか', note: ['・ラフター, タピオカなど'], attributes: ['study'] },
-          { id: 'map-nickname-calls', text: '今回のマップの、非公式なエリアの俗称を概ね知っていますか', note: ['・ヘヴン, ザリガニなど'], attributes: ['study'] },
-          { id: 'sniper-spots', text: 'スナイパーがよく出てくる場所とエージェントを知っていますか', attributes: ['study'] },
-          { id: 'shotgun-spots', text: 'ショットガンがよく出てくる場所を知っていますか', attributes: ['study'] },
-          { id: 'map-key-areas', text: '今回のマップで一般的に重要とされるエリアはどこか、理由も含めて説明できますか', attributes: ['study'] },
-          { id: 'map-essential-agents', text: '今回のマップで一般的に必須とされるエージェントを、理由も含めて説明できますか', attributes: ['study'] },
-          { id: 'map-plant-spots', text: '今回のマップの、一般的なプラント位置を全て知っていますか', attributes: ['study'] },
-          { id: 'map-chokepoints', text: '今回のマップにおける、一般的なチョークポイントを知っていますか', note: ['・チョークポイントとは：敵が出てくる所'] , attributes: ['study'] },
-          { id: 'map-off-angles', text: '今回のマップにおける、一般的なオフアングルを知っていますか', attributes: ['study'] },
-          { id: 'map-highground', text: '今回のマップにおける、一般的な高所ポジションを知っていますか', note: ['・ジェットやオーメンなど、移動アビリティ使用後限定のポジションを含む'] , attributes: ['study'] },
-          { id: 'signature-knowledge', text: '今回の試合で使われた全てのエージェントのシグネチャーアビリティと、そのリキャストタイムを知っていますか', attributes: ['study'] },
-          { id: 'flash-stun-knowledge', text: '今回の試合で使われたエージェントの、全てのフラッシュ・スタンの効果と範囲を知っていますか', attributes: ['study'] },
-          { id: 'flash-stun-spots', text: '今回のマップで、一般的にフラッシュやスタンが良く使われる場所を知っていますか', attributes: ['study'] },
-          { id: 'sentinel-trap-knowledge', text: '今回の試合で使われた全てのセンチネルの持つ、トラップの一般的な定点と対策を知っていますか', attributes: ['study'] },
-          { id: 'smoke-usage-knowledge', text: '一般的なスモークの置き方と、その使い方を全て知っていますか', note: ['・閉じ・耐え・もっこり・1way など'], attributes: ['study'] },
-          { id: 'recon-usage-knowledge', text: '索敵アビリティが一般的にどこに投げられ、それがどのエリアを映す為のものか知っていますか', attributes: ['study'] },
-          { id: 'drone-required-areas', text: '今回のマップで、ドローン系の索敵が無ければ極めて進みづらいエリアがどこかを知っていますか', attributes: ['study'] },
-          { id: 'molly-count-knowledge', text: '今回の試合で互いのチームにモロトフが合計何個あり、それぞれ何秒あるか知っていますか', attributes: ['study'] },
-          { id: 'utility-ult-counterplay', text: '敵のイニシエーターとキルジョイとクローヴのウルトの性能と対策を知っていますか', attributes: ['study'] }
-        ]
-      }
+      heading: '座学',
+      subsections: [
+        {
+          heading: ' `エリアコントロール',
+          items: [         
+            { id: 'smoke-usage-knowledge', text: '一般的なスモークの置き方と、その使い方を全て知っていますか', note: ['・閉じ・耐え・もっこり・1way など'], attributes: ['study'] },
+            { id: 'sentinel-trap-knowledge', text: '今回の試合で使われた全てのセンチネルの持つ、トラップの一般的な定点と対策を知っていますか', attributes: ['study'] },
+            { id: 'recon-usage-knowledge', text: '索敵アビリティが一般的にどこに投げられ、それがどの場所を映す為のものか知っていますか', attributes: ['study'] },
+          ]
+        },
+        {
+          heading: ' `武器・エージェントの性能',
+          items: [         
+            { id: 'weapon-knowledge', text: '全ての武器のダメージと特徴を知っていますか', attributes: ['study'] },
+            { id: 'buy-amount-memory', text: 'フルバイとハーフアーマーバイの金額を覚えていますか', attributes: ['study'] },
+            { id: 'ability-cost-awareness', text: '自分のアビリティの合計金額を知っていますか', attributes: ['study'] }
+          ]
+        },
+        {            
+          headking: 'スパイクの仕様',
+          items: [
+            { id: 'spike-benefits', text: 'スパイクを設置・解除した際に得られるメリットを全て知っていますか', attributes: ['study'] },
+            { id: 'spike-timers', text: 'スパイクの設置・爆発・解除にかかる秒数を知っていますか', attributes: ['study'] },
+            { id: 'spike-cues', text: '設置後のスパイクの見た目や音の変化で分かる情報を全て知っていますか', attributes: ['study'] }
+          ]
+        },
+        {
+          heading: 'マップ知識'
+          items: [
+            { id: 'map-official-calls', text: '今回のマップの、公式なエリアの名称を全て知っていますか', note: ['・ラフター, タピオカなど'], attributes: ['study'] },
+            { id: 'map-nickname-calls', text: '今回のマップの、非公式なエリアの俗称を概ね知っていますか', note: ['・ヘヴン, ザリガニなど'], attributes: ['study'] },
+            { id: 'sniper-spots', text: 'スナイパーがよく出てくる場所とエージェントを知っていますか', attributes: ['study'] },
+            { id: 'shotgun-spots', text: 'ショットガンがよく出てくる場所を知っていますか', attributes: ['study'] },
+            { id: 'map-key-areas', text: '今回のマップで一般的に重要とされるエリアはどこか、理由も含めて説明できますか', attributes: ['study'] },
+            { id: 'map-essential-agents', text: '今回のマップで一般的に必須とされるエージェントを、理由も含めて説明できますか', attributes: ['study'] },
+            { id: 'drone-required-areas', text: '今回のマップで、ドローン系の索敵が無ければ極めて進みづらいエリアがどこかを知っていますか', attributes: ['study'] },
+            { id: 'map-plant-spots', text: '今回のマップの、一般的なプラント位置を全て知っていますか', attributes: ['study'] }
+            //{ id: 'flash-stun-spots', text: '今回のマップで、一般的にフラッシュやスタンが良く使われる場所を知っていますか', attributes: ['study'] }
+          //{ id: 'map-chokepoints', text: '今回のマップにおける、一般的なチョークポイントを知っていますか', note: ['・チョークポイントとは：敵が出てくる所'] , attributes: ['study'] },
+          //{ id: 'map-off-angles', text: '今回のマップにおける、一般的なオフアングルを知っていますか', attributes: ['study'] },
+          //{ id: 'map-highground', text: '今回のマップにおける、一般的な高所ポジションを知っていますか', note: ['・ジェットやオーメンなど、移動アビリティ使用後限定のポジションを含む'] , attributes: ['study'] },
+          //{ id: 'signature-knowledge', text: '今回の試合で使われた全てのエージェントのシグネチャーアビリティと、そのリキャストタイムを知っていますか', attributes: ['study'] },
+          //{ id: 'flash-stun-knowledge', text: '今回の試合で使われたエージェントの、全てのフラッシュ・スタンの効果と範囲を知っていますか', attributes: ['study'] },
+          //{ id: 'flash-stun-spots', text: '今回のマップで、一般的にフラッシュやスタンが良く使われる場所を知っていますか', attributes: ['study'] },
+          //{ id: 'molly-count-knowledge', text: '今回の試合で互いのチームにモロトフが合計何個あり、それぞれ何秒あるか知っていますか', attributes: ['study'] },
+          //{ id: 'utility-ult-counterplay', text: '敵のイニシエーターとキルジョイとクローヴのウルトの性能と対策を知っていますか', attributes: ['study'] }
+          ]
+        }  
+      ]
+    }
 ];
 
 // Build KPI sections including headings while collecting items
