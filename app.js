@@ -115,16 +115,6 @@ const advancedKpiData = [
       }
 ];
 
-const simpleKpiData = [
-  {
-    heading: 'シンプル項目',
-    items: [
-      { id: 'simple-overview', text: '試合全体の動きに満足できましたか', attributes: ['thinking', 'judgement'] },
-      { id: 'simple-communication', text: '必要なコミュニケーションは取れましたか', attributes: ['teamplay', 'alert'] },
-      { id: 'simple-mechanics', text: 'エイムとアビリティの操作に安定感はありましたか', attributes: ['physical', 'study'] }
-    ]
-  }
-];
 // Build KPI sections including headings while collecting items
 const kpiItems = [];
 const container = document.getElementById('kpi-container');
@@ -481,22 +471,22 @@ function addItem(item, sectionHeading = null, subsectionHeading = null) {
   skipContainer.appendChild(skipLabel);
   wrapper.appendChild(skipContainer);
 
-  const starContainer = document.createElement('div');
-  starContainer.classList.add('star-rating');
+  const ratingContainer = document.createElement('div');
+  ratingContainer.classList.add('star-rating');
   for (let i = 1; i <= 5; i++) {
     const star = document.createElement('span');
     star.classList.add('star');
     star.innerHTML = '★';
     star.dataset.value = i;
     star.addEventListener('click', () => {
-      const current = parseInt(wrapper.dataset.rating || '0');
+      const current = parseFloat(wrapper.dataset.rating || '0');
       const newRating = current === i ? 0 : i;
       setRating(wrapper, newRating);
       updateAverage();
     });
-    starContainer.appendChild(star);
+    ratingContainer.appendChild(star);
   }
-  wrapper.appendChild(starContainer);
+  wrapper.appendChild(ratingContainer);
 
   const scoreWrapper = document.createElement('div');
   scoreWrapper.classList.add('score-container');
@@ -531,17 +521,10 @@ function clearKpiContainer() {
   kpiItems.length = 0;
 }
 
-function getActiveKpiData() {
-  if (complexityToggle && complexityToggle.checked) {
-    return advancedKpiData;
-  }
-  return simpleKpiData;
-}
-
 function buildDefaultKpiLayout() {
   if (!container) return;
   clearKpiContainer();
-  const dataset = getActiveKpiData();
+  const dataset = advancedKpiData;
   dataset.forEach(section => {
     const sectionHeading = document.createElement('h2');
     sectionHeading.classList.add('section-heading');
@@ -684,7 +667,7 @@ function buildStatsLayoutFromDatasets(datasets) {
       if (skipCheckbox && skipCheckbox.checked) return;
       const wrapper = document.getElementById(item.id);
       if (!wrapper) return;
-      const parsed = parseInt(wrapper.dataset.rating, 10);
+      const parsed = parseFloat(wrapper.dataset.rating);
       const rating = Number.isNaN(parsed) ? 0 : parsed;
       const score = rating * 20;
       total += score;
@@ -819,10 +802,19 @@ function buildStatsLayoutFromDatasets(datasets) {
   }
 
 function setRating(wrapper, rating) {
-  wrapper.dataset.rating = rating;
+  const numericValue = typeof rating === 'number' ? rating : parseFloat(rating);
+  const hasNumericValue = !Number.isNaN(numericValue);
+
+  if (!hasNumericValue) {
+    delete wrapper.dataset.rating;
+  } else {
+    wrapper.dataset.rating = numericValue;
+  }
+
+  const numeric = hasNumericValue ? numericValue : 0;
   const stars = wrapper.querySelectorAll('.star');
   stars.forEach((star, idx) => {
-    star.classList.toggle('selected', idx < rating);
+    star.classList.toggle('selected', idx < numeric);
   });
 }
 
@@ -949,7 +941,7 @@ document.getElementById('export-btn').addEventListener('click', () => {
   const buildElement = item => {
     const skip = document.getElementById(`${item.id}-skip`).checked;
     const wrapper = document.getElementById(item.id);
-    const rating = parseInt(wrapper.dataset.rating || '0');
+    const rating = parseFloat(wrapper.dataset.rating || '0');
     const element = {
       id: item.id,
       text: item.text,
@@ -997,8 +989,7 @@ document.getElementById('export-btn').addEventListener('click', () => {
   a.href = url;
   const mapName = selectedMap ? selectedMap.toLowerCase() : 'unknown';
   const agentName = selectedAgent ? selectedAgent.toLowerCase() : 'unknown';
-  const complexityName = complexityToggle && complexityToggle.checked ? 'advanced' : 'simple';
-  a.download = `valoinsight_${complexityName}_${mapName}_${agentName}.json`;
+  a.download = `valoinsight_advanced_${mapName}_${agentName}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -1007,15 +998,6 @@ document.getElementById('export-btn').addEventListener('click', () => {
 
 const modeToggle = document.getElementById('mode-toggle');
 const statsPlaceholderValue = 0.0;
-
-if (complexityToggle) {
-  complexityToggle.addEventListener('change', () => {
-    if (!modeToggle || !modeToggle.checked) {
-      buildDefaultKpiLayout();
-      applyMode();
-    }
-  });
-}
 
 function applyMode() {
   const isStatsMode = modeToggle && modeToggle.checked;
@@ -1038,16 +1020,12 @@ function applyMode() {
     exportBtn.style.display = isStatsMode ? 'none' : '';
   }
 
-  if (complexityToggle) {
-    complexityToggle.disabled = isStatsMode;
-  }
-
   kpiItems.forEach(item => {
     const skipCheckbox = document.getElementById(`${item.id}-skip`);
     const wrapper = document.getElementById(item.id);
     if (!wrapper) return;
     const skipContainer = wrapper.querySelector('.skip-container');
-    const starContainer = wrapper.querySelector('.star-rating');
+    const ratingContainer = wrapper.querySelector('.star-rating');
     const scoreContainer = wrapper.querySelector('.score-container');
     const scoreEl = wrapper.querySelector('.score-display');
     const countEl = wrapper.querySelector('.data-count');
@@ -1059,8 +1037,8 @@ function applyMode() {
     if (skipContainer) {
       skipContainer.style.display = isStatsMode ? 'none' : '';
     }
-    if (starContainer) {
-      starContainer.style.display = isStatsMode ? 'none' : '';
+    if (ratingContainer) {
+      ratingContainer.style.display = isStatsMode ? 'none' : '';
     }
     if (scoreContainer) {
       scoreContainer.style.display = 'flex';
