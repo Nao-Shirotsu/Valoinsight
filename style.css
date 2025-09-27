@@ -52,15 +52,15 @@ h1 {
 }
 
 #json-drop-area {
-  width: 12vw;
-  height: 6vw;
-  min-width: 150px;
-  padding: 20px 10px;
+  width: 18vw;
+  height: 9vw;
+  min-width: 225px;
+  padding: 30px 15px;
   border: 2px dashed #bbb;
   text-align: center;
   color: #666;
   background-color: #fafafa;
-  font-size: 1.25vw;
+  font-size: 1.875vw;
 }
 
 #json-drop-area.dragover {
@@ -150,25 +150,6 @@ h1 {
   align-items: center;
   justify-content: center;
 }
-#controls-container {
-  position: absolute;
-  right: 0;
-  top: 10%;
-  margin-right: 3%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-/* mode switch positioned via controls-container */
-#mode-switch {}
-
-#file-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .toggle-switch input {
   display: none;
 }
@@ -181,6 +162,18 @@ h1 {
 
 #complexity-switch {
   display: inline-flex;
+}
+
+#mode-switch-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 20px;
+}
+
+#drop-area-container {
+  display: none;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .toggle-label {
@@ -196,6 +189,13 @@ h1 {
 }
 
 #complexity-switch .toggle-label {
+  width: 225px;
+  height: 48px;
+  border-radius: 24px;
+  font-size: 1.25rem;
+}
+
+#mode-switch .toggle-label {
   width: 225px;
   height: 48px;
   border-radius: 24px;
@@ -338,13 +338,20 @@ h1 {
   background-color: var(--color-study);
 }
 
+
 .attribute-label {
   width: 6em;
 }
 
+#export-container {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0 0;
+}
+
 #export-btn {
-  padding: 6px 12px;
-  font-size: 1rem;
+  padding: 9px 18px;
+  font-size: 1.5rem;
 }
 
 #export-btn:disabled {
