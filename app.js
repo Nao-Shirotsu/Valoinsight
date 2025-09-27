@@ -96,7 +96,7 @@ const advancedKpiData = [
           ]
         },
         {
-          heading: 'マップ知識'
+          heading: 'マップ知識',
           items: [
             { id: 'map-official-calls', text: '今回のマップの、公式なエリアの名称を全て知っていますか', note: ['・ラフター, タピオカなど'], attributes: ['study'] },
             { id: 'map-nickname-calls', text: '今回のマップの、非公式なエリアの俗称を概ね知っていますか', note: ['・ヘヴン, ザリガニなど'], attributes: ['study'] },
