@@ -7,13 +7,14 @@
   --color-teamplay: #e6d5ff;
   --color-judgement: #fff9cc;
   --color-study: #d6f0ff;
+  --footer-height: 0px;
 }
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   margin: 0;
-  padding: 0 20px 40px;
+  padding: 0 20px calc(40px + var(--footer-height));
   background-color: #f5f7fa;
   color: #333;
 }
@@ -477,16 +478,14 @@ h1 {
   box-sizing: border-box;
 }
 
-#footer {
-  text-align: center;
-  margin: 40px auto 0;
+#compliance-section {
   width: 95%;
+  margin: 40px auto 0;
 }
 
 .riot-footer {
   text-align: center;
   margin: 16px auto 0;
-  width: 95%;
 }
 
 .riot-footer p {
