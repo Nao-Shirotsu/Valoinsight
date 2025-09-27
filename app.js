@@ -88,7 +88,7 @@ const advancedKpiData = [
           ]
         },
         {            
-          headking: 'スパイクの仕様',
+          heading: 'スパイクの仕様',
           items: [
             { id: 'spike-benefits', text: 'スパイクを設置・解除した際に得られるメリットを全て知っていますか', attributes: ['study'] },
             { id: 'spike-timers', text: 'スパイクの設置・爆発・解除にかかる秒数を知っていますか', attributes: ['study'] },
