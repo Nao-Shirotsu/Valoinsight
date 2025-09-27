@@ -64,6 +64,16 @@ h1 {
   font-size: 1.5vw;
 }
 
+#json-drop-area .drop-line {
+  display: block;
+}
+
+#json-drop-area .drop-note {
+  display: block;
+  font-size: 0.8em;
+  color: #999;
+}
+
 #json-drop-area.dragover {
   border-color: #333;
   background-color: #f0f0f0;
