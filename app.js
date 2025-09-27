@@ -115,31 +115,11 @@ const advancedKpiData = [
       }
 ];
 
-const simpleKpiData = [
-  {
-    
-    items: [
-      { id: 'xx1', text: 'エイム/ピークの仕方は良かったですか', attributes: ['physical'] },
-      { id: 'xx2', text: '遮蔽物を活かせましたか', attributes: ['physical'] },
-      { id: 'xx3', text: '味方に付いていきましたか/味方が付いてこれることを確認してから行きましたか', attributes: ['teamplay'] },
-      { id: 'xx4', text: '味方のためにアビリティを使えましたか', attributes: ['teamplay'] },
-      { id: 'xx5', text: '安全な時はミニマップを見ていましたか', attributes: ['judgement'] },
-      { id: 'xx6', text: 'エントリー前に敵が多くないか判断しましたか', attributes: ['judgement'] },
-      { id: 'xx7', text: '丁寧にクリアリングできましたか', attributes: ['alert'] },
-      { id: 'xx8', text: 'フラッシュ/モク抜きでやられにくい位置にいましたか', attributes: ['alert'] },
-      { id: 'xx9', text: '敵味方のアルティメット状況を見てから動き出せましたか', attributes: ['thinking'] },
-      { id: 'x10', text: '前ラウンドの敵の動きの対策を考えてから動き出せましたか', attributes: ['thinking'] },
-      { id: 'x11', text: '今回のマップの重要なエリアはどこか説明できますか', attributes: ['study'] },
-      { id: 'x12', text: '敵味方全員のアビリティと使い方を説明できますか', attributes: ['study'] }
-    ]
-  }
-];
 // Build KPI sections including headings while collecting items
 const kpiItems = [];
 const container = document.getElementById('kpi-container');
 const selectionContainer = document.getElementById('selection-container');
 const dropArea = document.getElementById('json-drop-area');
-const complexityToggle = document.getElementById('complexity-toggle');
 let selectedMap = null;
 let selectedAgent = null;
 let loadedDatasets = [];
@@ -489,55 +469,20 @@ function addItem(item, sectionHeading = null, subsectionHeading = null) {
   skipContainer.appendChild(skipLabel);
   wrapper.appendChild(skipContainer);
 
-  const isAdvancedMode = complexityToggle && complexityToggle.checked;
-  wrapper.dataset.ratingMode = isAdvancedMode ? 'advanced' : 'simple';
-
-  let ratingContainer;
-  if (isAdvancedMode) {
-    ratingContainer = document.createElement('div');
-    ratingContainer.classList.add('star-rating');
-    for (let i = 1; i <= 5; i++) {
-      const star = document.createElement('span');
-      star.classList.add('star');
-      star.innerHTML = '★';
-      star.dataset.value = i;
-      star.addEventListener('click', () => {
-        const current = parseFloat(wrapper.dataset.rating || '0');
-        const newRating = current === i ? 0 : i;
-        setRating(wrapper, newRating);
-        updateAverage();
-      });
-      ratingContainer.appendChild(star);
-    }
-  } else {
-    ratingContainer = document.createElement('div');
-    ratingContainer.classList.add('simple-rating');
-    const simpleOptions = [
-      { label: '悪い', emoji: '👎', score: 0 },
-      { label: '普通', emoji: '😐', score: 50 },
-      { label: '良い', emoji: '👍', score: 100 }
-    ];
-    simpleOptions.forEach(option => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.classList.add('simple-rating-option');
-      button.dataset.ratingValue = option.score / 20;
-      button.innerHTML = `
-        <span class="simple-rating-emoji" aria-hidden="true">${option.emoji}</span>
-      `;
-      button.setAttribute('aria-label', option.label);
-      button.setAttribute('title', option.label);
-      button.addEventListener('click', () => {
-        const parsed = parseFloat(wrapper.dataset.rating);
-        const current = Number.isNaN(parsed) ? null : parsed;
-        const normalizedScore = option.score / 20;
-        const isSame = current !== null && Math.abs(current - normalizedScore) < 0.001;
-        const newRating = isSame ? null : normalizedScore;
-        setRating(wrapper, newRating);
-        updateAverage();
-      });
-      ratingContainer.appendChild(button);
+  const ratingContainer = document.createElement('div');
+  ratingContainer.classList.add('star-rating');
+  for (let i = 1; i <= 5; i++) {
+    const star = document.createElement('span');
+    star.classList.add('star');
+    star.innerHTML = '★';
+    star.dataset.value = i;
+    star.addEventListener('click', () => {
+      const current = parseFloat(wrapper.dataset.rating || '0');
+      const newRating = current === i ? 0 : i;
+      setRating(wrapper, newRating);
+      updateAverage();
     });
+    ratingContainer.appendChild(star);
   }
   wrapper.appendChild(ratingContainer);
 
@@ -574,17 +519,10 @@ function clearKpiContainer() {
   kpiItems.length = 0;
 }
 
-function getActiveKpiData() {
-  if (complexityToggle && complexityToggle.checked) {
-    return advancedKpiData;
-  }
-  return simpleKpiData;
-}
-
 function buildDefaultKpiLayout() {
   if (!container) return;
   clearKpiContainer();
-  const dataset = getActiveKpiData();
+  const dataset = advancedKpiData;
   dataset.forEach(section => {
     const sectionHeading = document.createElement('h2');
     sectionHeading.classList.add('section-heading');
@@ -870,22 +808,12 @@ function setRating(wrapper, rating) {
   } else {
     wrapper.dataset.rating = numericValue;
   }
-  const mode = wrapper.dataset.ratingMode || 'advanced';
-  if (mode === 'advanced') {
-    const numeric = hasNumericValue ? numericValue : 0;
-    const stars = wrapper.querySelectorAll('.star');
-    stars.forEach((star, idx) => {
-      star.classList.toggle('selected', idx < numeric);
-    });
-  } else {
-    const numeric = hasNumericValue ? numericValue : null;
-    const options = wrapper.querySelectorAll('.simple-rating-option');
-    options.forEach(option => {
-      const value = parseFloat(option.dataset.ratingValue || '0');
-      const isSelected = numeric !== null && Math.abs(value - numeric) < 0.001;
-      option.classList.toggle('selected', isSelected);
-    });
-  }
+
+  const numeric = hasNumericValue ? numericValue : 0;
+  const stars = wrapper.querySelectorAll('.star');
+  stars.forEach((star, idx) => {
+    star.classList.toggle('selected', idx < numeric);
+  });
 }
 
 const csvInput = document.getElementById('csvFile');
@@ -1059,8 +987,7 @@ document.getElementById('export-btn').addEventListener('click', () => {
   a.href = url;
   const mapName = selectedMap ? selectedMap.toLowerCase() : 'unknown';
   const agentName = selectedAgent ? selectedAgent.toLowerCase() : 'unknown';
-  const complexityName = complexityToggle && complexityToggle.checked ? 'advanced' : 'simple';
-  a.download = `valoinsight_${complexityName}_${mapName}_${agentName}.json`;
+  a.download = `valoinsight_advanced_${mapName}_${agentName}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -1070,21 +997,11 @@ document.getElementById('export-btn').addEventListener('click', () => {
 const modeToggle = document.getElementById('mode-toggle');
 const statsPlaceholderValue = 0.0;
 
-if (complexityToggle) {
-  complexityToggle.addEventListener('change', () => {
-    if (!modeToggle || !modeToggle.checked) {
-      buildDefaultKpiLayout();
-      applyMode();
-    }
-  });
-}
-
 function applyMode() {
   const isStatsMode = modeToggle && modeToggle.checked;
   const kpiContainer = document.getElementById('kpi-container');
   const summaryContainer = document.getElementById('summary-container');
   const exportBtn = document.getElementById('export-btn');
-  const complexitySwitchContainer = document.getElementById('complexity-switch-container');
 
   if (kpiContainer) kpiContainer.style.display = '';
   if (summaryContainer) {
@@ -1098,20 +1015,12 @@ function applyMode() {
     exportBtn.style.display = isStatsMode ? 'none' : '';
   }
 
-  if (complexityToggle) {
-    complexityToggle.disabled = isStatsMode;
-  }
-
-  if (complexitySwitchContainer) {
-    complexitySwitchContainer.style.display = isStatsMode ? 'none' : '';
-  }
-
   kpiItems.forEach(item => {
     const skipCheckbox = document.getElementById(`${item.id}-skip`);
     const wrapper = document.getElementById(item.id);
     if (!wrapper) return;
     const skipContainer = wrapper.querySelector('.skip-container');
-    const ratingContainer = wrapper.querySelector('.star-rating, .simple-rating');
+    const ratingContainer = wrapper.querySelector('.star-rating');
     const scoreContainer = wrapper.querySelector('.score-container');
     const scoreEl = wrapper.querySelector('.score-display');
     const countEl = wrapper.querySelector('.data-count');
