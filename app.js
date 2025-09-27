@@ -72,7 +72,7 @@ const advancedKpiData = [
       heading: '座学',
       subsections: [
         {
-          heading: ' `エリアコントロール',
+          heading: 'スキル',
           items: [         
             { id: 'smoke-usage-knowledge', text: '一般的なスモークの置き方と、その使い方を全て知っていますか', note: ['・閉じ・耐え・もっこり・1way など'], attributes: ['study'] },
             { id: 'sentinel-trap-knowledge', text: '今回の試合で使われた全てのセンチネルの持つ、トラップの一般的な定点と対策を知っていますか', attributes: ['study'] },
@@ -80,7 +80,7 @@ const advancedKpiData = [
           ]
         },
         {
-          heading: ' `武器・エージェントの性能',
+          heading: '武器',
           items: [         
             { id: 'weapon-knowledge', text: '全ての武器のダメージと特徴を知っていますか', attributes: ['study'] },
             { id: 'buy-amount-memory', text: 'フルバイとハーフアーマーバイの金額を覚えていますか', attributes: ['study'] },
@@ -98,14 +98,14 @@ const advancedKpiData = [
         {
           heading: 'マップ知識',
           items: [
-            { id: 'map-official-calls', text: '今回のマップの、公式なエリアの名称を全て知っていますか', note: ['・ラフター, タピオカなど'], attributes: ['study'] },
+            { id: 'map-official-calls', text: '今回のマップの、場所ごとの名称・通称を全て知っていますか', note: ['拡大マップに記載の正式名称: ラフター, タピオか, ...', 'プレイヤー間での通称: ザリガニ, ヘヴン/アンダー,...'], attributes: ['study'] },
             { id: 'map-nickname-calls', text: '今回のマップの、非公式なエリアの俗称を概ね知っていますか', note: ['・ヘヴン, ザリガニなど'], attributes: ['study'] },
-            { id: 'sniper-spots', text: 'スナイパーがよく出てくる場所とエージェントを知っていますか', attributes: ['study'] },
-            { id: 'shotgun-spots', text: 'ショットガンがよく出てくる場所を知っていますか', attributes: ['study'] },
-            { id: 'map-key-areas', text: '今回のマップで一般的に重要とされるエリアはどこか、理由も含めて説明できますか', attributes: ['study'] },
-            { id: 'map-essential-agents', text: '今回のマップで一般的に必須とされるエージェントを、理由も含めて説明できますか', attributes: ['study'] },
+            //{ id: 'sniper-spots', text: 'スナイパーがよく出てくる場所とエージェントを知っていますか', attributes: ['study'] },
+            //{ id: 'shotgun-spots', text: 'ショットガンがよく出てくる場所を知っていますか', attributes: ['study'] },
+            { id: 'map-key-areas', text: '今回のマップで、重要なエリアはどこか説明できますか', attributes: ['study'] },
+            { id: 'map-essential-agents', text: '今回のマップの、必須級エージェントの何が強くて必須か説明できますか', attributes: ['study'] },
             { id: 'drone-required-areas', text: '今回のマップで、ドローン系の索敵が無ければ極めて進みづらいエリアがどこかを知っていますか', attributes: ['study'] },
-            { id: 'map-plant-spots', text: '今回のマップの、一般的なプラント位置を全て知っていますか', attributes: ['study'] }
+            //{ id: 'map-plant-spots', text: '今回のマップの、一般的なプラント位置を全て知っていますか', attributes: ['study'] }
             //{ id: 'flash-stun-spots', text: '今回のマップで、一般的にフラッシュやスタンが良く使われる場所を知っていますか', attributes: ['study'] }
           //{ id: 'map-chokepoints', text: '今回のマップにおける、一般的なチョークポイントを知っていますか', note: ['・チョークポイントとは：敵が出てくる所'] , attributes: ['study'] },
           //{ id: 'map-off-angles', text: '今回のマップにおける、一般的なオフアングルを知っていますか', attributes: ['study'] },
