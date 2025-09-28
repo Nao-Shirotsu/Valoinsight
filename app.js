@@ -5,7 +5,7 @@ const advancedKpiData = [
       { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ', '例: バインド 狭いエリアが多いため犬系アビリティが多めに欲しい'], attributes: ['teamplay', 'study'] },
       { id: 'self-role', text: '自分がロールを全うすべきか/イレギュラー対応すべきか判断できましたか', note: ['・0デュエ2イニシ編成で自分イニシ → 自分がデュエ的な戦う動きをする', '・攻めでサイファーが逆サイト管理してくれそう → デフォルト戦術', '・イニシがデュエにくっついてアビリティ投げそう → ラッシュ可能かも'], attributes: ['thinking', 'study'] },
       { id: 'strategy-axis', text: '編成から作戦を見出せましたか', note: ['例: バインド 1イニシ+セージ → メインだけ取って多少無理やりでも設置通りそう'], attributes: ['teamplay', 'thinking', 'study'] },
-      { id: 'ally-counter', text: '敵の編成から何をやってきそうか/対策の取り方は見出せましたか', note: ['例: ロータス 敵にブリーチがいてAメイン強めに当たってきそう → 初動は避けて後取りする'], attributes: ['thinking', 'study', 'teamplay'] }
+      { id: 'ally-counter', text: '敵の編成から何をやってきそうか/対策の取り方は見出せましたか', note: ['例: ロータス 敵にブリーチがいてAメイン強めに当たってきそう → 初動は避けて後取りする'], attributes: ['teamplay', 'thinking', 'study'] }
     ]
   },
   {
@@ -16,7 +16,7 @@ const advancedKpiData = [
       { id: 'ult-management', text: '敵味方のアルティメットチャージ数を確認しましたか', note: ['強いウルト(KJ, ブリーチ, ...)によってどう仕掛けるか/仕掛けられるか事前に想像しておく'], attributes: ['thinking', 'study'] },
       { id: 'emotion-reset', text: '前ラウンドの感情をすぐリセットできましたか', note: ['次のことを考えるために早く冷静になる'], attributes: ['thinking'] },
       { id: 'counter-plan', text: '前ラウンドで敵がしてきたことの対策を考えられましたか', attributes: ['thinking', 'study'] },
-      { id: 'propose-strat', text: '必要に応じて作戦を提案できましたか', note:['自分がやりたいこと/刺さりそうな作戦/敵がしてきたことの対策 を味方に共有する'], attributes: ['thinking', 'teamplay'] }
+      { id: 'propose-strat', text: '必要に応じて作戦を提案できましたか', note:['自分がやりたいこと/刺さりそうな作戦/敵がしてきたことの対策 を味方に共有する'], attributes: ['teamplay', 'thinking'] }
     ]
   },
   {
