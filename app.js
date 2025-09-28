@@ -4,18 +4,18 @@ const advancedKpiData = [
     items: [
       { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ', '例: バインド 狭いエリアが多いため犬系アビリティが多めに欲しい'], attributes: ['teamplay', 'study'] },
       { id: 'self-role', text: '自分がロールを全うすべきか/イレギュラー対応すべきか判断できましたか', note: ['・0デュエ2イニシ編成で自分イニシ → 自分がデュエ的な戦う動きをする', '・攻めでサイファーが逆サイト管理してくれそう → デフォルト戦術', '・イニシがデュエにくっついてアビリティ投げそう → ラッシュ可能かも'], attributes: ['thinking', 'study'] },
-      { id: 'strategy-axis', text: '編成から作戦を見出せましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ', '例: バインド 1イニシ+セージ → メインだけ取って多少無理やりでも設置通りそう'], attributes: ['teamplay', 'thinking', 'study'] },
-      { id: 'ally-counter', text: '敵の編成から何をやってきそうか/対策の取り方は見出せましたか', note: ['・味方が敵の編成から対策を考えられそうか判断する', '・ネオンがワイヤーのある所に行かなそうか、行くとしてもアンチワイヤーを考えていそうか、など'], attributes: ['thinking', 'study', 'teamplay'] }
+      { id: 'strategy-axis', text: '編成から作戦を見出せましたか', note: ['例: バインド 1イニシ+セージ → メインだけ取って多少無理やりでも設置通りそう'], attributes: ['teamplay', 'thinking', 'study'] },
+      { id: 'ally-counter', text: '敵の編成から何をやってきそうか/対策の取り方は見出せましたか', note: ['例: ロータス 敵にブリーチがいてAメイン強めに当たってきそう → 初動は避けて後取りする'], attributes: ['thinking', 'study', 'teamplay'] }
     ]
   },
   {
     heading: '各ラウンドの準備フェーズ',
     items: [
-      { id: 'weapon-econ', text: '節約/バイの判断を適切に行えましたか', note: ['・ライトシールドで4人買えるならバイを提案する', '・敵がエコならオペを出さない'], attributes: ['thinking', 'study'] },
+      { id: 'weapon-econ', text: '節約/バイの判断を適切に行えましたか', note: ['例: ライトシールドで4人買えるならバイを提案する'], attributes: ['thinking', 'study'] },
       { id: 'op-care', text: '敵がオペレーターを買える金額か確認しましたか', note: ['敵ジェットが5100ならオペ+ライトを買いそう → 丁寧にジャンプピーク/索敵をもらう'], attributes: ['thinking', 'study'] },
       { id: 'ult-management', text: '敵味方のアルティメットチャージ数を確認しましたか', note: ['強いウルト(KJ, ブリーチ, ...)によってどう仕掛けるか/仕掛けられるか事前に想像しておく'], attributes: ['thinking', 'study'] },
       { id: 'emotion-reset', text: '前ラウンドの感情をすぐリセットできましたか', note: ['次のことを考えるために早く冷静になる'], attributes: ['thinking'] },
-      { id: 'counter-plan', text: '前のラウンドで敵がしてきたことの対策を考えられましたか', attributes: ['thinking', 'study'] },
+      { id: 'counter-plan', text: '前ラウンドで敵がしてきたことの対策を考えられましたか', attributes: ['thinking', 'study'] },
       { id: 'propose-strat', text: '必要に応じて作戦を提案できましたか', note:['自分がやりたいこと/刺さりそうな作戦/敵がしてきたことの対策 を味方に共有する'], attributes: ['thinking', 'teamplay'] }
     ]
   },
@@ -37,12 +37,12 @@ const advancedKpiData = [
       {
         heading: '盤面管理',
         items: [
-          { id: 'engage-decision', text: '接敵していいか判断してからピークしましたか', note:['・誰もカバーできない位置でピークすると良くて1v1, 悪くて1v3くらいになる', '・今自分がやられたら敵のローテが成功しそうなら戦ってはいけない'], attributes: ['judgement', 'alert'] },
+          { id: 'engage-decision', text: '接敵していいか判断してからピークしましたか', note:['誰もカバーできない位置でピークすると良くて1v1, 悪くて1v3くらいになる', '例: 自分が一人で片方サイトをホールドしている → やられるとローテされるため戦ってはいけない'], attributes: ['judgement', 'alert'] },
           { id: 'reposition', text: '適切にポジションを変えましたか', note:['毎回同じポジション/同じタイミングだと流石に読まれる。相手がされて嫌な位置取り/ピークをする'], attributes: ['judgement', 'alert'] },
           { id: 'consider-enemy-count', text: '無理なエントリーをしませんでしたか', note:['マップや飛んできたアビリティから敵が何人いるか判断する。例えば4人確定ならエントリーは非常に厳しい'], attributes: ['judgement', 'thinking', 'study'] },
           { id: 'not-miss-rotate', text: 'ローテートが出来る状況を見落としませんでしたか', note:['敵のエージェントの誰がマップに映ったか覚えておく。例えばAに5人見えたならBにフリーで設置できる'], attributes: ['judgement', 'thinking'] },
           { id: 'rotate-reason', text: 'ローテートする判断の時、敵より早くサイトに到着できる根拠はありましたか', attributes: ['judgement', 'thinking', 'study'] },
-          { id: 'silent-steps', text: '適切に足音を消せましたか', note: ['・ラウンド開始直後の情報取り段階', '・ローテート画策中'], attributes: ['judgement', 'alert', 'thinking'] },
+          { id: 'silent-steps', text: '適切に足音を消せましたか', note: ['例: ラウンド開始直後の情報取り段階 / ローテート画策中'], attributes: ['judgement', 'alert', 'thinking'] },
           { id: 'clearing', text: '丁寧にクリアリングできましたか', note:['主導権がないエリアなど敵がいるかもしれない場所では特に丁寧に'], attributes: ['alert'] }
         ]
       },
@@ -60,6 +60,7 @@ const advancedKpiData = [
       {
         heading: 'プラント・ポストプラント',
         items: [
+          { id: 'plant-general', text: 'よくあるプラント位置を複数知っていますか', attributes: ['study'] },
           { id: 'plant-delay', text: 'どこで遅延行為がしやすいか考えてプラント位置を決めましたか', attributes: ['study', 'judgement', 'thinking'] },
           { id: 'postplant-position', text: 'プラント位置に対して強い位置取りができましたか', attributes: ['study', 'judgement'] },
           { id: 'ability-awareness', text: '味方と敵の残アビリティを意識してリアルタイムで対策できましたか', attributes: ['study', 'judgement', 'teamplay'] },
@@ -69,12 +70,12 @@ const advancedKpiData = [
     ]
   },
   {
-      heading: '座学',
+      heading: '知識',
       subsections: [
         {
           heading: 'スキル',
           items: [         
-            { id: 'smoke-usage-knowledge', text: '一般的なスモークの置き方と、その使い方を全て知っていますか', note: ['・閉じ・耐え・もっこり・1way など'], attributes: ['study'] },
+            { id: 'smoke-usage-knowledge', text: '一般的なスモークの置き方と、その使い方を全て知っていますか', note: ['閉じ/耐え/もっこり/ワンウェイ'], attributes: ['study'] },
             { id: 'sentinel-trap-knowledge', text: '今回の試合で使われた全てのセンチネルの持つ、トラップの一般的な定点と対策を知っていますか', attributes: ['study'] },
             { id: 'recon-usage-knowledge', text: '索敵アビリティが一般的にどこに投げられ、それがどの場所を映す為のものか知っていますか', attributes: ['study'] },
           ]
@@ -92,13 +93,12 @@ const advancedKpiData = [
           items: [
             { id: 'spike-benefits', text: 'スパイクを設置・解除した際に得られるメリットを全て知っていますか', attributes: ['study'] },
             { id: 'spike-timers', text: 'スパイクの設置・爆発・解除にかかる秒数を知っていますか', attributes: ['study'] },
-            { id: 'spike-cues', text: '設置後のスパイクの見た目や音の変化で分かる情報を全て知っていますか', attributes: ['study'] }
           ]
         },
         {
           heading: 'マップ知識',
           items: [
-            { id: 'map-official-calls', text: '場所ごとの名称・通称を全て知っていますか', note: ['正式名称: ラフター, タピオか, ...', 'プレイヤー間通称: ザリガニ, ヘヴン/アンダー, ...'], attributes: ['study'] },
+            { id: 'map-official-calls', text: '場所ごとの名称・通称を全て知っていますか', note: ['正式名称: ラフター, タピオカ, ...', 'プレイヤー間通称: ザリガニ, ヘヴン, アンダー, ...'], attributes: ['study'] },
             //{ id: 'sniper-spots', text: 'スナイパーがよく出てくる場所とエージェントを知っていますか', attributes: ['study'] },
             //{ id: 'shotgun-spots', text: 'ショットガンがよく出てくる場所を知っていますか', attributes: ['study'] },
             { id: 'map-key-areas', text: '重要なエリアはどこか説明できますか', attributes: ['study'] },
