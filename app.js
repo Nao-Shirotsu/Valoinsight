@@ -2,10 +2,10 @@ const advancedKpiData = [
   {
     heading: '編成中～1st準備フェーズ',
     items: [
-      { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ', '例: バインド 狭いエリアが多いため犬系アビリティが多めに欲しい'], attributes: ['teamplay', 'study'] },
-      { id: 'self-role', text: '自分がロールを全うすべきか/イレギュラー対応すべきか判断できましたか', note: ['・0デュエ2イニシ編成で自分イニシ → 自分がデュエ的な戦う動きをする', '・攻めでサイファーが逆サイト管理してくれそう → デフォルト戦術', '・イニシがデュエにくっついてアビリティ投げそう → ラッシュ可能かも'], attributes: ['thinking', 'study'] },
-      { id: 'strategy-axis', text: '編成から作戦を見出せましたか', note: ['例: バインド 1イニシ+セージ → メインだけ取って多少無理やりでも設置通りそう'], attributes: ['teamplay', 'thinking', 'study'] },
-      { id: 'ally-counter', text: '敵の編成から何をやってきそうか/対策の取り方は見出せましたか', note: ['例: ロータス 敵にブリーチがいてAメイン強めに当たってきそう → 初動は避けて後取りする'], attributes: ['teamplay', 'thinking', 'study'] }
+      { id: 'role-balance', text: 'ロール過不足は認識できましたか', note: ['エントリー/索敵/スモーク/トラップ/フラッシュ', '例: バインド 狭いエリアが多いため犬系アビリティが多めに欲しい'], attributes: ['thinking', 'study'] },
+      { id: 'self-role', text: '自分がロールを全うすべきか/イレギュラー対応すべきか判断できましたか', note: ['・0デュエ2イニシ編成で自分イニシ → 自分がデュエ的な戦う動きをする', '・攻めで味方サイファーが逆サイト管理してくれそう → デフォルト戦術', '・イニシがデュエに付いていきそう → ラッシュ可能かも'], attributes: ['thinking', 'study'] },
+      { id: 'strategy-axis', text: '編成から作戦を見出せましたか', note: ['例: バインド 1イニシ+セージ → メインだけ取って多少無理やりでも設置通りそう'], attributes: ['thinking', 'study'] },
+      { id: 'ally-counter', text: '敵の編成から何をやってきそうか/対策の取り方は見出せましたか', note: ['例: ロータス 敵にブリーチがいてAメイン強めに当たってきそう → 初動は避けて後取りする'], attributes: ['thinking', 'study'] }
     ]
   },
   {
@@ -39,8 +39,8 @@ const advancedKpiData = [
         items: [
           { id: 'engage-decision', text: '接敵していいか判断してからピークしましたか', note:['誰もカバーできない位置でピークすると良くて1v1, 悪くて1v3くらいになる', '例: 自分が一人で片方サイトをホールドしている → やられるとローテされるため戦ってはいけない'], attributes: ['judgement', 'alert'] },
           { id: 'reposition', text: '適切にポジションを変えましたか', note:['毎回同じポジション/同じタイミングだと流石に読まれる。相手がされて嫌な位置取り/ピークをする'], attributes: ['judgement', 'alert'] },
-          { id: 'consider-enemy-count', text: '無理なエントリーをしませんでしたか', note:['マップや飛んできたアビリティから敵が何人いるか判断する。例えば4人確定ならエントリーは非常に厳しい'], attributes: ['judgement', 'thinking', 'study'] },
-          { id: 'not-miss-rotate', text: 'ローテートが出来る状況を見落としませんでしたか', note:['敵のエージェントの誰がマップに映ったか覚えておく。例えばAに5人見えたならBにフリーで設置できる'], attributes: ['judgement', 'thinking'] },
+          { id: 'consider-enemy-count', text: '無理なエントリーをしませんでしたか', note:['マップや飛んできたアビリティから敵が何人いるか判断する', '例: サイト内に4人映った → エントリーは非常に厳しい'], attributes: ['judgement', 'thinking', 'study'] },
+          { id: 'not-miss-rotate', text: 'ローテートが出来る状況を見落としませんでしたか', note:['敵のエージェントの誰がマップに映ったか覚えておく', '例: Aサイト4人+ミッド5人映った → Bにフリーで設置できる'], attributes: ['judgement', 'thinking'] },
           { id: 'rotate-reason', text: 'ローテートする判断の時、敵より早くサイトに到着できる根拠はありましたか', attributes: ['judgement', 'thinking', 'study'] },
           { id: 'silent-steps', text: '適切に足音を消せましたか', note: ['例: ラウンド開始直後の情報取り段階 / ローテート画策中'], attributes: ['judgement', 'alert', 'thinking'] },
           { id: 'clearing', text: '丁寧にクリアリングできましたか', note:['主導権がないエリアなど敵がいるかもしれない場所では特に丁寧に'], attributes: ['alert'] }
@@ -102,8 +102,8 @@ const advancedKpiData = [
             //{ id: 'sniper-spots', text: 'スナイパーがよく出てくる場所とエージェントを知っていますか', attributes: ['study'] },
             //{ id: 'shotgun-spots', text: 'ショットガンがよく出てくる場所を知っていますか', attributes: ['study'] },
             { id: 'map-key-areas', text: '重要なエリアはどこか説明できますか', attributes: ['study'] },
-            { id: 'map-essential-agents', text: '必須級エージェントの何が強くて必須か説明できますか', attributes: ['study'] },
-            { id: 'drone-required-areas', text: 'ドローン系スキルが無いと進みみくいエリアがどこかを説明できますか', attributes: ['study'] },
+            { id: 'map-essential-agents', text: 'マップごとの必須級エージェントのどんなところが強いか説明できますか', attributes: ['study'] },
+            { id: 'drone-required-areas', text: 'どのエリアがどんなスキルが無いと進みみくいか説明できますか', attributes: ['study'] },
             //{ id: 'map-plant-spots', text: '今回のマップの、一般的なプラント位置を全て知っていますか', attributes: ['study'] }
             //{ id: 'flash-stun-spots', text: '今回のマップで、一般的にフラッシュやスタンが良く使われる場所を知っていますか', attributes: ['study'] }
           //{ id: 'map-chokepoints', text: '今回のマップにおける、一般的なチョークポイントを知っていますか', note: ['・チョークポイントとは：敵が出てくる所'] , attributes: ['study'] },
